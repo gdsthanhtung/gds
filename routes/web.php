@@ -2,46 +2,43 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SliderController;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
 |--------------------------------------------------------------------------
-| Web Routes
+| Set config params
 |--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
 */
 
 $prefixAdmin = Config::get('custom.route.prefix_admin', 'admin');
 
+/*
+|--------------------------------------------------------------------------
+| Config Routes
+|--------------------------------------------------------------------------
+*/
 
 Route::get('/', function () {
     return view('welcome');
 });
 
 Route::prefix($prefixAdmin)->group(function () {
-    $prefixAdminSlider = 'slider';
-
-    Route::get('/user', function () {
-        return '/admin/user';
-    });
-
-    Route::prefix($prefixAdminSlider)->group(function () {
-
-        Route::controller(SliderController::class)->group(function () {
-
-            Route::get('{id}', 'index');
-
-            Route::get('/edit/{id}/{name}', 'edit')->where(['id' => '[0-9]+', 'name' => '[a-z]+']);
-
-            Route::get('/delete/{id}', 'delete')->where(['id' => '[0-9]+']);
-
+    $prefix = Config::get('custom.route.dashboard.prefix', 'dashboard');
+    $ctrl   = Config::get('custom.route.dashboard.ctrl', 'dashboard');
+    Route::prefix($prefix)->group(function () use ($ctrl) {
+        Route::controller(DashboardController::class)->group(function () use ($ctrl) {
+            Route::get('/', 'show')->name($ctrl);
         });
     });
 
-    Route::get('/category', function () {
-        return '/admin/category';
+    $prefix = Config::get('custom.route.slider.prefix', 'slider');
+    $ctrl   = Config::get('custom.route.slider.ctrl', 'slider');
+    Route::prefix($prefix)->group(function () use ($ctrl) {
+        Route::controller(SliderController::class)->group(function () use ($ctrl) {
+            Route::get('/', 'show')->name($ctrl);
+            Route::get('/form/{id?}', 'edit')->where(['id' => '[0-9]+'])->name($ctrl.'/form');
+            Route::get('/delete/{id}', 'delete')->where(['id' => '[0-9]+'])->name($ctrl.'/delete');
+            Route::get('/change-status/{id}/{status}', 'change_status')->where(['id' => '[0-9]+', 'status' => '[a-z]+'])->name($ctrl.'/change-status');
+        });
     });
 });

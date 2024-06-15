@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Config;
 
-class SliderController extends Controller
+class DashboardController extends Controller
 {
-    private $path_view = 'admin.slider.';
+    private $path_view = 'admin.dashboard.';
 
     public function __construct(){
         $ctrl = Config::get('custom.route.slider.ctrl', 'slider');
