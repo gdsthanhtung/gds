@@ -3,22 +3,56 @@
 namespace App\Http\Controllers;
 
 //use App\Models\User;
-//use Illuminate\View\View;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\View;
+use Config;
 
 class SliderController extends Controller
 {
-    public function index(string $id)
-    {
-        return 'SliderController_show______000999'.$id;
+    private $path_view = 'admin.slider.';
+
+    public function __construct(){
+        $ctrl = Config::get('custom.route.slider.ctrl', 'slider');
+        View::share('ctrl', $ctrl);
     }
 
-    public function edit(string $id, string $name)
-    {
-        return 'SliderController_edit_'.$id.'_'.$name;
+    private function get_path_view(string $file = 'index'){
+        return $this->path_view.$file;
     }
 
-    public function delete(string $id)
+    //=====================================================
+
+    public function show()
     {
-        return 'SliderController_delete_'.$id;
+        return view($this->get_path_view('index'));
+    }
+
+    public function edit(Request $request)
+    {
+        $data = [
+            'id'    => $request->id,
+            'name'  => $request->name
+        ];
+        return view($this->get_path_view('form'), $data);
+    }
+
+    public function delete(Request $request)
+    {
+        $data = [
+            'id'    => $request->id
+        ];
+        return view($this->get_path_view('delete'), $data);
+    }
+
+    public function change_status(Request $request)
+    {
+        $data = [
+            'id'    => $request->id,
+            'status'  => $request->status
+        ];
+        view($this->get_path_view('change-status'), $data);
+        sleep(2);
+        return redirect()->route('slider');
+
     }
 }
