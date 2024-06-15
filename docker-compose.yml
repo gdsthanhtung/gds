@@ -1,0 +1,36 @@
+services:
+  app:
+    image: nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - ./laravel:/var/www/html
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+  php:
+    build:
+      context: ./laravel
+      dockerfile: Dockerfile
+    volumes:
+      - ./laravel:/var/www/html
+    ports:
+      - "9000:9000"
+  mysql:
+    image: mysql:8.0.29-oracle
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./mysql:/var/lib/mysql
+    environment: 
+      MYSQL_DATABASE: laravel
+      MYSQL_USER: pocadi
+      MYSQL_PASSWORD: pocadi123
+      MYSQL_ROOT_PASSWORD: pocadi123
+  # phpmyadmin:
+  #   image: phpmyadmin/phpmyadmin:latest
+  #   ports:
+  #     - "8081:80"
+  #   environment:
+  #     - PMA_HOSTS=mysql
+  #     - PMA_PORT=3307
+  #     - PMA_USER=pocadi
+  #     - PMA_PASSWORD=pocadi123
