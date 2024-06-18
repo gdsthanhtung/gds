@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Config;
+use DB;
 
 class DashboardController extends Controller
 {
@@ -23,6 +24,11 @@ class DashboardController extends Controller
 
     public function show()
     {
+        $users = DB::table('user')->get();
+        foreach ($users as $user) {
+            echo $user->fullname.';;;';
+        }
+
         return view($this->get_path_view('index'));
     }
 }
