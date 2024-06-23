@@ -2,33 +2,29 @@
 
 namespace App\Http\Controllers;
 
-//use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Config;
-use DB;
 
 class DashboardController extends Controller
 {
-    private $path_view = 'admin.dashboard.';
+    private $pathView;
+    private $moduleName = "dashboard";
 
     public function __construct(){
-        View::share('ctrl', Config::get('custom.route.dashboard.ctrl', 'dashboard'));
+        $this->pathView = "admin.pages.$this->moduleName.";
+        $ctrl = Config::get("custom.route.$this->moduleName.ctrl");
+        View::share(['ctrl' => $ctrl, 'pathView' => $this->pathView]);
     }
 
-    private function get_path_view(string $file = 'index'){
-        return $this->path_view.$file;
+    private function getPathView(string $file = 'index'){
+        return $this->pathView.$file;
     }
 
     //=====================================================
 
     public function show()
     {
-        $users = DB::table('user')->get();
-        foreach ($users as $user) {
-            echo $user->fullname.';;;';
-        }
-
-        return view($this->get_path_view('index'));
+        return view($this->getPathView('index'));
     }
 }
