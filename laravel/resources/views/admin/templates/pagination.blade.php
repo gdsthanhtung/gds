@@ -13,7 +13,7 @@
             Tổng số trang: <span class="label label-warning label-pagination">{{ $totalPages }}</span>
         </div>
         <div class="col-md-6">
-            {{ $data->links('admin.templates.paginator_backend', ['paginator' => $data]) }}
+            {{ $data->appends(request()->input())->links('admin.templates.paginator_backend', ['paginator' => $data]) }}
         </div>
     </div>
 </div>

@@ -11,3 +11,5 @@
 <script src={{ asset("admin/asset/iCheck/icheck.min.js");}}></script>
 <!-- Custom Theme Scripts -->
 <script src={{ asset("admin/js/custom.min.js");}}></script>
+<!-- Custom Modules Scripts -->
+<script src={{ asset("admin/js/modules.js");}}></script>
