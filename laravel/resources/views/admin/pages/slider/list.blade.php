@@ -1,5 +1,6 @@
 @php
-    use App\Helpers\Template;
+use App\Helpers\Template;
+use App\Helpers\Highlight;
 @endphp
 
 <div class="x_content">
@@ -22,9 +23,9 @@
                             @php
                                 $no = ++$key;
                                 $id = $item['id'];
-                                $name = $item['name'];
-                                $link = $item['link'];
-                                $description = $item['description'];
+                                $name = Highlight::show($item['name'], $params['filter'], 'name');
+                                $link = Highlight::show($item['link'], $params['filter'], 'link');
+                                $description = Highlight::show($item['description'], $params['filter'], 'description');
 
                                 $thumb = Template::showItemThumb($ctrl, $item['thumb'], $item['name']);
                                 $status = Template::showItemStatus($ctrl, $id, $item['status']);
@@ -35,9 +36,9 @@
 
                             <td>{{ $no }}</td>
                             <td width="40%">
-                                <p><strong>Name:</strong> {{ $name }}</p>
-                                <p><strong>Description:</strong> {{ $description }}</p>
-                                <p><strong>Link:</strong> {{ $link }}</p>
+                                <p><strong>Name:</strong> {!! $name !!}</p>
+                                <p><strong>Description:</strong> {!! $description !!}</p>
+                                <p><strong>Link:</strong> {!! $link !!}</p>
                                 <p>{!! $thumb !!}</p>
                             </td>
                             <td>{!! $status !!}</td>

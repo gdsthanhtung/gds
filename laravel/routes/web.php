@@ -36,9 +36,10 @@ Route::prefix($prefixAdmin)->group(function () {
     Route::prefix($prefix)->group(function () use ($ctrl) {
         Route::controller(SliderController::class)->group(function () use ($ctrl) {
             Route::get('/', 'show')->name($ctrl);
-            Route::get('/form/{id?}', 'edit')->where(['id' => '[0-9]+'])->name($ctrl.'/form');
+            Route::get('/form/{id?}', 'form')->where(['id' => '[0-9]+'])->name($ctrl.'/form');
             Route::get('/delete/{id}', 'delete')->where(['id' => '[0-9]+'])->name($ctrl.'/delete');
             Route::get('/change-status/{id}/{status}', 'change_status')->where(['id' => '[0-9]+', 'status' => '[a-z]+'])->name($ctrl.'/change-status');
+            Route::post('/save', 'save')->name($ctrl.'/save');
         });
     });
 });

@@ -20,7 +20,7 @@ class SliderController extends Controller
         $this->pathView = "admin.pages.$this->moduleName.";
         $this->pathViewTemplate = "admin.templates.";
 
-        $this->params["pagination"]['perPage'] = 1;
+        $this->params["pagination"]['perPage'] = 2;
 
         $ctrl = Config::get("custom.route.$this->moduleName.ctrl");
         View::share(['ctrl' => $ctrl, 'pathView' => $this->pathView, 'pathViewTemplate' => $this->pathViewTemplate]);
@@ -54,21 +54,35 @@ class SliderController extends Controller
         return view($this->getPathView('index'), $shareData);
     }
 
-    public function edit(Request $request)
+    public function form(Request $request)
     {
-        $data = [
-            'id'    => $request->id,
-            'name'  => $request->name
+        $data = [];
+        $id = $request->id;
+
+        if($id){
+             $params = [
+                'id'    => $id
+            ];
+            $data = $this->mainModel->getItem($params, ['task' => 'get-item']);
+        }
+
+        if(!$data && $id)
+            return redirect()->route('slider')->with('notify', ['type' => 'danger', 'message' => 'Slider id is invalid!']);
+
+        $shareData = [
+            'data' => $data,
+            'id' => $id
         ];
-        return view($this->getPathView('form'), $data);
+        return view($this->getPathView('form'), $shareData);
+
     }
 
     public function delete(Request $request)
     {
-        $data = [
+        $params = [
             'id'    => $request->id
         ];
-        $rs = $this->mainModel->delete($data);
+        $rs = $this->mainModel->delete($params);
         $notify = ($rs) ? ['type' => 'success', 'message' => 'Delete successfully!'] : ['type' => 'danger', 'message' => 'Delete failed!'];
         return redirect()->route('slider')->with('notify', $notify);
     }
@@ -83,6 +97,12 @@ class SliderController extends Controller
         $rs = $this->mainModel->saveItem($params, ['task' => 'change-status']);
         $notify = ($rs) ? ['type' => 'success', 'message' => 'Update successfully!'] : ['type' => 'danger', 'message' => 'Update failed!'];
         return redirect()->route('slider')->with('notify', $notify);
+
+    }
+
+    public function save(Request $request)
+    {
+        return 'Saved!';
 
     }
 }

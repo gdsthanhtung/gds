@@ -18,12 +18,24 @@ return [
         'longTime' => 'd/m/Y H:m:s',
         'shortTime' => 'd/m/Y'
     ],
+    'template' => [
+        'formLabel' => [
+            'class' => 'control-label col-md-3 col-sm-3 col-xs-12'
+        ],
+        'formInput' => [
+            'class' => 'form-control col-md-7 col-xs-12'
+        ]
+    ],
     'enum' => [
-        'ruleStatus' => [
-            'active' => ['name' => 'Kích hoạt', 'class' => 'btn-success'],
-            'inactive' => ['name' => 'Chưa kích hoạt', 'class' => 'btn-warning'],
-            'all' => ['name' => 'Tất cả', 'class' => 'btn-primary'],
-            'unknown' => ['name' => 'Không xác định', 'class' => 'btn-danger']
+        'ruleStatus'    => [
+            'active'    => ['name' => 'Kích hoạt', 'class' => 'btn-success'],
+            'inactive'  => ['name' => 'Chưa kích hoạt', 'class' => 'btn-warning'],
+            'all'       => ['name' => 'Tất cả', 'class' => 'btn-primary'],
+            'unknown'   => ['name' => 'Không xác định', 'class' => 'btn-danger']
+        ],
+        'selectStatus' => [
+            'active' => 'Kích hoạt',
+            'inactive' => 'Chưa kích hoạt'
         ],
         'searchSelection' => [
             'all' => ['name' => 'Tìm tất cả'],
@@ -41,9 +53,9 @@ return [
             'slider' => ['all', 'id', 'name', 'description', 'link']
         ],
         'ruleBtn' => [
-            'edit'      => ['class' => 'btn-success',   'title' => 'Điều chỉnh',    'icon' => 'fa-pencil',  'route' => "/form"],
-            'delete'    => ['class' => 'btn-delete btn-danger',    'title' => 'Xoá',           'icon' => 'fa-trash',   'route' => "/delete"],
-            'info'      => ['class' => 'btn-info',      'title' => 'Thông tin',     'icon' => 'fa-info',    'route' => "/form"],
+            'edit'      => ['class' => 'btn-success',               'title' => 'Điều chỉnh',    'icon' => 'fa-pencil',  'route' => "/form"],
+            'delete'    => ['class' => 'btn-delete btn-danger',     'title' => 'Xoá',           'icon' => 'fa-trash',   'route' => "/delete"],
+            'info'      => ['class' => 'btn-info',                  'title' => 'Thông tin',     'icon' => 'fa-info',    'route' => "/form"],
         ],
         'btnInArea' => [
             'default' => ['edit', 'delete'],

@@ -7,14 +7,12 @@
 @endphp
 @section('content')
     <div class="right_col" role="main">
-        <div class="page-header zvn-page-header clearfix">
-            <div class="zvn-page-header-title">
-                <h3>Danh sách User</h3>
-            </div>
-            <div class="zvn-add-new pull-right">
-                <a href="/form" class="btn btn-success"><i class="fa fa-plus-circle"></i> Thêm mới</a>
-            </div>
-        </div>
+        @include($pathViewTemplate . 'page_header',
+            [
+                'title' => ucfirst($ctrl),
+                'button' => '<a href="'.route($ctrl."/form").'" class="btn btn-success"><i class="fa fa-plus-circle"></i> Thêm mới</a>'
+            ])
+
         @if(session('notify'))
             @include($pathViewTemplate.'notify')
         @endif

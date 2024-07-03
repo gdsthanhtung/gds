@@ -84,4 +84,12 @@ class SliderModel extends Model
         }
         return $result;
     }
+
+    public function getItem($params = null, $options = null){
+        $result = null;
+        if($options['task'] == 'get-item'){
+            $result = Self::select('*')->where('id', $params['id'])->first();
+        }
+        return $result;
+    }
 }
