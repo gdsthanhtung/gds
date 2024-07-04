@@ -4,14 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use App\Helpers\Resource;
+use Carbon\Carbon;
 
 class SliderModel extends Model
 {
     use HasFactory;
     protected $table = 'slider';
+    protected $uploadDir = 'slider';
     const CREATED_AT = 'created';
     const UPDATED_AT = 'modified';
+
+    protected $crudNotAccepted = ['_token', 'thumb', 'thumb_current'];
 
     public function listItems($params = null, $options = null){
         $result = null;
@@ -71,7 +75,10 @@ class SliderModel extends Model
 
     public function delete($params = null){
         $result = null;
+        $item = Self::getItem($params, ['task' => 'get-item']);
         $result = Self::where('id', $params['id'])->delete();
+
+        if($result) Resource::delete($this->uploadDir, $item['thumb']);
         return $result;
     }
 
@@ -82,6 +89,26 @@ class SliderModel extends Model
             $result = Self::where('id', $params['id'])
                         ->update(['status' => $newStatus]);
         }
+
+        if($options['task'] == 'add-item'){
+            $paramsInsert = array_diff_key($params, array_flip($this->crudNotAccepted));
+            $paramsInsert['created'] = Carbon::now();
+
+            if($params['thumb']){
+                $uploadRS = Resource::upload($this->uploadDir, $params['thumb']);
+                if($uploadRS)
+                    $paramsInsert['thumb'] = $uploadRS;
+                else
+                    return "Upload error..";
+            }
+
+            $result = Self::insert($paramsInsert);
+        }
+
+        if($options['task'] == 'update-item'){
+
+        }
+
         return $result;
     }
 

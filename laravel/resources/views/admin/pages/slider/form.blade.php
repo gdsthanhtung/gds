@@ -25,11 +25,11 @@
         ],
         [
             'label' => Form::label('description', 'Description', ['class' => $formLabelClass]),
-            'el'    => Form::text('description', $description, ['class' => $formInputClass, 'required' => 'required'])
+            'el'    => Form::textarea('description', $description, ['class' => $formInputClass, 'required' => 'required'])
         ],
         [
             'label' => Form::label('status', 'Status', ['class' => $formLabelClass]),
-            'el'    => Form::select('status', $statusEnum, $status, ['class' => $formInputClass, 'required' => 'required', 'placeholder' => 'Select a status...'])
+            'el'    => Form::select('status', $statusEnum, $status, ['class' => $formInputClass, 'placeholder' => 'Select a status...'])
         ],
         [
             'label' => Form::label('link', 'Link', ['class' => $formLabelClass]),
@@ -37,7 +37,7 @@
         ],
         [
             'label' => Form::label('thumb', 'Thumb', ['class' => $formLabelClass]),
-            'el'    => Form::file('thumb', ['class' => $formInputClass, 'required' => 'required']),
+            'el'    => Form::file('thumb', ['class' => $formInputClass]),
             'thumb' => ($thumb) ? Template::showItemThumb($ctrl, $thumb, $name) : null,
             'type'  => 'thumb'
         ],
@@ -65,6 +65,8 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     @include($pathViewTemplate . 'x_title', ['title' => (1) ? 'Điều chỉnh' : 'Thêm mới'])
+
+                    @include($pathViewTemplate . 'error')
 
                     <div class="x_content">
                         {!!

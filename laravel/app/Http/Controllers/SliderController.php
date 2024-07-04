@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\SliderModel as MainModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
+use App\Http\Requests\SliderRequest  as MainRequest;
+use App\Helpers\Notify;
 use Config;
 
 class SliderController extends Controller
@@ -32,16 +34,16 @@ class SliderController extends Controller
 
     //=====================================================
 
-    public function show(Request $request)
+    public function show(Request $rq)
     {
-        $searchField = $request->input('searchField', 'all');
+        $searchField = $rq->input('searchField', 'all');
         $fieldAccepted = Config::get("custom.enum.selectionInModule.".$this->moduleName);
 
         $this->params['filter']['fieldAccepted'] = $fieldAccepted;
         $this->params['filter']['searchField'] = (in_array($searchField, $fieldAccepted)) ? $searchField : 'all';
-        $this->params['filter']['searchValue'] = $request->input('searchValue', '');
+        $this->params['filter']['searchValue'] = $rq->input('searchValue', '');
 
-        $this->params['filter']['status'] = $request->input('status', 'all');
+        $this->params['filter']['status'] = $rq->input('status', 'all');
 
         $data = $this->mainModel->listItems($this->params, ['task' => 'admin-list-items']);
         $countByStatus = $this->mainModel->countItems($this->params, ['task' => 'admin-count-items']);
@@ -54,10 +56,10 @@ class SliderController extends Controller
         return view($this->getPathView('index'), $shareData);
     }
 
-    public function form(Request $request)
+    public function form(Request $rq)
     {
         $data = [];
-        $id = $request->id;
+        $id = $rq->id;
 
         if($id){
              $params = [
@@ -67,7 +69,7 @@ class SliderController extends Controller
         }
 
         if(!$data && $id)
-            return redirect()->route('slider')->with('notify', ['type' => 'danger', 'message' => 'Slider id is invalid!']);
+            return redirect()->route($this->moduleName)->with('notify', ['type' => 'danger', 'message' => 'Slider id is invalid!']);
 
         $shareData = [
             'data' => $data,
@@ -77,32 +79,36 @@ class SliderController extends Controller
 
     }
 
-    public function delete(Request $request)
+    public function delete(Request $rq)
     {
         $params = [
-            'id'    => $request->id
+            'id'    => $rq->id
         ];
         $rs = $this->mainModel->delete($params);
-        $notify = ($rs) ? ['type' => 'success', 'message' => 'Delete successfully!'] : ['type' => 'danger', 'message' => 'Delete failed!'];
-        return redirect()->route('slider')->with('notify', $notify);
+        return redirect()->route($this->moduleName)->with('notify', Notify::export($rs));
     }
 
-    public function change_status(Request $request)
+    public function change_status(Request $rq)
     {
         $params = [
-            'id'    => $request->id,
-            'status'  => $request->status
+            'id'    => $rq->id,
+            'status'  => $rq->status
         ];
 
         $rs = $this->mainModel->saveItem($params, ['task' => 'change-status']);
-        $notify = ($rs) ? ['type' => 'success', 'message' => 'Update successfully!'] : ['type' => 'danger', 'message' => 'Update failed!'];
-        return redirect()->route('slider')->with('notify', $notify);
+        return redirect()->route($this->moduleName)->with('notify', Notify::export($rs));
 
     }
 
-    public function save(Request $request)
+    public function save(MainRequest $rq)
     {
-        return 'Saved!';
+        if($rq->method() == 'POST'){
+            $params = $rq->all();
 
+            $task = ($params['id'] == null) ? 'add-item' : 'update-item';
+
+            $rs = $this->mainModel->saveItem($params, ['task' => $task]);
+        }
+        return redirect()->route($this->moduleName)->with('notify', Notify::export($rs));
     }
 }

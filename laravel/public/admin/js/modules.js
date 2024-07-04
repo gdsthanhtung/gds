@@ -143,7 +143,7 @@ $(document).ready(function() {
 
 	//Confirm button delete item
 	$('.btn-delete').on('click', function() {
-		if(!confirm('Are you soure?'))
+		if(!confirm('Are you sure?'))
 			return false;
 	});
 });

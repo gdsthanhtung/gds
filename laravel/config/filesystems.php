@@ -30,6 +30,12 @@ return [
 
     'disks' => [
 
+        'global' => [
+            'driver' => 'local',
+            'root' => public_path('images'),
+            'throw' => false,
+        ],
+
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app'),
