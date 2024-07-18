@@ -82,3 +82,12 @@ span.highlight{
     padding-left: 0;
     padding-right: 20px;
 }
+
+.img-user-mgmt{
+    width: 85px;
+    background: #fff;
+    z-index: 1000;
+    position: inherit;
+    border: 1px solid rgba(52, 73, 94, .44);
+    padding: 4px;
+}

@@ -37,6 +37,18 @@ class FormTemplate {
                         </div>', $item['label'], $colClass, $item['el'], $item['thumb']);
                     break;
 
+
+                case 'avatar':
+                    $html .= sprintf('
+                        <div class="form-group">
+                            %s
+                            <div class="%s">
+                                %s
+                                <p style="margin-top: 50px;"> %s </p>
+                            </div>
+                        </div>', $item['label'], $colClass, $item['el'], $item['avatar']);
+                    break;
+
                 default:
                     break;
             }

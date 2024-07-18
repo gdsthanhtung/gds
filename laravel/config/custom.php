@@ -12,6 +12,11 @@ return [
             'ctrl' => 'dashboard',
             'prefix' => 'dashboard',
             'view' => 'dashboard'
+        ],
+        'user' => [
+            'ctrl' => 'user',
+            'prefix' => 'user',
+            'view' => 'user'
         ]
     ],
     'format' => [
@@ -37,6 +42,10 @@ return [
             'active' => 'Kích hoạt',
             'inactive' => 'Chưa kích hoạt'
         ],
+        'selectLevel' => [
+            'user' => 'Người dùng',
+            'admin' => 'Quản trị viên'
+        ],
         'searchSelection' => [
             'all' => ['name' => 'Tìm tất cả'],
             'id' => ['name' => 'Tìm theo id'],
@@ -50,7 +59,8 @@ return [
         ],
         'selectionInModule' => [
             'default' => ['all'],
-            'slider' => ['all', 'id', 'name', 'description', 'link']
+            'slider' => ['all', 'name', 'description', 'link'],
+            'user' => ['all', 'username', 'email', 'fullname']
         ],
         'ruleBtn' => [
             'edit'      => ['class' => 'btn-success',               'title' => 'Điều chỉnh',    'icon' => 'fa-pencil',  'route' => "/form"],
@@ -59,7 +69,8 @@ return [
         ],
         'btnInArea' => [
             'default' => ['edit', 'delete'],
-            'slider' => ['edit', 'delete']
+            'slider' => ['edit', 'delete'],
+            'user' => ['edit']
         ]
     ]
 ];

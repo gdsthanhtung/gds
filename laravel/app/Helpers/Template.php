@@ -21,6 +21,10 @@ class Template {
         return sprintf (" <img src=%s }} alt=%s class='zvn-thumb'> ", asset("images/$ctrl/$thumb"), $alt);
     }
 
+    public static function showItemAvatar($ctrl, $avatar, $alt){
+        return sprintf ("<img src='%s' class='img-circle img-user-mgmt'>", asset("images/$ctrl/$avatar"), $alt);
+    }
+
     public static function showActionButton($ctrl, $id){
         $rule = Config::get('custom.enum.ruleBtn');
 
@@ -99,6 +103,23 @@ class Template {
                         <button id="btn-search" type="button" class="btn btn-primary">Tìm kiếm</button>
                     </span>
                 </div>', $rule[$searchField]['name'], $selections, $searchValue, $searchField);
+
+        return $html;
+    }
+
+    public static function showItemSelect($ctrl, $id, $displayValue, $fieldName)
+    {
+       $link          = route($ctrl . '/change-' . $fieldName, [$fieldName => 'value_new', 'id' => $id]);
+
+       $tmplDisplay = Config::get('custom.enum.select' . ucfirst($fieldName));
+       $html = sprintf('<select name="selectChangeAttr" data-url="%s" class="form-control">', $link  );
+
+        foreach ($tmplDisplay as $key => $value) {
+           $htmlSelected = '';
+           if ($key == $displayValue) $htmlSelected = 'selected="selected"';
+            $html .= sprintf('<option value="%s" %s>%s</option>', $key, $htmlSelected, $value);
+        }
+        $html .= '</select>';
 
         return $html;
     }
