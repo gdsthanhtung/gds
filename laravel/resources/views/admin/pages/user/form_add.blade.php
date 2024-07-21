@@ -23,19 +23,19 @@
     $element = [
         [
             'label' => Form::label('username', 'Username', ['class' => $formLabelClass]),
-            'el'    => Form::text('username', $username, ['class' => $formInputClass, 'required' => 'required'])
+            'el'    => Form::text('username', $username, ['class' => $formInputClass, 'required' => true])
         ],[
             'label' => Form::label('fullname', 'Fullname', ['class' => $formLabelClass]),
-            'el'    => Form::text('fullname', $fullname, ['class' => $formInputClass, 'required' => 'required'])
+            'el'    => Form::text('fullname', $fullname, ['class' => $formInputClass, 'required' => true])
         ],[
             'label' => Form::label('password', 'Password', ['class' => $formLabelClass]),
-            'el'    => Form::password('password', ['class' => $formInputClass, 'required' => 'required'])
+            'el'    => Form::password('password', ['class' => $formInputClass, 'required' => true])
         ],[
             'label' => Form::label('password_confirmation', 'Password confirmation', ['class' => $formLabelClass]),
-            'el'    => Form::password('password_confirmation', ['class' => $formInputClass, 'required' => 'required'])
+            'el'    => Form::password('password_confirmation', ['class' => $formInputClass, 'required' => true])
         ],[
             'label' => Form::label('email', 'Email', ['class' => $formLabelClass]),
-            'el'    => Form::text('email', $email, ['class' => $formInputClass, 'required' => 'required'])
+            'el'    => Form::text('email', $email, ['class' => $formInputClass, 'required' => true])
         ],[
             'label' => Form::label('status', 'Status', ['class' => $formLabelClass]),
             'el'    => Form::select('status', $statusEnum, $status, ['class' => $formInputClass, 'placeholder' => 'Select a status...'])

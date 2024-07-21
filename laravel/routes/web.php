@@ -1,9 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\SliderController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Admin\SliderController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +22,7 @@ $prefixAdmin = Config::get('custom.route.prefix_admin', 'admin');
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('/');
 
 Route::prefix($prefixAdmin)->group(function () {
     $prefix = Config::get('custom.route.dashboard.prefix', 'dashboard');
@@ -47,13 +48,23 @@ Route::prefix($prefixAdmin)->group(function () {
     $prefix = Config::get('custom.route.user.prefix', 'user');
     $ctrl   = Config::get('custom.route.user.ctrl', 'user');
     Route::prefix($prefix)->group(function () use ($ctrl) {
-        Route::controller(userController::class)->group(function () use ($ctrl) {
+        Route::controller(UserController::class)->group(function () use ($ctrl) {
             Route::get('/', 'show')->name($ctrl);
             Route::get('/form/{id?}', 'form')->where(['id' => '[0-9]+'])->name($ctrl.'/form');
             Route::get('/delete/{id}', 'delete')->where(['id' => '[0-9]+'])->name($ctrl.'/delete');
             Route::get('/change-status/{id}/{status}', 'change_status')->where(['id' => '[0-9]+', 'status' => '[a-z]+'])->name($ctrl.'/change-status');
             Route::get('/change-level/{id}/{level}', 'change_level')->where(['id' => '[0-9]+', 'level' => '[a-z]+'])->name($ctrl.'/change-level');
             Route::post('/save', 'save')->name($ctrl.'/save');
+        });
+    });
+
+    $prefix = Config::get('custom.route.auth.prefix', 'auth');
+    $ctrl   = Config::get('custom.route.auth.ctrl', 'auth');
+    Route::prefix($prefix)->group(function () use ($ctrl) {
+        Route::controller(AuthController::class)->group(function () use ($ctrl) {
+            Route::get('/', 'show')->name($ctrl);
+            Route::post('/do-login', 'do_login')->name($ctrl.'/do-login');
+            Route::get('/logout', 'logout')->name($ctrl.'/logout');
         });
     });
 });

@@ -17,6 +17,11 @@ return [
             'ctrl' => 'user',
             'prefix' => 'user',
             'view' => 'user'
+        ],
+        'auth' => [
+            'ctrl' => 'auth',
+            'prefix' => 'auth',
+            'view' => 'auth'
         ]
     ],
     'format' => [

@@ -18,10 +18,10 @@
     $element = [
         [
             'label' => Form::label('password', 'Password', ['class' => $formLabelClass]),
-            'el'    => Form::password('password', ['class' => $formInputClass, 'required' => 'required'])
+            'el'    => Form::password('password', ['class' => $formInputClass, 'required' => true])
         ],[
             'label' => Form::label('password_confirmation', 'Password confirmation', ['class' => $formLabelClass]),
-            'el'    => Form::password('password_confirmation', ['class' => $formInputClass, 'required' => 'required'])
+            'el'    => Form::password('password_confirmation', ['class' => $formInputClass, 'required' => true])
 
         ],[
             'el' => $hiddenID . $hiddenTask . Form::submit('Lưu', ['class' => 'btn btn-success']),
