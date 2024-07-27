@@ -145,9 +145,9 @@ class UserModel extends Model
         }
 
         if($options['task'] == 'do-login'){
-            $result = Self::select(['id', 'username', 'fullname', 'status', 'level', 'avatar'])
-                        ->firstWhere(['email' => $params['email'], 'password' => md5($params['password']), 'status' => 'active'])
-                        ->toArray();
+            $result = Self::select(['id', 'username', 'fullname', 'email', 'status', 'level', 'avatar'])
+                        ->firstWhere(['email' => $params['email'], 'password' => md5($params['password']), 'status' => 'active']);
+            $result = ($result) ? $result->toArray() : null;
         }
         return $result;
     }

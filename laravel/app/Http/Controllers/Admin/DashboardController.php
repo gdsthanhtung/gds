@@ -10,12 +10,14 @@ use Config;
 class DashboardController extends Controller
 {
     private $pathView;
+    private $pathViewTemplate;
     private $moduleName = "dashboard";
 
     public function __construct(){
         $this->pathView = "admin.pages.$this->moduleName.";
+        $this->pathViewTemplate = "admin.templates.";
         $ctrl = Config::get("custom.route.$this->moduleName.ctrl");
-        View::share(['ctrl' => $ctrl, 'pathView' => $this->pathView]);
+        View::share(['ctrl' => $ctrl, 'pathView' => $this->pathView, 'pathViewTemplate' => $this->pathViewTemplate]);
     }
 
     private function getPathView(string $file = 'index'){
@@ -26,12 +28,6 @@ class DashboardController extends Controller
 
     public function show(Request $rq)
     {
-        if ($rq->session()->has('userInfo')) {
-            $user = $rq->session()->get('userInfo');
-            echo "<pre>";
-            print_r($user);
-            echo "</pre>";
-        }
         return view($this->getPathView('index'));
     }
 }

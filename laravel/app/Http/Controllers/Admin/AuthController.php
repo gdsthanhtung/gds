@@ -32,13 +32,11 @@ class AuthController extends Controller
     //=====================================================
 
     public function show(MainRequest $rq){
-        if ($rq->session()->has('userInfo')) {
-            return redirect()->route('dashboard');
-        }
         return view($this->getPathView('login'));
     }
 
     public function do_login(MainRequest $rq){
+        $target = 'auth';
         if($rq->method() == 'POST'){
             $params = [
                 'email'    => $rq->email,
@@ -46,8 +44,11 @@ class AuthController extends Controller
             ];
             $rs = $this->mainModel->getItem($params, ['task' => 'do-login']);
         }
-        if($rs) $rq->session()->put('userInfo', $rs);
-        return redirect()->route('dashboard')->with('notify', Notify::export($rs, ['sMsg' => 'Đăng nhập thành công!', 'eMsg' => 'Đăng nhập thất bại!']));
+        if($rs) {
+            $rq->session()->put('userInfo', $rs);
+            $target = ($rs['level'] == 'admin') ? 'dashboard' : '/';
+        }
+        return redirect()->route($target)->with('notify', Notify::export($rs, ['sMsg' => 'Đăng nhập thành công!', 'eMsg' => 'Đăng nhập thất bại!']));
     }
 
     public function logout(MainRequest $rq){
@@ -56,6 +57,6 @@ class AuthController extends Controller
             $rq->session()->forget('userInfo');
             $rs = true;
         }
-        return redirect()->route('auth')->with('notify', Notify::export($rs, ['sMsg' => 'Đăng xuất thành công!', 'eMsg' => 'Đăng xuất thất bại!']));
+        return redirect()->route('/')->with('notify', Notify::export($rs, ['sMsg' => 'Đăng xuất thành công!', 'eMsg' => 'Đăng xuất thất bại!']));
     }
 }
