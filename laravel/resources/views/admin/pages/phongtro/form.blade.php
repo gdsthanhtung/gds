@@ -34,7 +34,7 @@
     <div class="right_col" role="main">
         @include($pathViewTemplate . 'page_header',
             [
-                'title' => ucfirst($ctrl),
+                'title' => $pageTitle,
                 'button' => '<a href="'.route($ctrl).'" class="btn btn-info"><i class="fa fa-arrow-left"></i> Quay lại</a>'
             ])
 

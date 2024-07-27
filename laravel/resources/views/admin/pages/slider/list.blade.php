@@ -1,10 +1,6 @@
 @php
 use App\Helpers\Template;
 use App\Helpers\Highlight;
-echo '<pre>';
-print_r($data);
-echo '</pre>';
-die();
 @endphp
 
 <div class="x_content">

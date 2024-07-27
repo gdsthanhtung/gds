@@ -16,6 +16,7 @@ class PhongTroController extends Controller
     private $pathView;
     private $pathViewTemplate;
     private $moduleName = "phongtro";
+    private $pageTitle = "Phòng Trọ";
     private $params = [];
 
     public function __construct(){
@@ -26,7 +27,12 @@ class PhongTroController extends Controller
         $this->params["pagination"]['perPage'] = 10;
 
         $ctrl = Config::get("custom.route.$this->moduleName.ctrl");
-        View::share(['ctrl' => $ctrl, 'pathView' => $this->pathView, 'pathViewTemplate' => $this->pathViewTemplate]);
+        View::share([
+            'ctrl' => $ctrl,
+            'pathView' => $this->pathView,
+            'pathViewTemplate' => $this->pathViewTemplate,
+            'pageTitle' => $this->pageTitle
+        ]);
     }
 
     private function getPathView(string $file = 'index'){
