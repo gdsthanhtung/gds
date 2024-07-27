@@ -1,11 +1,19 @@
+@php
+    $avt = 'admin/img/img.jpg';
+    $fullname = 'N/A';
+    if(Session::has('userInfo')) {
+        $fullname = Session::get('userInfo')['fullname'];
+        $avt = 'images/user/'.Session::get('userInfo')['avatar'];
+    }
+@endphp
 <!-- menu profile quick info -->
 <div class="profile clearfix">
     <div class="profile_pic">
-        <img src={{asset('admin/img/img.jpg')}} alt="..." class="img-circle profile_img">
+        <img src={{asset($avt)}} alt="..." class="img-circle profile_img">
     </div>
     <div class="profile_info">
         <span>Welcome,</span>
-        <h2>John Doe</h2>
+        <h2>{{ $fullname }}</h2>
     </div>
 </div>
 <!-- /menu profile quick info -->
