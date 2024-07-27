@@ -3,19 +3,19 @@
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 
-use App\Models\UserModel as MainModel;
+use App\Models\PhongTroModel as MainModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
-use App\Http\Requests\UserRequest as MainRequest;
+use App\Http\Requests\PhongTroRequest  as MainRequest;
 use App\Helpers\Notify;
 use Config;
 
-class UserController extends Controller
+class PhongTroController extends Controller
 {
     private $mainModel;
     private $pathView;
     private $pathViewTemplate;
-    private $moduleName = "user";
+    private $moduleName = "phongtro";
     private $params = [];
 
     public function __construct(){
@@ -70,7 +70,7 @@ class UserController extends Controller
         }
 
         if(!$data && $id)
-            return redirect()->route($this->moduleName)->with('notify', ['type' => 'danger', 'message' => 'Id is invalid!']);
+            return redirect()->route($this->moduleName)->with('notify', ['type' => 'danger', 'message' => 'PhongTro id is invalid!']);
 
         $shareData = [
             'data' => $data,
@@ -101,24 +101,14 @@ class UserController extends Controller
 
     }
 
-    public function change_level(Request $rq)
-    {
-        $params = [
-            'id'    => $rq->id,
-            'level'  => $rq->level
-        ];
-
-        $rs = $this->mainModel->saveItem($params, ['task' => 'change-level']);
-        return redirect()->route($this->moduleName)->with('notify', Notify::export($rs));
-
-    }
-
     public function save(MainRequest $rq)
     {
         if($rq->method() == 'POST'){
             $params = $rq->all();
 
-            $rs = $this->mainModel->saveItem($params, ['task' => $params['task']]);
+            $task = ($params['id'] == null) ? 'add' : 'edit';
+
+            $rs = $this->mainModel->saveItem($params, ['task' => $task]);
         }
         return redirect()->route($this->moduleName)->with('notify', Notify::export($rs));
     }

@@ -1,10 +1,6 @@
 @php
 use App\Helpers\Template;
 use App\Helpers\Highlight;
-echo '<pre>';
-print_r($data);
-echo '</pre>';
-die();
 @endphp
 
 <div class="x_content">
@@ -13,7 +9,7 @@ die();
             <thead>
                 <tr class="headings">
                     <th class="column-title">#</th>
-                    <th class="column-title">Slider Info</th>
+                    <th class="column-title">Tên</th>
                     <th class="column-title">Trạng thái</th>
                     <th class="column-title">Tạo mới</th>
                     <th class="column-title">Chỉnh sửa</th>
@@ -28,23 +24,15 @@ die();
                                 $no = ++$key;
                                 $id = $item['id'];
                                 $name = Highlight::show($item['name'], $params['filter'], 'name');
-                                $link = Highlight::show($item['link'], $params['filter'], 'link');
-                                $description = Highlight::show($item['description'], $params['filter'], 'description');
 
-                                $thumb = Template::showItemThumb($ctrl, $item['thumb'], $item['name']);
                                 $status = Template::showItemStatus($ctrl, $id, $item['status']);
-                                $createdHis = Template::showItemHistory($item['created_by'], $item['created']);
-                                $modifiedHis = Template::showItemHistory($item['modified_by'], $item['modified']);
+                                $createdHis = Template::showItemHistory($item['created_by_name'], $item['created']);
+                                $modifiedHis = Template::showItemHistory($item['modified_by_name'], $item['modified']);
                                 $actionBtn = Template::showActionButton($ctrl, $id);
                             @endphp
 
                             <td>{{ $no }}</td>
-                            <td width="40%">
-                                <p><strong>Name:</strong> {!! $name !!}</p>
-                                <p><strong>Description:</strong> {!! $description !!}</p>
-                                <p><strong>Link:</strong> {!! $link !!}</p>
-                                <p>{!! $thumb !!}</p>
-                            </td>
+                            <td width="40%">{!! $name !!}</td>
                             <td>{!! $status !!}</td>
                             <td>{!! $createdHis !!}</td>
                             <td>{!! $modifiedHis !!}</td>

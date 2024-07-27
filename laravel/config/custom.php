@@ -22,6 +22,11 @@ return [
             'ctrl' => 'auth',
             'prefix' => 'auth',
             'view' => 'auth'
+        ],
+        'phongtro' => [
+            'ctrl' => 'phongtro',
+            'prefix' => 'phongtro',
+            'view' => 'phong_tro'
         ]
     ],
     'format' => [
@@ -65,7 +70,8 @@ return [
         'selectionInModule' => [
             'default' => ['all'],
             'slider' => ['all', 'name', 'description', 'link'],
-            'user' => ['all', 'username', 'email', 'fullname']
+            'user' => ['all', 'username', 'email', 'fullname'],
+            'phongtro' => ['all', 'name']
         ],
         'ruleBtn' => [
             'edit'      => ['class' => 'btn-success',               'title' => 'Điều chỉnh',    'icon' => 'fa-pencil',  'route' => "/form"],
@@ -75,7 +81,8 @@ return [
         'btnInArea' => [
             'default' => ['edit', 'delete'],
             'slider' => ['edit', 'delete'],
-            'user' => ['edit']
+            'user' => ['edit'],
+            'phongtro' => ['edit', 'delete'],
         ]
     ]
 ];

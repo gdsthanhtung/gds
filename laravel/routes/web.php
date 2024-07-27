@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\PhongTroController;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,6 +65,18 @@ Route::prefix($prefixAdmin)->middleware('check.permission')->group(function () {
             Route::get('/delete/{id}', 'delete')->where(['id' => '[0-9]+'])->name($ctrl.'/delete');
             Route::get('/change-status/{id}/{status}', 'change_status')->where(['id' => '[0-9]+', 'status' => '[a-z]+'])->name($ctrl.'/change-status');
             Route::get('/change-level/{id}/{level}', 'change_level')->where(['id' => '[0-9]+', 'level' => '[a-z]+'])->name($ctrl.'/change-level');
+            Route::post('/save', 'save')->name($ctrl.'/save');
+        });
+    });
+
+    $prefix = Config::get('custom.route.phongtro.prefix', 'phongtro');
+    $ctrl   = Config::get('custom.route.phongtro.ctrl', 'phongtro');
+    Route::prefix($prefix)->group(function () use ($ctrl) {
+        Route::controller(PhongTroController::class)->group(function () use ($ctrl) {
+            Route::get('/', 'show')->name($ctrl);
+            Route::get('/form/{id?}', 'form')->where(['id' => '[0-9]+'])->name($ctrl.'/form');
+            Route::get('/delete/{id}', 'delete')->where(['id' => '[0-9]+'])->name($ctrl.'/delete');
+            Route::get('/change-status/{id}/{status}', 'change_status')->where(['id' => '[0-9]+', 'status' => '[a-z]+'])->name($ctrl.'/change-status');
             Route::post('/save', 'save')->name($ctrl.'/save');
         });
     });
