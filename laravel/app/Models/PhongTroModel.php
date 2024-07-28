@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Session;
 class PhongTroModel extends Model
 {
     use HasFactory;
-    protected $table = 'phong_tro';
+    protected $table = 'phong_tro as main';
     protected $uploadDir = 'phong_tro';
     const CREATED_AT = 'created';
     const UPDATED_AT = 'modified';
@@ -29,24 +29,24 @@ class PhongTroModel extends Model
         $fieldAccepted  = $params["filter"]['fieldAccepted'];
 
         if($options['task'] == 'admin-list-items'){
-            $query = Self::select(DB::raw($this->table.".*, c_user.fullname as created_by_name, u_user.fullname as modified_by_name"));
+            $query = Self::select(DB::raw('m.*, c_user.fullname as created_by_name, u_user.fullname as modified_by_name'));
             if($searchValue)
                 if($searchField == 'all'){
                     $query->where(function($query) use ($fieldAccepted, $searchValue){
                         foreach($fieldAccepted as $field){
-                            if($field != 'all') $query->orWhere($this->table.'.'.$field, 'LIKE', "%$searchValue%");
+                            if($field != 'all') $query->orWhere('main.'.$field, 'LIKE', "%$searchValue%");
                         }
                     });
                 }else{
-                    $query->where($this->table.'.'.$searchField, 'LIKE', "%$searchValue%");
+                    $query->where('main.'.$searchField, 'LIKE', "%$searchValue%");
                 }
 
             if($filterStatus != 'all'){
-                $query->where($this->table.'.status', $filterStatus);
+                $query->where('main.status', $filterStatus);
             }
-            $query->leftJoin('user as c_user', 'c_user.id', '=', $this->table.'.created_by');
-            $query->leftJoin('user as u_user', 'u_user.id', '=', $this->table.'.modified_by');
-            $result = $query->orderBy($this->table.'.id', 'desc')->paginate($perPage);
+            $query->leftJoin('user as c_user', 'c_user.id', '=', 'main.created_by');
+            $query->leftJoin('user as u_user', 'u_user.id', '=', 'main.modified_by');
+            $result = $query->orderBy('main.id', 'desc')->paginate($perPage);
         }
 
         return $result;
