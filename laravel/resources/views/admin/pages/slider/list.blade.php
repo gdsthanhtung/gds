@@ -29,8 +29,8 @@ use App\Helpers\Highlight;
 
                                 $thumb = Template::showItemThumb($ctrl, $item['thumb'], $item['name']);
                                 $status = Template::showItemStatus($ctrl, $id, $item['status']);
-                                $createdHis = Template::showItemHistory($item['created_by'], $item['created']);
-                                $modifiedHis = Template::showItemHistory($item['modified_by'], $item['modified']);
+                                $createdHis = Template::showItemHistory($item['created_by_name'], $item['created']);
+                                $modifiedHis = Template::showItemHistory($item['modified_by_name'], $item['modified']);
                                 $actionBtn = Template::showActionButton($ctrl, $id);
                             @endphp
 

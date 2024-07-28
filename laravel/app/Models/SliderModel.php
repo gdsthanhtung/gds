@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Helpers\Resource;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class SliderModel extends Model
 {
@@ -27,22 +29,24 @@ class SliderModel extends Model
         $fieldAccepted  = $params["filter"]['fieldAccepted'];
 
         if($options['task'] == 'admin-list-items'){
-            $query = Self::select('*');
+            $query = Self::select(DB::raw($this->table.".*, c_user.fullname as created_by_name, u_user.fullname as modified_by_name"));
             if($searchValue)
                 if($searchField == 'all'){
                     $query->where(function($query) use ($fieldAccepted, $searchValue){
                         foreach($fieldAccepted as $field){
-                            if($field != 'all') $query->orWhere($field, 'LIKE', "%$searchValue%");
+                            if($field != 'all') $query->orWhere($this->table.'.'.$field, 'LIKE', "%$searchValue%");
                         }
                     });
                 }else{
-                    $query->where($searchField, 'LIKE', "%$searchValue%");
+                    $query->where($this->table.'.'.$searchField, 'LIKE', "%$searchValue%");
                 }
 
             if($filterStatus != 'all'){
-                $query->where('status', $filterStatus);
+                $query->where($this->table.'.status', $filterStatus);
             }
-            $result = $query->orderBy('id', 'desc')->paginate($perPage);
+            $query->leftJoin('user as c_user', 'c_user.id', '=', $this->table.'.created_by');
+            $query->leftJoin('user as u_user', 'u_user.id', '=', $this->table.'.modified_by');
+            $result = $query->orderBy($this->table.'.id', 'desc')->paginate($perPage);
         }
 
         return $result;
@@ -84,29 +88,46 @@ class SliderModel extends Model
 
     public function saveItem($params = null, $options = null){
         $result = null;
+        $id = (isset($params['id'])) ? $params['id'] : null;
+        $loginUserId = Session::get('userInfo')['id'];
+        $params['modified'] = Carbon::now();
+
         if($options['task'] == 'change-status'){
-            $newStatus = ($params['status'] == 'active') ? 'inactive' : 'active';
-            $result = Self::where('id', $params['id'])
-                        ->update(['status' => $newStatus]);
+            $paramsNew = $params;
+            $paramsNew['status'] = ($params['status'] == 'active') ? 'inactive' : 'active';
+            $paramsNew['modified_by'] = $loginUserId;
+            $result = Self::where('id', $id)->update($paramsNew);
         }
 
-        if($options['task'] == 'add-item'){
-            $paramsInsert = array_diff_key($params, array_flip($this->crudNotAccepted));
-            $paramsInsert['created'] = Carbon::now();
+        if($options['task'] == 'add'){
+            $paramsNew = array_diff_key($params, array_flip($this->crudNotAccepted));
+            $paramsNew['created'] = Carbon::now();
+            $paramsNew['created_by'] = $paramsNew['modified_by'] = $loginUserId;
 
             if($params['thumb']){
                 $uploadRS = Resource::upload($this->uploadDir, $params['thumb']);
                 if($uploadRS)
-                    $paramsInsert['thumb'] = $uploadRS;
+                    $paramsNew['thumb'] = $uploadRS;
                 else
                     return "Upload error..";
             }
 
-            $result = Self::insert($paramsInsert);
+            $result = Self::insert($paramsNew);
         }
 
-        if($options['task'] == 'update-item'){
+        if($options['task'] == 'edit'){
+            $paramsNew = array_diff_key($params, array_flip($this->crudNotAccepted));
+            $paramsNew['modified_by'] = $loginUserId;
 
+            if(isset($params['thumb']) && $params['thumb']){
+                $uploadRS = Resource::upload($this->uploadDir, $params['thumb']);
+                if($uploadRS)
+                    $paramsNew['thumb'] = $uploadRS;
+                else
+                    return "Upload error..";
+            }
+
+            $result = Self::where('id', $id)->update($paramsNew);
         }
 
         return $result;

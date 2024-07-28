@@ -32,8 +32,8 @@ use App\Helpers\Highlight;
                                 $avatar     = Template::showItemAvatar($ctrl, $item['avatar'], $item['name']);
                                 $status     = Template::showItemStatus($ctrl, $id, $item['status']);
                                 $level      = Template::showItemSelect($ctrl, $id, $item['level'], 'level');
-                                $createdHis = Template::showItemHistory($item['created_by'], $item['created']);
-                                $modifiedHis= Template::showItemHistory($item['modified_by'], $item['modified']);
+                                $createdHis = Template::showItemHistory($item['created_by_name'], $item['created']);
+                                $modifiedHis = Template::showItemHistory($item['modified_by_name'], $item['modified']);
                                 $actionBtn  = Template::showActionButton($ctrl, $id);
                             @endphp
 

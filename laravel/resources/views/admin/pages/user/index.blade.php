@@ -9,7 +9,7 @@
     <div class="right_col" role="main">
         @include($pathViewTemplate . 'page_header',
             [
-                'title' => ucfirst($ctrl),
+                'title' => $pageTitle,
                 'button' => '<a href="'.route($ctrl."/form").'" class="btn btn-success"><i class="fa fa-plus-circle"></i> Thêm mới</a>'
             ])
 
