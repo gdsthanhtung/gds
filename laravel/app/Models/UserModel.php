@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Session;
 class UserModel extends Model
 {
     use HasFactory;
-    protected $table = 'user as main';
+    protected $table = 'user';
     protected $uploadDir = 'user';
     const CREATED_AT = 'created';
     const UPDATED_AT = 'modified';
@@ -20,6 +20,7 @@ class UserModel extends Model
     protected $crudNotAccepted = ['_token', 'avatar', 'avatar_current', 'password_confirmation', 'task'];
 
     public function listItems($params = null, $options = null){
+        $this->table = $this->table.' as main';
         $result = null;
         $perPage = $params["pagination"]['perPage'];
 
@@ -88,25 +89,27 @@ class UserModel extends Model
 
     public function saveItem($params = null, $options = null){
         $result = null;
-        $params['modified_by'] = 'tunghuynh';
-        $params['modified'] = Carbon::now();
         $id = (isset($params['id'])) ? $params['id'] : null;
+        $loginUserId = Session::get('userInfo')['id'];
+        $params['modified'] = Carbon::now();
 
         if($options['task'] == 'change-status'){
-            $newStatus = ($params['status'] == 'active') ? 'inactive' : 'active';
-            $result = Self::where('id', $id)->update(['status' => $newStatus]);
+            $paramsNew = $params;
+            $paramsNew['status'] = ($params['status'] == 'active') ? 'inactive' : 'active';
+            $paramsNew['modified_by'] = $loginUserId;
+            $result = Self::where('id', $id)->update($paramsNew);
         }
 
         if($options['task'] == 'change-level'){
-            $result = Self::where('id', $id)->update(['level' => $params['level']]);
+            $paramsNew = $params;
+            $paramsNew['modified_by'] = $loginUserId;
+            $result = Self::where('id', $id)->update($paramsNew);
         }
 
         if($options['task'] == 'add'){
-            $paramsNew                   = array_diff_key($params, array_flip($this->crudNotAccepted));
-            $paramsNew['created']        = Carbon::now();
-            $paramsNew['created_by']     = 'tunghuynh';
-            $paramsNew['modified_by']    = null;
-            $paramsNew['modified']       = null;
+            $paramsNew = array_diff_key($params, array_flip($this->crudNotAccepted));
+            $paramsNew['created'] = Carbon::now();
+            $paramsNew['created_by'] = $paramsNew['modified_by'] = $loginUserId;
             $paramsNew['password']       = md5($params['password']);
 
             if(isset($params['avatar']) && $params['avatar']){
@@ -122,6 +125,7 @@ class UserModel extends Model
 
         if($options['task'] == 'edit'){
             $paramsNew = array_diff_key($params, array_flip($this->crudNotAccepted));
+            $paramsNew['modified_by'] = $loginUserId;
 
             if(isset($params['avatar']) && $params['avatar']){
                 $uploadRS = Resource::upload($this->uploadDir, $params['avatar']);

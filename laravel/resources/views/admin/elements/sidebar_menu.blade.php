@@ -23,9 +23,10 @@
     <div class="menu_section">
         <h3>General</h3>
         <ul class="nav side-menu">
-            <li><a href="{{route('dashboard')}}"><i class="fa fa-home"></i> Home</a></li>
+            <li><a href="{{route('dashboard')}}"><i class="fa fa-tachometer"></i> Dashboard</a></li>
             <li><a href="{{route('user')}}"><i class="fa fa-user"></i> User</a></li>
-            <li><a href="{{route('phongtro')}}"><i class="fa fa-user"></i> Phòng Trọ</a></li>
+            <li><a href="{{route('phongtro')}}"><i class="fa fa-home"></i> Phòng Trọ</a></li>
+            <li><a href="{{route('congdan')}}"><i class="fa fa-user"></i> Công Dân</a></li>
             <li><a href="{{route('slider')}}"><i class="fa fa-sliders"></i> Sliders</a></li>
         </ul>
     </div>

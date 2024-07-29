@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Session;
 class PhongTroModel extends Model
 {
     use HasFactory;
-    protected $table = 'phong_tro as main';
+    protected $table = 'phong_tro';
     protected $uploadDir = 'phong_tro';
     const CREATED_AT = 'created';
     const UPDATED_AT = 'modified';
@@ -20,6 +20,7 @@ class PhongTroModel extends Model
     protected $crudNotAccepted = ['_token'];
 
     public function listItems($params = null, $options = null){
+        $this->table = $this->table.' as main';
         $result = null;
         $perPage = $params["pagination"]['perPage'];
 

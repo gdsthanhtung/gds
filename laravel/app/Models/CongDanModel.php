@@ -9,15 +9,15 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
-class SliderModel extends Model
+class CongDanModel extends Model
 {
     use HasFactory;
-    protected $table = 'slider';
-    protected $uploadDir = 'slider';
+    protected $table = 'cong_dan as main';
+    protected $uploadDir = 'cong_dan';
     const CREATED_AT = 'created';
     const UPDATED_AT = 'modified';
 
-    protected $crudNotAccepted = ['_token', 'thumb', 'thumb_current'];
+    protected $crudNotAccepted = ['_token', 'avatar', 'avatar_current', 'password_confirmation', 'task'];
 
     public function listItems($params = null, $options = null){
         $this->table = $this->table.' as main';
@@ -83,7 +83,7 @@ class SliderModel extends Model
         $item = Self::getItem($params, ['task' => 'get-item']);
         $result = Self::where('id', $params['id'])->delete();
 
-        if($result) Resource::delete($this->uploadDir, $item['thumb']);
+        if($result) Resource::delete($this->uploadDir, $item['avatar']);
         return $result;
     }
 
@@ -100,15 +100,22 @@ class SliderModel extends Model
             $result = Self::where('id', $id)->update($paramsNew);
         }
 
+        if($options['task'] == 'change-level'){
+            $paramsNew = $params;
+            $paramsNew['modified_by'] = $loginUserId;
+            $result = Self::where('id', $id)->update($paramsNew);
+        }
+
         if($options['task'] == 'add'){
             $paramsNew = array_diff_key($params, array_flip($this->crudNotAccepted));
             $paramsNew['created'] = Carbon::now();
             $paramsNew['created_by'] = $paramsNew['modified_by'] = $loginUserId;
+            $paramsNew['password']       = md5($params['password']);
 
-            if($params['thumb']){
-                $uploadRS = Resource::upload($this->uploadDir, $params['thumb']);
+            if(isset($params['avatar']) && $params['avatar']){
+                $uploadRS = Resource::upload($this->uploadDir, $params['avatar']);
                 if($uploadRS)
-                    $paramsNew['thumb'] = $uploadRS;
+                    $paramsNew['avatar'] = $uploadRS;
                 else
                     return "Upload error..";
             }
@@ -120,15 +127,20 @@ class SliderModel extends Model
             $paramsNew = array_diff_key($params, array_flip($this->crudNotAccepted));
             $paramsNew['modified_by'] = $loginUserId;
 
-            if(isset($params['thumb']) && $params['thumb']){
-                $uploadRS = Resource::upload($this->uploadDir, $params['thumb']);
+            if(isset($params['avatar']) && $params['avatar']){
+                $uploadRS = Resource::upload($this->uploadDir, $params['avatar']);
                 if($uploadRS)
-                    $paramsNew['thumb'] = $uploadRS;
+                    $paramsNew['avatar'] = $uploadRS;
                 else
                     return "Upload error..";
             }
 
             $result = Self::where('id', $id)->update($paramsNew);
+        }
+
+        if($options['task'] == 'change-password'){
+            $params['password']       = md5($params['password']);
+            $result = Self::where('id', $id)->update(['password' => $params['password']]);
         }
 
         return $result;
@@ -138,6 +150,12 @@ class SliderModel extends Model
         $result = null;
         if($options['task'] == 'get-item'){
             $result = Self::select('*')->where('id', $params['id'])->first();
+        }
+
+        if($options['task'] == 'do-login'){
+            $result = Self::select(['id', 'username', 'fullname', 'email', 'status', 'level', 'avatar'])
+                        ->firstWhere(['email' => $params['email'], 'password' => md5($params['password']), 'status' => 'active']);
+            $result = ($result) ? $result->toArray() : null;
         }
         return $result;
     }

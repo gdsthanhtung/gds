@@ -27,6 +27,11 @@ return [
             'ctrl' => 'phongtro',
             'prefix' => 'phongtro',
             'view' => 'phong_tro'
+        ],
+        'congdan' => [
+            'ctrl' => 'congdan',
+            'prefix' => 'congdan',
+            'view' => 'cong_dan'
         ]
     ],
     'format' => [
@@ -71,7 +76,8 @@ return [
             'default' => ['all'],
             'slider' => ['all', 'name', 'description', 'link'],
             'user' => ['all', 'username', 'email', 'fullname'],
-            'phongtro' => ['all', 'name']
+            'phongtro' => ['all', 'name'],
+            'congdan' => ['all', 'username', 'email', 'fullname'],
         ],
         'ruleBtn' => [
             'edit'      => ['class' => 'btn-success',               'title' => 'Điều chỉnh',    'icon' => 'fa-pencil',  'route' => "/form"],
@@ -83,6 +89,7 @@ return [
             'slider' => ['edit', 'delete'],
             'user' => ['edit'],
             'phongtro' => ['edit', 'delete'],
+            'congdan' => ['edit', 'delete'],
         ]
     ]
 ];
