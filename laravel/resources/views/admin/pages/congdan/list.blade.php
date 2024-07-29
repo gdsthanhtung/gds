@@ -35,12 +35,12 @@ use App\Helpers\Highlight;
                                 $gender             = Config::get("custom.enum.gender.".$item['gender']);
                                 $address            = $item['address'];
 
-                                $avatar             = ($item['avatar']) ? $item['avatar'] : Config::get("custom.enum.defaultPath.avatar");
+                                $avatar             = ($item['avatar']) ? 'avatar/'.$item['avatar'] : Config::get("custom.enum.defaultPath.avatar");
                                 $avatar             = Template::showItemAvatar($ctrl, $avatar, $item['name']);
                                 $status             = Template::showItemStatus($ctrl, $id, $item['status']);
 
-                                $cccd_image_front   = $item['cccd_image_front'];
-                                $cccd_image_rear    = $item['cccd_image_rear'];
+                                $cccd_image_front   = 'cccd_front/'.$item['cccd_image_front'];
+                                $cccd_image_rear    = 'cccd_rear/'.$item['cccd_image_rear'];
 
                                 $room               = "N/A";
                                 $dktt_status        = "N/A";
