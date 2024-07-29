@@ -5,8 +5,7 @@ use Config;
 class Template {
     public static function showItemHistory($by, $time){
         return sprintf ("
-            <p><i class='fa fa-user'></i> %s </p>
-            <p><i class='fa fa-clock-o'></i> %s </p>
+            <p><i class='fa fa-user'></i> %s <br> <i class='fa fa-clock-o'></i> %s </p>
         ", $by, date(Config::get('custom.format.shortTime'), strtotime($time)));
     }
 

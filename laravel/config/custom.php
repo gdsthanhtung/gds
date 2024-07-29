@@ -62,22 +62,25 @@ return [
             'admin' => 'Quản trị viên'
         ],
         'searchSelection' => [
-            'all' => ['name' => 'Tìm tất cả'],
-            'id' => ['name' => 'Tìm theo id'],
-            'name' => ['name' => 'Tìm theo tên'],
-            'username' => ['name' => 'Tìm theo username'],
-            'fullname' => ['name' => 'Tìm theo tên đầy đủ'],
-            'email' => ['name' => 'Tìm theo email'],
-            'description' => ['name' => 'Tìm theo mô tả'],
-            'content' => ['name' => 'Tìm theo nội dung'],
-            'link' => ['name' => 'Tìm theo link'],
+            'all' => ['name' => 'Tìm Tất cả'],
+            'id' => ['name' => 'Tìm theo ID'],
+            'name' => ['name' => 'Tìm theo Tên'],
+            'username' => ['name' => 'Tìm theo Username'],
+            'fullname' => ['name' => 'Tìm theo Tên đầy đủ'],
+            'email' => ['name' => 'Tìm theo Email'],
+            'description' => ['name' => 'Tìm theo Mô tả'],
+            'content' => ['name' => 'Tìm theo Nội dung'],
+            'link' => ['name' => 'Tìm theo Link'],
+            'cccd_number' => ['name' => 'Tìm số CCCD'],
+            'address' => ['name' => 'Tìm theo Đ/C thường trú'],
+            'phone' => ['name' => 'Tìm theo Số điện thoại'],
         ],
         'selectionInModule' => [
             'default' => ['all'],
             'slider' => ['all', 'name', 'description', 'link'],
             'user' => ['all', 'username', 'email', 'fullname'],
             'phongtro' => ['all', 'name'],
-            'congdan' => ['all', 'username', 'email', 'fullname'],
+            'congdan' => ['all', 'fullname', 'cccd_number', 'address', 'phone'],
         ],
         'ruleBtn' => [
             'edit'      => ['class' => 'btn-success',               'title' => 'Điều chỉnh',    'icon' => 'fa-pencil',  'route' => "/form"],
@@ -90,6 +93,15 @@ return [
             'user' => ['edit'],
             'phongtro' => ['edit', 'delete'],
             'congdan' => ['edit', 'delete'],
+        ],
+        'gender' => [
+            'M' => 'Nam',
+            'W' => 'Nữ'
+        ],
+        'defaultPath' => [
+            'avatar' => 'default/avatar.jpg',
+            'cccd_front' => 'default/cccd_front.jpg',
+            'cccd_rear' => 'default/cccd_rear.jpg',
         ]
     ]
 ];

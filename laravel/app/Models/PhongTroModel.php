@@ -30,7 +30,7 @@ class PhongTroModel extends Model
         $fieldAccepted  = $params["filter"]['fieldAccepted'];
 
         if($options['task'] == 'admin-list-items'){
-            $query = Self::select(DB::raw('m.*, c_user.fullname as created_by_name, u_user.fullname as modified_by_name'));
+            $query = Self::select(DB::raw('main.*, c_user.fullname as created_by_name, u_user.fullname as modified_by_name'));
             if($searchValue)
                 if($searchField == 'all'){
                     $query->where(function($query) use ($fieldAccepted, $searchValue){
