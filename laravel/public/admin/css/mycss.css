@@ -5,8 +5,14 @@
 .table>tbody>tr>td{
     vertical-align: middle;
 }
+
 img.zvn-thumb {
     max-width: 100%;
+    border-radius: 12px;
+}
+
+img.zvn-cccd {
+    max-width: 400px;
     border-radius: 12px;
 }
 

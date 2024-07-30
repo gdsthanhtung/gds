@@ -55,9 +55,9 @@ use App\Helpers\Highlight;
                             <td width="20px">{{ $no }}</td>
                             <td width="5%">{!! $avatar !!}</td>
                             <td width="15%">
-                                <p><strong>ID No.:</strong> {!! $cccd_number !!}</p>
-                                <p><strong>ID DoS:</strong> {!! $cccd_dos !!}</p>
-                                <p><strong>ID Card:</strong> <a href="#"><i class="fa fa-eye"></i> View</a></p>
+                                <p><strong>Số CCCD:</strong> {!! $cccd_number !!}</p>
+                                <p><strong>Ngày cấp:</strong> {!! $cccd_dos !!}</p>
+                                <p><strong>Hình CCCD:</strong> <a href="#"><i class="fa fa-eye"></i> View</a></p>
                             </td>
                             <td width="25%">
                                 <p><strong>Họ tên:</strong> {!! $fullname !!}</p>

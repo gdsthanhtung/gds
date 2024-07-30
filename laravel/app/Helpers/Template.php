@@ -16,12 +16,16 @@ class Template {
         return sprintf ("<a href='%s' type='button' class='btn btn-round %s'>%s</a>", $link, $tpl['class'], $tpl['name']);
     }
 
-    public static function showItemThumb($ctrl, $thumb, $alt){
-        return sprintf (" <img src=%s }} alt=%s class='zvn-thumb'> ", asset("images/$ctrl/$thumb"), $alt);
+    public static function showItemThumb($ctrl, $img, $alt){
+        return sprintf (" <img src=%s }} alt=%s class='zvn-thumb'> ", asset("images/$ctrl/$img"), $alt);
     }
 
-    public static function showItemAvatar($ctrl, $avatar, $alt){
-        return sprintf ("<img src='%s' class='img-circle img-user-mgmt'>", asset("images/$ctrl/$avatar"), $alt);
+    public static function showItemCCCD($ctrl, $img, $alt){
+        return sprintf (" <img src=%s }} alt=%s class='zvn-cccd'> ", asset("images/$ctrl/$img"), $alt);
+    }
+
+    public static function showItemAvatar($ctrl, $img, $alt){
+        return sprintf ("<img src='%s' class='img-circle img-user-mgmt'>", asset("images/$ctrl/$img"), $alt);
     }
 
     public static function showActionButton($ctrl, $id){

@@ -17,7 +17,7 @@ class CongDanModel extends Model
     const CREATED_AT = 'created';
     const UPDATED_AT = 'modified';
 
-    protected $crudNotAccepted = ['_token', 'avatar', 'avatar_current', 'password_confirmation', 'task'];
+    protected $crudNotAccepted = ['_token', 'avatar', 'avatar_current', 'cccd_image_front', 'cccd_image_front_current', 'cccd_image_rear', 'cccd_image_rear_current', 'password_confirmation', 'task'];
 
     public function listItems($params = null, $options = null){
         $this->table = $this->table.' as main';
@@ -141,11 +141,25 @@ class CongDanModel extends Model
             $paramsNew['modified_by'] = $loginUserId;
 
             if(isset($params['avatar']) && $params['avatar']){
-                $uploadRS = Resource::upload($this->uploadDir, $params['avatar']);
+                $uploadRS = Resource::upload($this->uploadDir.'/avatar', $params['avatar']);
                 if($uploadRS)
                     $paramsNew['avatar'] = $uploadRS;
                 else
-                    return "Upload error..";
+                    return "Upload avatar error..";
+            }
+            if(isset($params['cccd_image_front']) && $params['cccd_image_front']){
+                $uploadRS = Resource::upload($this->uploadDir.'/cccd_front', $params['cccd_image_front']);
+                if($uploadRS)
+                    $paramsNew['cccd_image_front'] = $uploadRS;
+                else
+                    return "Upload cccd_image_front error..";
+            }
+            if(isset($params['cccd_image_rear']) && $params['cccd_image_rear']){
+                $uploadRS = Resource::upload($this->uploadDir.'/cccd_rear', $params['cccd_image_rear']);
+                if($uploadRS)
+                    $paramsNew['cccd_image_rear'] = $uploadRS;
+                else
+                    return "Upload cccd_image_rear error..";
             }
 
             $result = Self::where('id', $id)->update($paramsNew);
