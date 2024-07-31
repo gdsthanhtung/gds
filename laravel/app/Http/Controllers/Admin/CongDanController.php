@@ -107,18 +107,6 @@ class CongDanController extends Controller
 
     }
 
-    public function change_level(Request $rq)
-    {
-        $params = [
-            'id'    => $rq->id,
-            'level'  => $rq->level
-        ];
-
-        $rs = $this->mainModel->saveItem($params, ['task' => 'change-level']);
-        return redirect()->route($this->moduleName)->with('notify', Notify::export($rs));
-
-    }
-
     public function save(MainRequest $rq)
     {
         if($rq->method() == 'POST'){

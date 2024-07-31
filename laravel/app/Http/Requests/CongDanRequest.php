@@ -60,9 +60,9 @@ class CongDanRequest extends FormRequest
                 $condPhone          = ['bail','required','between:10,20',Rule::unique($this->table,'phone')];
                 $condStatus         = ['bail',Rule::in($ruleSelectStatus)];
 
-                $condAvatar         = ['bail','required','image','max:5000'];
-                $condCccdImageFront = ['bail','required','image','max:5000'];
-                $condCccdImageRear  = ['bail','required','image','max:5000'];
+                $condAvatar         = ['bail','required','image','mimes:jpeg,png,jpg,gif','max:5000'];
+                $condCccdImageFront = ['bail','required','image','mimes:jpeg,png,jpg,gif','max:5000'];
+                $condCccdImageRear  = ['bail','required','image','mimes:jpeg,png,jpg,gif','max:5000'];
                 break;
 
             case 'edit':
@@ -77,9 +77,9 @@ class CongDanRequest extends FormRequest
                 $condPhone          = ['bail','required','between:10,20',Rule::unique($this->table,'phone')->ignore($id)];
                 $condStatus         = ['bail',Rule::in($ruleSelectStatus)];
 
-                $condAvatar         = ($avatar) ? ['bail','image','max:5000'] : '';
-                $condCccdImageFront = ($cccdImageFront) ? ['bail','image','max:5000'] : '';
-                $condCccdImageRear  = ($cccdImageRear) ? ['bail','image','max:5000'] : '';
+                $condAvatar         = ($avatar) ? ['bail','image','mimes:jpeg,png,jpg,gif','max:5000'] : '';
+                $condCccdImageFront = ($cccdImageFront) ? ['bail','image','mimes:jpeg,png,jpg,gif','max:5000'] : '';
+                $condCccdImageRear  = ($cccdImageRear) ? ['bail','image','mimes:jpeg,png,jpg,gif','max:5000'] : '';
                 break;
 
             default:

@@ -100,12 +100,6 @@ class CongDanModel extends Model
             $result = Self::where('id', $id)->update($paramsNew);
         }
 
-        if($options['task'] == 'change-level'){
-            $paramsNew = $params;
-            $paramsNew['modified_by'] = $loginUserId;
-            $result = Self::where('id', $id)->update($paramsNew);
-        }
-
         if($options['task'] == 'add'){
             $paramsNew = array_diff_key($params, array_flip($this->crudNotAccepted));
             $paramsNew['created'] = Carbon::now();
@@ -141,24 +135,27 @@ class CongDanModel extends Model
             $paramsNew['modified_by'] = $loginUserId;
 
             if(isset($params['avatar']) && $params['avatar']){
-                $uploadRS = Resource::upload($this->uploadDir.'/avatar', $params['avatar']);
-                if($uploadRS)
+                $uploadRS = Resource::uploadImage($this->uploadDir.'/avatar', $params['avatar'], 'avatar');
+                if($uploadRS){
                     $paramsNew['avatar'] = $uploadRS;
-                else
+                    Resource::delete($this->uploadDir.'/avatar', $params['avatar_current']);
+                }else
                     return "Upload avatar error..";
             }
             if(isset($params['cccd_image_front']) && $params['cccd_image_front']){
-                $uploadRS = Resource::upload($this->uploadDir.'/cccd_front', $params['cccd_image_front']);
-                if($uploadRS)
+                $uploadRS = Resource::uploadImage($this->uploadDir.'/cccd_front', $params['cccd_image_front'], 'cccd');
+                if($uploadRS){
                     $paramsNew['cccd_image_front'] = $uploadRS;
-                else
+                    Resource::delete($this->uploadDir.'/cccd_front', $params['cccd_image_front_current']);
+                }else
                     return "Upload cccd_image_front error..";
             }
             if(isset($params['cccd_image_rear']) && $params['cccd_image_rear']){
-                $uploadRS = Resource::upload($this->uploadDir.'/cccd_rear', $params['cccd_image_rear']);
-                if($uploadRS)
+                $uploadRS = Resource::uploadImage($this->uploadDir.'/cccd_rear', $params['cccd_image_rear'], 'cccd');
+                if($uploadRS){
                     $paramsNew['cccd_image_rear'] = $uploadRS;
-                else
+                    Resource::delete($this->uploadDir.'/cccd_rear', $params['cccd_image_rear_current']);
+                }else
                     return "Upload cccd_image_rear error..";
             }
 
