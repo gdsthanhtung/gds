@@ -109,7 +109,7 @@ class CongDanModel extends Model
 
             foreach($typeImages as $type){
                 $rsUpload = $this->processImage($type, $params, $paramsNew, $delOldImage = false);
-                if($rsUpload['status'] == false) return $rsUpload['data'];
+                if($rsUpload['status'] == false) return $rsUpload['data']; else $paramsNew = $rsUpload['data'];
             }
 
             $result = Self::insert($paramsNew);
@@ -121,7 +121,11 @@ class CongDanModel extends Model
 
             foreach($typeImages as $type){
                 $rsUpload = $this->processImage($type, $params, $paramsNew, $delOldImage = true);
-                if($rsUpload['status'] == false) return $rsUpload['data'];
+                if($rsUpload == 1) continue;
+                if($rsUpload['status'] == false)
+                    return $rsUpload['data'];
+                else
+                    $paramsNew = $rsUpload['data'];
             }
 
             $result = Self::where('id', $id)->update($paramsNew);
@@ -160,5 +164,6 @@ class CongDanModel extends Model
             }else
                 return ['status' => false, 'data' => "Upload $obj error.."];
         }
+        return 1;
     }
 }
