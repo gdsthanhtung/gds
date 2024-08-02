@@ -100,8 +100,15 @@ return [
         ],
         'defaultPath' => [
             'avatar' => 'default/avatar.jpg',
-            'cccd_front' => 'default/cccd_front.jpg',
-            'cccd_rear' => 'default/cccd_rear.jpg',
+            'cccd_image_front' => 'default/cccd_front.jpg',
+            'cccd_image_rear' => 'default/cccd_rear.jpg',
+        ],
+        'path' => [
+            'congdan' => [
+                'avatar' => 'congdan/avatar',
+                'cccd_image_front' => 'congdan/cccd_image_front',
+                'cccd_image_rear' => 'congdan/cccd_image_rear',
+            ]
         ]
     ]
 ];

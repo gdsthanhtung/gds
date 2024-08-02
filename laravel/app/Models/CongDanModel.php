@@ -8,6 +8,7 @@ use App\Helpers\Resource;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Config;
 
 class CongDanModel extends Model
 {
@@ -92,6 +93,7 @@ class CongDanModel extends Model
         $id = (isset($params['id'])) ? $params['id'] : null;
         $loginUserId = Session::get('userInfo')['id'];
         $params['modified'] = Carbon::now();
+        $typeImages = ['avatar','cccd_image_front','cccd_image_rear'];
 
         if($options['task'] == 'change-status'){
             $paramsNew = $params;
@@ -105,26 +107,9 @@ class CongDanModel extends Model
             $paramsNew['created'] = Carbon::now();
             $paramsNew['created_by'] = $paramsNew['modified_by'] = $loginUserId;
 
-            if(isset($params['avatar']) && $params['avatar']){
-                $uploadRS = Resource::upload($this->uploadDir.'/avatar', $params['avatar']);
-                if($uploadRS)
-                    $paramsNew['avatar'] = $uploadRS;
-                else
-                    return "Upload avatar error..";
-            }
-            if(isset($params['cccd_image_front']) && $params['cccd_image_front']){
-                $uploadRS = Resource::upload($this->uploadDir.'/cccd_front', $params['cccd_image_front']);
-                if($uploadRS)
-                    $paramsNew['cccd_image_front'] = $uploadRS;
-                else
-                    return "Upload cccd_image_front error..";
-            }
-            if(isset($params['cccd_image_rear']) && $params['cccd_image_rear']){
-                $uploadRS = Resource::upload($this->uploadDir.'/cccd_rear', $params['cccd_image_rear']);
-                if($uploadRS)
-                    $paramsNew['cccd_image_rear'] = $uploadRS;
-                else
-                    return "Upload cccd_image_rear error..";
+            foreach($typeImages as $type){
+                $rsUpload = $this->processImage($type, $params, $paramsNew, $delOldImage = false);
+                if($rsUpload['status'] == false) return $rsUpload['data'];
             }
 
             $result = Self::insert($paramsNew);
@@ -134,29 +119,9 @@ class CongDanModel extends Model
             $paramsNew = array_diff_key($params, array_flip($this->crudNotAccepted));
             $paramsNew['modified_by'] = $loginUserId;
 
-            if(isset($params['avatar']) && $params['avatar']){
-                $uploadRS = Resource::uploadImage($this->uploadDir.'/avatar', $params['avatar'], 'avatar');
-                if($uploadRS){
-                    $paramsNew['avatar'] = $uploadRS;
-                    Resource::delete($this->uploadDir.'/avatar', $params['avatar_current']);
-                }else
-                    return "Upload avatar error..";
-            }
-            if(isset($params['cccd_image_front']) && $params['cccd_image_front']){
-                $uploadRS = Resource::uploadImage($this->uploadDir.'/cccd_front', $params['cccd_image_front'], 'cccd');
-                if($uploadRS){
-                    $paramsNew['cccd_image_front'] = $uploadRS;
-                    Resource::delete($this->uploadDir.'/cccd_front', $params['cccd_image_front_current']);
-                }else
-                    return "Upload cccd_image_front error..";
-            }
-            if(isset($params['cccd_image_rear']) && $params['cccd_image_rear']){
-                $uploadRS = Resource::uploadImage($this->uploadDir.'/cccd_rear', $params['cccd_image_rear'], 'cccd');
-                if($uploadRS){
-                    $paramsNew['cccd_image_rear'] = $uploadRS;
-                    Resource::delete($this->uploadDir.'/cccd_rear', $params['cccd_image_rear_current']);
-                }else
-                    return "Upload cccd_image_rear error..";
+            foreach($typeImages as $type){
+                $rsUpload = $this->processImage($type, $params, $paramsNew, $delOldImage = true);
+                if($rsUpload['status'] == false) return $rsUpload['data'];
             }
 
             $result = Self::where('id', $id)->update($paramsNew);
@@ -182,5 +147,18 @@ class CongDanModel extends Model
             $result = ($result) ? $result->toArray() : null;
         }
         return $result;
+    }
+
+    public function processImage($obj, $params, $paramsNew, $delOldImage = false){
+        $path = Config::get("custom.enum.path.".$this->uploadDir.".$obj");
+        if(isset($params[$obj]) && $params[$obj]){
+            $uploadRS = Resource::uploadImage($path, $params[$obj]);
+            if($uploadRS){
+                if($delOldImage) Resource::delete($path, $params[$obj."_current"]);
+                $paramsNew[$obj] = $uploadRS;
+                return ['status' => true, 'data' => $paramsNew];
+            }else
+                return ['status' => false, 'data' => "Upload $obj error.."];
+        }
     }
 }

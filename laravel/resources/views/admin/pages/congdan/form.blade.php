@@ -29,6 +29,8 @@
     $statusEnum     = Config::get('custom.enum.selectStatus');
     $genderEnum     = Config::get('custom.enum.gender');
 
+    $pathImage      = Config::get("custom.enum.path.$ctrl");
+
     $element = [
         [
             'label' => Form::label('fullname', 'Họ Tên', ['class' => $formLabelClass]),
@@ -57,17 +59,17 @@
         ],[
             'label' => Form::label('avatar', 'Ảnh Đại Diện', ['class' => $formLabelClass]),
             'el'    => Form::file('avatar', ['class' => $formInputClass]),
-            'avatar' => ($avatar) ? Template::showItemAvatar($ctrl, 'avatar/'.$avatar, $fullname) : null,
+            'avatar' => ($avatar) ? Template::showItemAvatar('', $pathImage['avatar'].'/'.$avatar, $fullname) : null,
             'type'  => 'avatar'
         ],[
             'label' => Form::label('cccd_image_front', 'Ảnh Mặt Trước CCCD', ['class' => $formLabelClass]),
             'el'    => Form::file('cccd_image_front', ['class' => $formInputClass]),
-            'avatar' => ($cccdImageFront) ? Template::showItemCCCD($ctrl, 'cccd_front/'.$cccdImageFront, $fullname) : null,
+            'avatar' => ($cccdImageFront) ? Template::showItemCCCD('', $pathImage['cccd_image_front'].'/'.$cccdImageFront, $fullname) : null,
             'type'  => 'avatar'
         ],[
             'label' => Form::label('cccd_image_rear', 'Ảnh Mặt Sau CCCD', ['class' => $formLabelClass]),
             'el'    => Form::file('cccd_image_rear', ['class' => $formInputClass]),
-            'avatar' => ($cccdImageRear) ? Template::showItemCCCD($ctrl, 'cccd_rear/'.$cccdImageRear, $fullname) : null,
+            'avatar' => ($cccdImageRear) ? Template::showItemCCCD('', $pathImage['cccd_image_rear'].'/'.$cccdImageRear, $fullname) : null,
             'type'  => 'avatar'
         ],[
             'el' => $hiddenID . $hiddenAvatar . $hiddenCccdImageFront . $hiddenCccdImageRear . $hiddenTask . Form::submit('Lưu', ['class' => 'btn btn-success']),
