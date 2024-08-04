@@ -8,6 +8,8 @@ use Config;
 
 class PhongTroRequest extends FormRequest
 {
+    private $table = 'phong_tros';
+
     /**
      * Determine if the user is authorized to make this request.
      */

@@ -13,7 +13,7 @@ use Config;
 class CongDanModel extends Model
 {
     use HasFactory;
-    protected $table = 'cong_dan';
+    protected $table = 'cong_dans';
     protected $uploadDir = 'congdan';
     const CREATED_AT = 'created';
     const UPDATED_AT = 'modified';

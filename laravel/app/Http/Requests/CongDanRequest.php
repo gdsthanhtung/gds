@@ -8,7 +8,7 @@ use Config;
 
 class CongDanRequest extends FormRequest
 {
-    private $table = 'cong_dan';
+    private $table = 'cong_dans';
 
     /**
      * Determine if the user is authorized to make this request.

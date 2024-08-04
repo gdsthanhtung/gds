@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Session;
 class PhongTroModel extends Model
 {
     use HasFactory;
-    protected $table = 'phong_tro';
+    protected $table = 'phong_tros';
     protected $uploadDir = 'phong_tro';
     const CREATED_AT = 'created';
     const UPDATED_AT = 'modified';
