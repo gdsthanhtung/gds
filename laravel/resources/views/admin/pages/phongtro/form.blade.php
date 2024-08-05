@@ -20,8 +20,8 @@
             'el'    => Form::text('name', $name, ['class' => $formInputClass, 'required' => 'required'])
         ],
         [
-            'label' => Form::label('status', 'Status', ['class' => $formLabelClass]),
-            'el'    => Form::select('status', $statusEnum, $status, ['class' => $formInputClass, 'placeholder' => 'Select a status...'])
+            'label' => Form::label('status', 'Trạng thái', ['class' => $formLabelClass]),
+            'el'    => Form::select('status', $statusEnum, $status, ['class' => $formInputClass, 'placeholder' => 'Select a item...'])
         ],
         [
             'el' => $hiddenID . Form::submit('Lưu', ['class' => 'btn btn-success']),

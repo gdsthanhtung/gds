@@ -98,6 +98,11 @@ class HopDongModel extends Model
             $result = Self::where('id', $id)->update($paramsNew);
         }
 
+        if($options['task'] == 'add' || $options['task'] == 'edit'){
+            $params['thue_tu_ngay'] = Carbon::parse( $params['thue_tu_ngay'])->format('Y-m-d');
+            $params['thue_den_ngay'] = Carbon::parse( $params['thue_den_ngay'])->format('Y-m-d');
+        }
+
         if($options['task'] == 'add'){
             $paramsNew = array_diff_key($params, array_flip($this->crudNotAccepted));
             $paramsNew['created'] = Carbon::now();

@@ -49,6 +49,9 @@ return [
         ],
         'formInput' => [
             'class' => 'form-control col-md-7 col-xs-12'
+        ],
+        'formInputDateRange' => [
+            'class' => 'form-control col-md-3 col-xs-6'
         ]
     ],
     'enum' => [
@@ -61,6 +64,10 @@ return [
         'selectStatus' => [
             'active' => 'Kích hoạt',
             'inactive' => 'Chưa kích hoạt'
+        ],
+        'selectYesNo' => [
+            '0' => 'No',
+            '1' => 'Yes'
         ],
         'selectLevel' => [
             'user' => 'Người dùng',

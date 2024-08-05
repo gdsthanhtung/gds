@@ -28,8 +28,8 @@
             'el'    => Form::textarea('description', $description, ['class' => $formInputClass, 'required' => 'required'])
         ],
         [
-            'label' => Form::label('status', 'Status', ['class' => $formLabelClass]),
-            'el'    => Form::select('status', $statusEnum, $status, ['class' => $formInputClass, 'placeholder' => 'Select a status...'])
+            'label' => Form::label('status', 'Trạng thái', ['class' => $formLabelClass]),
+            'el'    => Form::select('status', $statusEnum, $status, ['class' => $formInputClass, 'placeholder' => 'Select a item...'])
         ],
         [
             'label' => Form::label('link', 'Link', ['class' => $formLabelClass]),

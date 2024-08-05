@@ -11,6 +11,7 @@ use App\Helpers\Notify;
 use Config;
 
 use App\Models\CongDanModel;
+use App\Models\PhongTroModel;
 
 class HopDongController extends Controller
 {
@@ -80,9 +81,17 @@ class HopDongController extends Controller
         if(!$data && $id)
             return redirect()->route($this->moduleName)->with('notify', ['type' => 'danger', 'message' => $this->pageTitle.' id is invalid!']);
 
+            $congDanModel = new CongDanModel();
+            $dataCongDan = $congDanModel->listItems([], ['task' => 'admin-list-items-to-select']);
+
+            $phongTroModel = new PhongTroModel();
+            $dataPhongTro = $phongTroModel->listItems([], ['task' => 'admin-list-items-to-select']);
+
         $shareData = [
             'data' => $data,
-            'id' => $id
+            'id' => $id,
+            'dataCongDan' => $dataCongDan,
+            'dataPhongTro' => $dataPhongTro
         ];
         return view($this->getPathView('form'), $shareData);
 

@@ -22,14 +22,13 @@ class PhongTroModel extends Model
     public function listItems($params = null, $options = null){
         $this->table = $this->table.' as main';
         $result = null;
-        $perPage = $params["pagination"]['perPage'];
-
-        $filterStatus   = $params['filter']['status'];
-        $searchField    = $params['filter']['searchField'];
-        $searchValue    = $params["filter"]['searchValue'];
-        $fieldAccepted  = $params["filter"]['fieldAccepted'];
 
         if($options['task'] == 'admin-list-items'){
+            $perPage = $params["pagination"]['perPage'];
+            $filterStatus   = $params['filter']['status'];
+            $searchField    = $params['filter']['searchField'];
+            $searchValue    = $params["filter"]['searchValue'];
+            $fieldAccepted  = $params["filter"]['fieldAccepted'];
             $query = Self::select(DB::raw('main.*, c_user.fullname as created_by_name, u_user.fullname as modified_by_name'));
             if($searchValue)
                 if($searchField == 'all'){
@@ -48,6 +47,11 @@ class PhongTroModel extends Model
             $query->leftJoin('users as c_user', 'c_user.id', '=', 'main.created_by');
             $query->leftJoin('users as u_user', 'u_user.id', '=', 'main.modified_by');
             $result = $query->orderBy('main.id', 'desc')->paginate($perPage);
+        }
+
+        if($options['task'] == 'admin-list-items-to-select'){
+            $query = Self::select(DB::raw('main.id, CONCAT_WS(" - ",main.name, main.status) as info'));
+            $result = $query->orderBy('main.name', 'asc')->pluck('info', 'id')->toArray();
         }
 
         return $result;

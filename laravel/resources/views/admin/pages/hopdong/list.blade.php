@@ -10,9 +10,8 @@ use App\Helpers\Highlight;
                 <tr class="headings">
                     <th class="column-title">#</th>
                     <th class="column-title">Hợp đồng</th>
-                    <th class="column-title">Đại diện thuê phòng</th>
-                    <th class="column-title"></th>
-                    <th class="column-title">Thông tin thuê phòng</th>
+                    <th class="column-title" colspan="2">Đại diện thuê phòng</th>
+                    <th class="column-title" colspan="2">Thông tin thuê phòng</th>
                     <th class="column-title">Số nhân khẩu</th>
                     <th class="column-title">Trạng thái</th>
                     <th class="column-title">Lịch sử</th>
@@ -32,13 +31,17 @@ use App\Helpers\Highlight;
                                 $cdCccdNumber   = Highlight::show($item['cd_cccd_number'], $params['filter'], 'cd_cccd_number');
                                 $note           = Highlight::show($item['ghi_chu'], $params['filter'], 'ghi_chu');
 
-                                $cdStatus = ucfirst($item['cd_status']);
-                                $fromDate = Template::showDate($item['thue_tu_ngay']);
-                                $toDate   = Template::showDate($item['thue_den_ngay']);
-                                $approveE = ($item['huong_dinh_muc_dien']) ? 'Có' : 'Không';
-                                $approveW = ($item['huong_dinh_muc_dien']) ? 'Có' : 'Không';
-                                $avatar   = ($item['cd_avatar']) ? 'avatar/'.$item['cd_avatar'] : Config::get("custom.enum.defaultPath.avatar");
-                                $avatar     = Template::showItemAvatar('congdan', $avatar, $item['cd_avatar']);
+                                $cdStatus       = ucfirst($item['cd_status']);
+                                $fromDate       = Template::showDate($item['thue_tu_ngay']);
+                                $toDate         = Template::showDate($item['thue_den_ngay']);
+                                $approveE       = ($item['huong_dinh_muc_dien']) ? 'Có' : 'Không';
+                                $approveW       = ($item['huong_dinh_muc_nuoc']) ? 'Có' : 'Không';
+                                $avatar         = ($item['cd_avatar']) ? 'avatar/'.$item['cd_avatar'] : Config::get("custom.enum.defaultPath.avatar");
+                                $avatar         = Template::showItemAvatar('congdan', $avatar, $item['cd_avatar']);
+
+                                $price          = Template::currencyFormat($item['gia_phong']);
+                                $numberE        = Template::numberFormat($item['chi_so_dien']);
+                                $numberW        = Template::numberFormat($item['chi_so_nuoc']);
 
                                 $status         = Template::showItemStatus($ctrl, $id, $item['status']);
                                 $createdHis     = Template::showItemHistory($item['created_by_name'], $item['created']);
@@ -62,6 +65,11 @@ use App\Helpers\Highlight;
                             </td>
                             <td>
                                 <p><strong>Phòng:</strong> {!! $ptName !!}</p>
+                                <p><strong>Chỉ số Điện:</strong> {!! $numberE !!}</p>
+                                <p><strong>Chỉ số Nước:</strong> {!! $numberW !!}</p>
+                            </td>
+                            <td>
+                                <p><strong>Giá Phòng:</strong> {!! $price !!}</p>
                                 <p><strong>Hưởng định mức Điện:</strong> {!! $approveE !!}</p>
                                 <p><strong>Hưởng định mức Nước:</strong> {!! $approveW !!}</p>
                             </td>

@@ -32,11 +32,11 @@
             'label' => Form::label('email', 'Email', ['class' => $formLabelClass]),
             'el'    => Form::text('email', $email, ['class' => $formInputClass, 'required' => true])
         ],[
-            'label' => Form::label('status', 'Status', ['class' => $formLabelClass]),
-            'el'    => Form::select('status', $statusEnum, $status, ['class' => $formInputClass, 'placeholder' => 'Select a status...'])
+            'label' => Form::label('status', 'Trạng thái', ['class' => $formLabelClass]),
+            'el'    => Form::select('status', $statusEnum, $status, ['class' => $formInputClass, 'placeholder' => 'Select a item...'])
         ],[
             'label' => Form::label('level', 'Level', ['class' => $formLabelClass]),
-            'el'    => Form::select('level', $levelEnum, $level, ['class' => $formInputClass, 'placeholder' => 'Select a level...'])
+            'el'    => Form::select('level', $levelEnum, $level, ['class' => $formInputClass, 'placeholder' => 'Select a item...'])
         ],[
             'label' => Form::label('avatar', 'Avatar', ['class' => $formLabelClass]),
             'el'    => Form::file('avatar', ['class' => $formInputClass]),

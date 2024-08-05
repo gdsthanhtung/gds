@@ -51,9 +51,9 @@ class CongDanModel extends Model
             $result = $query->orderBy('main.id', 'desc')->paginate($perPage);
         }
 
-        if($options['task'] == 'admin-list-items-basic'){
-            $query = Self::select(DB::raw('main.id, main.fullname, main.dob, main.cccd_number, main.status'));
-            $result = $query->orderBy('main.fullname', 'asc')->get()->toArray();
+        if($options['task'] == 'admin-list-items-to-select'){
+            $query = Self::select(DB::raw('main.id, CONCAT_WS(" - ",main.fullname, main.cccd_number, main.status) as info'));
+            $result = $query->orderBy('main.fullname', 'asc')->pluck('info', 'id')->toArray();
         }
 
         return $result;

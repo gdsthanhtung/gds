@@ -9,6 +9,12 @@ $(document).ready(function() {
 	let $selectChangeAttr = $("select[name =  selectChangeAttr]");
 	let $selectChangeAttrAjax = $("select[name =  selectChangeAttrAjax]");
 
+    $.fn.datepicker.defaults.format = "dd-mm-yyyy";
+
+    $('.input-daterange input').each(function() {
+        $(this).datepicker('clearDates');
+    });
+
     //Cap nhat val cua hidden input search field/type
 	$("a.select-field").click(function(e) {
 		e.preventDefault();
