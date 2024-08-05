@@ -35,15 +35,12 @@ class HopDongModel extends Model
         if($options['task'] == 'admin-list-items'){
             $query = Self::select(DB::raw('main.*, pt.name as pt_name, cd.avatar as cd_avatar, cd.fullname as cd_fullname, cd.cccd_number as cd_cccd_number, cd.status as cd_status, c_user.fullname as created_by_name, u_user.fullname as modified_by_name'));
             if($searchValue)
-                if($searchField == 'all'){
-                    $query->where(function($query) use ($fieldAccepted, $searchValue){
-                        foreach($fieldAccepted as $field){
-                            if($field != 'all') $query->orWhere('main.'.$field, 'LIKE', "%$searchValue%");
-                        }
-                    });
-                }else{
-                    $query->where('main.'.$searchField, 'LIKE', "%$searchValue%");
-                }
+            if($searchField == 'all'){
+                unset($fieldAccepted[0]);
+                $query->whereAny($fieldAccepted, 'LIKE', "%$searchValue%");
+            }else{
+                $query->where($searchField, 'LIKE', "%$searchValue%");
+            }
 
             if($filterStatus != 'all'){
                 $query->where('main.status', $filterStatus);
@@ -66,17 +63,16 @@ class HopDongModel extends Model
         $fieldAccepted  = $params["filter"]['fieldAccepted'];
 
         if($options['task'] == 'admin-count-items'){
-            $query = Self::selectRaw('count(id) as total, status');
+            $query = Self::selectRaw('count(main.id) as total, main.status');
             if($searchValue)
                 if($searchField == 'all'){
-                    $query->where(function($query) use ($fieldAccepted, $searchValue){
-                        foreach($fieldAccepted as $field){
-                            if($field != 'all') $query->orWhere($field, 'LIKE', "%$searchValue%");
-                        }
-                    });
+                    unset($fieldAccepted[0]);
+                    $query->whereAny($fieldAccepted, 'LIKE', "%$searchValue%");
                 }else{
                     $query->where($searchField, 'LIKE', "%$searchValue%");
                 }
+            $query->leftJoin($this->tablePhongTro.' as pt', 'pt.id', '=', 'main.phong_id');
+            $query->leftJoin($this->tableCongDan.' as cd', 'cd.id', '=', 'main.cong_dan_id');
             $result = $query->groupBy('status')->get()->toArray();
         }
 

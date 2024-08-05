@@ -79,7 +79,14 @@ return [
             'cccd_number' => ['name' => 'Tìm số CCCD'],
             'address' => ['name' => 'Tìm theo Đ/C thường trú'],
             'phone' => ['name' => 'Tìm theo Số điện thoại'],
-            'ma_hop_dong' => ['name' => 'Tìm theo Mã hợp đồng'],
+        ],
+        'searchSelectionHopDong' => [
+            'all' => ['name' => 'Tìm Tất cả'],
+            'main.id' => ['name' => 'Tìm theo ID Hợp đồng'],
+            'main.ma_hop_dong' => ['name' => 'Tìm theo Mã hợp đồng'],
+            'cd.fullname' => ['name' => 'Tìm theo Tên công dân'],
+            'cd.cccd_number' => ['name' => 'Tìm theo Số CCCD'],
+            'pt.name' => ['name' => 'Tìm theo Số phòng'],
         ],
         'selectionInModule' => [
             'default' => ['all'],
@@ -87,7 +94,7 @@ return [
             'user' => ['all', 'username', 'email', 'fullname'],
             'phongtro' => ['all', 'name'],
             'congdan' => ['all', 'fullname', 'cccd_number', 'address', 'phone'],
-            'hopdong' => ['all', 'ma_hop_dong', 'fullname', 'cccd_number'],
+            'hopdong' => ['all', 'main.id', 'main.ma_hop_dong', 'cd.fullname', 'cd.cccd_number', 'pt.name'],
         ],
         'ruleBtn' => [
             'edit'      => ['class' => 'btn-success',               'title' => 'Điều chỉnh',    'icon' => 'fa-pencil',  'route' => "/form"],

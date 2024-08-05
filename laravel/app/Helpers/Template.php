@@ -78,7 +78,7 @@ class Template {
         return $html;
     }
 
-    public static function showSearchArea($ctrl, $params){
+    public static function showSearchArea($ctrl, $params, $searchSelection = 'searchSelection'){
         $html = "";
         $selections = "";
 
@@ -86,7 +86,7 @@ class Template {
         $searchField = $filter['searchField'];
         $searchValue = $filter['searchValue'];
 
-        $rule = Config::get('custom.enum.searchSelection');
+        $rule = Config::get('custom.enum.'.$searchSelection);
         $selectionInModule = Config::get('custom.enum.selectionInModule');
         $ctrl = (isset($selectionInModule[$ctrl]))  ? $ctrl : 'default';
 

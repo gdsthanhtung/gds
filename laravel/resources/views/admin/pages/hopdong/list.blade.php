@@ -1,7 +1,6 @@
 @php
 use App\Helpers\Template;
 use App\Helpers\Highlight;
-dump($data);
 @endphp
 
 <div class="x_content">
@@ -51,6 +50,9 @@ dump($data);
                             <td>
                                 <p><strong>Hợp đồng số:</strong> {!! $maHopDong !!}</p>
                                 <p><strong>Hiệu lực:</strong> {!! $fromDate !!} - {!! $toDate !!}</p>
+                                @if($note)
+                                    <p><strong>Ghi chú:</strong> {!! $note !!}</p>
+                                @endif
                             </td>
                             <td width='140px' style="text-align: center">{!! $avatar !!}</td>
                             <td>

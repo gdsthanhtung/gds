@@ -111,7 +111,6 @@ class HopDongController extends Controller
             'id' => $id,
             'dataCongDan' => $dataCongDan
         ];
-        dd($shareData);
         return view($this->getPathView('form_add_cong_dan.blade'), $shareData);
 
     }

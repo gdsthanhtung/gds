@@ -3,7 +3,7 @@
 @php
     use App\Helpers\Template;
     $statusFilter = Template::showButtonFilter($ctrl, $countByStatus, $params);
-    $searchArea = Template::showsearchArea($ctrl, $params);
+    $searchArea = Template::showsearchArea($ctrl, $params, 'searchSelectionHopDong');
 @endphp
 @section('content')
     <div class="right_col" role="main">
