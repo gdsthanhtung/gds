@@ -3,6 +3,10 @@ namespace App\Helpers;
 use Config;
 
 class Template {
+    public static function showDate($date){
+        return sprintf ("%s", date(Config::get('custom.format.shortTime'), strtotime($date)));
+    }
+
     public static function showItemHistory($by, $time){
         return sprintf ("
             <p><i class='fa fa-user'></i> %s <br> <i class='fa fa-clock-o'></i> %s </p>

@@ -48,7 +48,7 @@ use App\Helpers\Highlight;
                         </tr>
                     @endforeach
                 @else
-                    @include('admin.templates.list_empty', ['colspan' => 6])
+                    @include('admin.templates.list_empty', ['colspan' => 100])
                 @endif
             </tbody>
         </table>

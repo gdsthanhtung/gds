@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Session;
 class UserModel extends Model
 {
     use HasFactory;
-    protected $table = 'user';
+    protected $table = 'users';
     protected $uploadDir = 'user';
     const CREATED_AT = 'created';
     const UPDATED_AT = 'modified';
@@ -45,8 +45,8 @@ class UserModel extends Model
             if($filterStatus != 'all'){
                 $query->where('main.status', $filterStatus);
             }
-            $query->leftJoin('user as c_user', 'c_user.id', '=', 'main.created_by');
-            $query->leftJoin('user as u_user', 'u_user.id', '=', 'main.modified_by');
+            $query->leftJoin('users as c_user', 'c_user.id', '=', 'main.created_by');
+            $query->leftJoin('users as u_user', 'u_user.id', '=', 'main.modified_by');
             $result = $query->orderBy('main.id', 'desc')->paginate($perPage);
         }
 

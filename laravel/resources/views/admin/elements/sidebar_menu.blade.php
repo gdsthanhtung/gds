@@ -27,6 +27,7 @@
             <li><a href="{{route('user')}}"><i class="fa fa-user"></i> User</a></li>
             <li><a href="{{route('phongtro')}}"><i class="fa fa-home"></i> Phòng Trọ</a></li>
             <li><a href="{{route('congdan')}}"><i class="fa fa-user"></i> Công Dân</a></li>
+            <li><a href="{{route('hopdong')}}"><i class="fa fa-book"></i> Hợp Đồng</a></li>
             <li><a href="{{route('slider')}}"><i class="fa fa-sliders"></i> Sliders</a></li>
         </ul>
     </div>

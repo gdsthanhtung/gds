@@ -32,7 +32,12 @@ return [
             'ctrl' => 'congdan',
             'prefix' => 'congdan',
             'view' => 'cong_dan'
-        ]
+        ],
+        'hopdong' => [
+            'ctrl' => 'hopdong',
+            'prefix' => 'hopdong',
+            'view' => 'hop_dong'
+        ],
     ],
     'format' => [
         'longTime' => 'd/m/Y H:m:s',
@@ -74,6 +79,7 @@ return [
             'cccd_number' => ['name' => 'Tìm số CCCD'],
             'address' => ['name' => 'Tìm theo Đ/C thường trú'],
             'phone' => ['name' => 'Tìm theo Số điện thoại'],
+            'ma_hop_dong' => ['name' => 'Tìm theo Mã hợp đồng'],
         ],
         'selectionInModule' => [
             'default' => ['all'],
@@ -81,6 +87,7 @@ return [
             'user' => ['all', 'username', 'email', 'fullname'],
             'phongtro' => ['all', 'name'],
             'congdan' => ['all', 'fullname', 'cccd_number', 'address', 'phone'],
+            'hopdong' => ['all', 'ma_hop_dong', 'fullname', 'cccd_number'],
         ],
         'ruleBtn' => [
             'edit'      => ['class' => 'btn-success',               'title' => 'Điều chỉnh',    'icon' => 'fa-pencil',  'route' => "/form"],
@@ -93,6 +100,7 @@ return [
             'user' => ['edit'],
             'phongtro' => ['edit', 'delete'],
             'congdan' => ['edit', 'delete'],
+            'hopdong' => ['edit', 'delete'],
         ],
         'gender' => [
             'M' => 'Nam',

@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\CongDanController;
 use App\Http\Controllers\Admin\PhongTroController;
+use App\Http\Controllers\Admin\HopDongController;
 
 /*
 |--------------------------------------------------------------------------
@@ -76,6 +77,7 @@ Route::prefix($prefixAdmin)->middleware('check.permission')->group(function () {
         Route::controller(PhongTroController::class)->group(function () use ($ctrl) {
             Route::get('/', 'show')->name($ctrl);
             Route::get('/form/{id?}', 'form')->where(['id' => '[0-9]+'])->name($ctrl.'/form');
+            Route::get('/form-add-cong-dan/{id?}', 'form_add_cong_dan')->where(['id' => '[0-9]+'])->name($ctrl.'/form_add_cong_dan');
             Route::get('/delete/{id}', 'delete')->where(['id' => '[0-9]+'])->name($ctrl.'/delete');
             Route::get('/change-status/{id}/{status}', 'change_status')->where(['id' => '[0-9]+', 'status' => '[a-z]+'])->name($ctrl.'/change-status');
             Route::post('/save', 'save')->name($ctrl.'/save');
@@ -91,6 +93,19 @@ Route::prefix($prefixAdmin)->middleware('check.permission')->group(function () {
             Route::get('/delete/{id}', 'delete')->where(['id' => '[0-9]+'])->name($ctrl.'/delete');
             Route::get('/change-status/{id}/{status}', 'change_status')->where(['id' => '[0-9]+', 'status' => '[a-z]+'])->name($ctrl.'/change-status');
             Route::get('/change-level/{id}/{level}', 'change_level')->where(['id' => '[0-9]+', 'level' => '[a-z]+'])->name($ctrl.'/change-level');
+            Route::post('/save', 'save')->name($ctrl.'/save');
+        });
+    });
+
+    $prefix = Config::get('custom.route.hopdong.prefix', 'hopdong');
+    $ctrl   = Config::get('custom.route.hopdong.ctrl', 'hopdong');
+    Route::prefix($prefix)->group(function () use ($ctrl) {
+        Route::controller(HopDongController::class)->group(function () use ($ctrl) {
+            Route::get('/', 'show')->name($ctrl);
+            Route::get('/form/{id?}', 'form')->where(['id' => '[0-9]+'])->name($ctrl.'/form');
+            Route::get('/form-add-cong-dan/{id?}', 'form_add_cong_dan')->where(['id' => '[0-9]+'])->name($ctrl.'/form_add_cong_dan');
+            Route::get('/delete/{id}', 'delete')->where(['id' => '[0-9]+'])->name($ctrl.'/delete');
+            Route::get('/change-status/{id}/{status}', 'change_status')->where(['id' => '[0-9]+', 'status' => '[a-z]+'])->name($ctrl.'/change-status');
             Route::post('/save', 'save')->name($ctrl.'/save');
         });
     });

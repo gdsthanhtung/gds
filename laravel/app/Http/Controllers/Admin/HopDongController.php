@@ -3,20 +3,22 @@
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 
-use App\Models\UserModel as MainModel;
+use App\Models\HopDongModel as MainModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
-use App\Http\Requests\UserRequest as MainRequest;
+use App\Http\Requests\HopDongRequest  as MainRequest;
 use App\Helpers\Notify;
 use Config;
 
-class UserController extends Controller
+use App\Models\CongDanModel;
+
+class HopDongController extends Controller
 {
     private $mainModel;
     private $pathView;
     private $pathViewTemplate;
-    private $moduleName = "user";
-    private $pageTitle = "User";
+    private $moduleName = "hopdong";
+    private $pageTitle = "Hợp Đồng";
     private $params = [];
 
     public function __construct(){
@@ -86,6 +88,34 @@ class UserController extends Controller
 
     }
 
+    public function form_add_cong_dan(Request $rq)
+    {
+        $data = [];
+        $id = $rq->id;
+
+        if($id){
+             $params = [
+                'id'    => $id
+            ];
+            $data = $this->mainModel->getItem($params, ['task' => 'get-item']);
+        }
+
+        if(!$data && $id)
+            return redirect()->route($this->moduleName)->with('notify', ['type' => 'danger', 'message' => $this->pageTitle.' id is invalid!']);
+
+        $congDanModel = new CongDanModel();
+        $dataCongDan = $congDanModel->listItems($params, ['task' => 'admin-list-items-basic']);
+
+        $shareData = [
+            'data' => $data,
+            'id' => $id,
+            'dataCongDan' => $dataCongDan
+        ];
+        dd($shareData);
+        return view($this->getPathView('form_add_cong_dan.blade'), $shareData);
+
+    }
+
     public function delete(Request $rq)
     {
         $params = [
@@ -107,24 +137,14 @@ class UserController extends Controller
 
     }
 
-    public function change_level(Request $rq)
-    {
-        $params = [
-            'id'    => $rq->id,
-            'level'  => $rq->level
-        ];
-
-        $rs = $this->mainModel->saveItem($params, ['task' => 'change-level']);
-        return redirect()->route($this->moduleName)->with('notify', Notify::export($rs));
-
-    }
-
     public function save(MainRequest $rq)
     {
         if($rq->method() == 'POST'){
             $params = $rq->all();
 
-            $rs = $this->mainModel->saveItem($params, ['task' => $params['task']]);
+            $task = ($params['id'] == null) ? 'add' : 'edit';
+
+            $rs = $this->mainModel->saveItem($params, ['task' => $task]);
         }
         return redirect()->route($this->moduleName)->with('notify', Notify::export($rs));
     }

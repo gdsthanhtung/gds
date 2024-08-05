@@ -76,7 +76,7 @@ class SliderController extends Controller
         }
 
         if(!$data && $id)
-            return redirect()->route($this->moduleName)->with('notify', ['type' => 'danger', 'message' => 'Slider id is invalid!']);
+            return redirect()->route($this->moduleName)->with('notify', ['type' => 'danger', 'message' => $this->pageTitle.' id is invalid!']);
 
         $shareData = [
             'data' => $data,

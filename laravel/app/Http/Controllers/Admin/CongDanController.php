@@ -76,7 +76,7 @@ class CongDanController extends Controller
         }
 
         if(!$data && $id)
-            return redirect()->route($this->moduleName)->with('notify', ['type' => 'danger', 'message' => 'Id is invalid!']);
+            return redirect()->route($this->moduleName)->with('notify', ['type' => 'danger', 'message' => $this->pageTitle.' id is invalid!']);
 
         $shareData = [
             'data' => $data,

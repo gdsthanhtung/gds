@@ -11,18 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('hop_dongs', function (Blueprint $table) {
             $table->id();
-            $table->string('username', 50);
-            $table->string('fullname', 50);
-            $table->string('email', 100)->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password', 100);
-            $table->string('avatar', 50);
-            $table->string('level', 10);
-            $table->string('avatar', 50);
+            $table->integer('ma_hop_dong');
+            $table->integer('cong_dan_id');
+            $table->integer('phong_id');
+            $table->date('thue_tu_ngay');
+            $table->date('thue_den_ngay');
+            $table->integer('gia_phong');
+            $table->integer('chi_so_dien');
+            $table->integer('chi_so_nuoc');
+            $table->boolean('huong_dinh_muc_dien');
+            $table->boolean('huong_dinh_muc_nuoc');
             $table->string('status', 10);
-            $table->rememberToken();
+            $table->string('ghi_chu');
+
             $table->integer('created_by');
             $table->timestamp('created', 0)->nullable();
             $table->integer('modified_by');
@@ -35,6 +38,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('hop_dongs');
     }
 };
