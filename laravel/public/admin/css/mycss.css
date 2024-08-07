@@ -97,3 +97,7 @@ span.highlight{
     border: 1px solid rgba(52, 73, 94, .44);
     padding: 4px;
 }
+
+.multiselect-container>li>a>label>input[type=checkbox]{
+    margin-top: 1px;
+}

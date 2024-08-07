@@ -20,4 +20,6 @@
 <!-- Custom Theme Style -->
 <link href={{ asset('admin/css/mycss.css') }} rel="stylesheet">
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/css/bootstrap-datepicker.min.css" integrity="sha512-34s5cpvaNG3BknEWSuOncX28vz97bRI59UnVtEEpFX536A7BtZSJHsDyFoCl8S7Dt2TPzcrCEoHBGeM4SUBDBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link href={{ asset('admin/asset/datepicker/css/bootstrap-datepicker.min.css') }} rel="stylesheet">
+
+<link href={{ asset('admin/asset/selectpicker/css/bootstrap-multiselect.css') }} rel="stylesheet">

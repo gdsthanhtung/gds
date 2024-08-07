@@ -50,7 +50,7 @@ use App\Helpers\Highlight;
                             @endphp
 
                             <td>{{ $no }}</td>
-                            <td>
+                            <td width='300px'>
                                 <p><strong>Hợp đồng số:</strong> {!! $maHopDong !!}</p>
                                 <p><strong>Hiệu lực:</strong> {!! $fromDate !!} - {!! $toDate !!}</p>
                                 @if($note)

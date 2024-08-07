@@ -64,7 +64,7 @@
         <div class="row">
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
-                    @include($pathViewTemplate . 'x_title', ['title' => (1) ? 'Điều chỉnh' : 'Thêm mới'])
+                    @include($pathViewTemplate . 'x_title', ['title' => ($id) ? 'Điều chỉnh' : 'Thêm mới'])
 
                     @include($pathViewTemplate . 'error')
 

@@ -12,8 +12,30 @@ $(document).ready(function() {
     $.fn.datepicker.defaults.format = "dd-mm-yyyy";
 
     $('.input-daterange input').each(function() {
-        $(this).datepicker('clearDates');
+        $(this).datepicker();
     });
+
+    $('.multiple-checkboxes').multiselect({
+        includeSelectAllOption: false,
+        numberDisplayed: 100,
+        enableFiltering: true,
+        enableCaseInsensitiveFiltering: true,
+        enableFullValueFiltering: false,
+        nonSelectedText: 'Select an item...',
+        buttonWidth: '100%',
+
+        optionLabel: function(element) {
+            let string = $(element).html();
+            // let index = s.indexOf(' - ');
+            // let nameCd =  s.substring(0, index);
+            // let infoCd = s.substring(index + 1);
+
+            let cd = string.split(" - ");
+
+            return cd[0] + ' (' + cd[1] + ' - ' + cd[2] + ')'
+            //return $(element).html() + '(' + $(element).val() + ')';
+        }
+      });
 
     //Cap nhat val cua hidden input search field/type
 	$("a.select-field").click(function(e) {
