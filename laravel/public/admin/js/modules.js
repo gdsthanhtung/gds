@@ -15,7 +15,7 @@ $(document).ready(function() {
         $(this).datepicker();
     });
 
-    $('.multiple-checkboxes').multiselect({
+    $('#multiple-checkboxes-nhan-khau').multiselect({
         includeSelectAllOption: false,
         numberDisplayed: 100,
         enableFiltering: true,
@@ -26,14 +26,20 @@ $(document).ready(function() {
 
         optionLabel: function(element) {
             let string = $(element).html();
-            // let index = s.indexOf(' - ');
-            // let nameCd =  s.substring(0, index);
-            // let infoCd = s.substring(index + 1);
-
             let cd = string.split(" - ");
-
             return cd[0] + ' (' + cd[1] + ' - ' + cd[2] + ')'
-            //return $(element).html() + '(' + $(element).val() + ')';
+        },
+
+        onChange: function(element, checked) {
+            if (checked === true) {
+            }
+
+            else if (checked === false) {
+
+
+            }
+
+            console.log($(element).val);
         }
       });
 

@@ -3,17 +3,25 @@
     use App\Helpers\FormTemplate;
     use Carbon\Carbon;
 
-    $formLabelClass             = Config::get('custom.template.formLabel.class');
-    $formInputClass             = Config::get('custom.template.formInput.class');
+    $formLabelClass     = Config::get('custom.template.formLabel.class');
+    $formInputClass     = Config::get('custom.template.formInput.class');
 
+    $congDanId          = $id ? $data['cong_dan_id'] : '';
+    $hiddenCongDanId    = Form::hidden('cong_dan_id_current', $congDanId);
 
-    $status         = $id ? $data['status'] : '';
-    $statusEnum     = Config::get('custom.enum.selectStatus');
+    $hiddenID           = Form::hidden('id', $id);
+    $status             = $id ? $data['status'] : '';
+    $statusEnum         = Config::get('custom.enum.selectStatus');
 
+    // <option data-role="divider"></option>
     $element = [
         [
             'label' => Form::label('cong_dan', 'Công Dân', ['class' => $formLabelClass]),
-            'el'    => Form::select('cong_dan', $dataCongDan, $status, ['class' => $formInputClass.' multiple-checkboxes', 'multiple' => 'multiple'])
+            'el'    => Form::select('cong_dan', $dataCongDan, $status, ['class' => $formInputClass, 'id' => 'multiple-checkboxes-nhan-khau', 'name' => 'cong_dan_id[]', 'multiple' => 'multiple'])
+        ],
+        [
+            'el' => $hiddenID . Form::submit('Lưu', ['class' => 'btn btn-success']).Form::button('tsssss', ['class' => 'btn btn-success', 'id' => 'multiple-checkboxes-nhan-khau-button']),
+            'type'  => 'btn-submit'
         ]
     ];
 @endphp
@@ -26,7 +34,7 @@
             <div class="x_content">
                 {!!
                     Form::open([
-                        'url' => route($ctrl.'/save'),
+                        'url' => route($ctrl.'/save-nk'),
                         'accept-charset' => 'UTF-8',
                         'method' => 'POST',
                         'enctype' => 'multipart/form-data',

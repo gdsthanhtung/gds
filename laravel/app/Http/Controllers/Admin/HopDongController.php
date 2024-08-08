@@ -97,33 +97,6 @@ class HopDongController extends Controller
 
     }
 
-    public function form_add_cong_dan(Request $rq)
-    {
-        $data = [];
-        $id = $rq->id;
-
-        if($id){
-             $params = [
-                'id'    => $id
-            ];
-            $data = $this->mainModel->getItem($params, ['task' => 'get-item']);
-        }
-
-        if(!$data && $id)
-            return redirect()->route($this->moduleName)->with('notify', ['type' => 'danger', 'message' => $this->pageTitle.' id is invalid!']);
-
-        $congDanModel = new CongDanModel();
-        $dataCongDan = $congDanModel->listItems($params, ['task' => 'admin-list-items-basic']);
-
-        $shareData = [
-            'data' => $data,
-            'id' => $id,
-            'dataCongDan' => $dataCongDan
-        ];
-        return view($this->getPathView('form_add_cong_dan.blade'), $shareData);
-
-    }
-
     public function delete(Request $rq)
     {
         $params = [
@@ -149,6 +122,20 @@ class HopDongController extends Controller
     {
         if($rq->method() == 'POST'){
             $params = $rq->all();
+
+            $task = ($params['id'] == null) ? 'add' : 'edit';
+
+            $rs = $this->mainModel->saveItem($params, ['task' => $task]);
+        }
+        return redirect()->route($this->moduleName)->with('notify', Notify::export($rs));
+    }
+
+    public function save_nk(MainRequest $rq)
+    {
+        if($rq->method() == 'POST'){
+            $params = $rq->all();
+
+            dd($params);
 
             $task = ($params['id'] == null) ? 'add' : 'edit';
 

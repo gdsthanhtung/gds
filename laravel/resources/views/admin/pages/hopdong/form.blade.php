@@ -16,7 +16,7 @@
             @include($pathViewTemplate . 'error')
 
             @include($pathView.'form_hd')
-            @if($id) @include($pathView.'form_cd') @endif
+            @if($id) @include($pathView.'form_nk') @endif
         </div>
     </div>
 @endsection

@@ -103,10 +103,10 @@ Route::prefix($prefixAdmin)->middleware('check.permission')->group(function () {
         Route::controller(HopDongController::class)->group(function () use ($ctrl) {
             Route::get('/', 'show')->name($ctrl);
             Route::get('/form/{id?}', 'form')->where(['id' => '[0-9]+'])->name($ctrl.'/form');
-            Route::get('/form-add-cong-dan/{id?}', 'form_add_cong_dan')->where(['id' => '[0-9]+'])->name($ctrl.'/form_add_cong_dan');
             Route::get('/delete/{id}', 'delete')->where(['id' => '[0-9]+'])->name($ctrl.'/delete');
             Route::get('/change-status/{id}/{status}', 'change_status')->where(['id' => '[0-9]+', 'status' => '[a-z]+'])->name($ctrl.'/change-status');
             Route::post('/save', 'save')->name($ctrl.'/save');
+            Route::post('/save-nk', 'save_nk')->name($ctrl.'/save-nk');
         });
     });
 });
