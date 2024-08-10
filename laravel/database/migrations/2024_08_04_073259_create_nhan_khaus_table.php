@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('nhan_khaus', function (Blueprint $table) {
             $table->id();
-            $table->integer('cong_dan_id');
             $table->integer('hop_dong_id');
+            $table->integer('cong_dan_id');
             $table->string('mqh_chu_phong',20);
             $table->string('status', 10);
             $table->integer('created_by');

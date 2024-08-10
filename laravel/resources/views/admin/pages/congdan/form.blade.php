@@ -43,7 +43,7 @@
             'el'    => Form::date('cccd_dos', $cccdDos, ['class' => $formInputClass, 'required' => true])
         ],[
             'label' => Form::label('gender', 'Giới Tính', ['class' => $formLabelClass]),
-            'el'    => Form::select('gender', $genderEnum, $gender, ['class' => $formInputClass, 'placeholder' => 'Select a item...'])
+            'el'    => Form::select('gender', $genderEnum, $gender, ['class' => $formInputClass, 'placeholder' => 'Select an item...'])
         ],[
             'label' => Form::label('dob', 'Ngày Sinh', ['class' => $formLabelClass]),
             'el'    => Form::date('dob', $dob, ['class' => $formInputClass, 'required' => true])
@@ -55,7 +55,7 @@
             'el'    => Form::text('phone', $phone, ['class' => $formInputClass, 'required' => true])
         ],[
             'label' => Form::label('status', 'Trạng Thái', ['class' => $formLabelClass]),
-            'el'    => Form::select('status', $statusEnum, $status, ['class' => $formInputClass, 'placeholder' => 'Select a item...'])
+            'el'    => Form::select('status', $statusEnum, $status, ['class' => $formInputClass, 'placeholder' => 'Select an item...'])
         ],[
             'label' => Form::label('avatar', 'Ảnh Đại Diện', ['class' => $formLabelClass]),
             'el'    => Form::file('avatar', ['class' => $formInputClass]),

@@ -101,3 +101,17 @@ span.highlight{
 .multiselect-container>li>a>label>input[type=checkbox]{
     margin-top: 1px;
 }
+
+.multiselect-container>li>a>label>input[type=radio]{
+    margin-top: 1px;
+}
+
+.selected-option {
+    background-color : #ddd;
+}
+
+.init-nk-selected {
+    margin-bottom: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}

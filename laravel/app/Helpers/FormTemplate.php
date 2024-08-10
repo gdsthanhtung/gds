@@ -7,7 +7,7 @@ class FormTemplate {
 
         foreach($element as $item){
             $type = isset($item['type']) ? $item['type'] : 'input';
-            $colClass = 'col-md-6 col-sm-6 col-xs-12';
+            $colClass = isset($item['elClass']) ? $item['elClass'] : 'col-md-6 col-sm-6 col-xs-12';
 
             switch ($type) {
                 case 'input':

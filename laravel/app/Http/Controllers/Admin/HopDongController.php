@@ -129,18 +129,4 @@ class HopDongController extends Controller
         }
         return redirect()->route($this->moduleName)->with('notify', Notify::export($rs));
     }
-
-    public function save_nk(MainRequest $rq)
-    {
-        if($rq->method() == 'POST'){
-            $params = $rq->all();
-
-            dd($params);
-
-            $task = ($params['id'] == null) ? 'add' : 'edit';
-
-            $rs = $this->mainModel->saveItem($params, ['task' => $task]);
-        }
-        return redirect()->route($this->moduleName)->with('notify', Notify::export($rs));
-    }
 }

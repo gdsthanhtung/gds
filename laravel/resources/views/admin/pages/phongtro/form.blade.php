@@ -21,7 +21,7 @@
         ],
         [
             'label' => Form::label('status', 'Trạng thái', ['class' => $formLabelClass]),
-            'el'    => Form::select('status', $statusEnum, $status, ['class' => $formInputClass, 'placeholder' => 'Select a item...'])
+            'el'    => Form::select('status', $statusEnum, $status, ['class' => $formInputClass, 'placeholder' => 'Select an item...'])
         ],
         [
             'el' => $hiddenID . Form::submit('Lưu', ['class' => 'btn btn-success']),

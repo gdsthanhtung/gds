@@ -15,33 +15,75 @@ $(document).ready(function() {
         $(this).datepicker();
     });
 
-    $('#multiple-checkboxes-nhan-khau').multiselect({
-        includeSelectAllOption: false,
-        numberDisplayed: 100,
-        enableFiltering: true,
-        enableCaseInsensitiveFiltering: true,
-        enableFullValueFiltering: false,
-        nonSelectedText: 'Select an item...',
-        buttonWidth: '100%',
-
-        optionLabel: function(element) {
-            let string = $(element).html();
-            let cd = string.split(" - ");
-            return cd[0] + ' (' + cd[1] + ' - ' + cd[2] + ')'
-        },
-
-        onChange: function(element, checked) {
-            if (checked === true) {
-            }
-
-            else if (checked === false) {
+    // START PROCESS LOGIC ADD NHAN KHAU VAO HOP DONG ========================================================================
+    let congDanSelectedId = [];
+    let mqhSelectedId = [];
+    let congDanSelectedName = [];
+    let mqhSelectedName = [];
 
 
-            }
+    $("#add-cong-dan").click(function(e) {
+		let congDanId   = $('#cong_dan_list').val();
+		let congDanName = $('#cong_dan_list option:selected').html();
+        let mqhId       = $('#mqh_list').val();
+        let mqhName     = $('#mqh_list option:selected').html();
 
-            console.log($(element).val);
+        if(!congDanId || !mqhId) {
+            alert('Vui lòng chọn Công dân và Mối quan hệ với Chủ hộ!'); return;
         }
-      });
+
+        congDanSelectedId.push(congDanId);
+        mqhSelectedId.push(mqhId);
+        congDanSelectedName.push(congDanName);
+        mqhSelectedName.push(mqhName);
+
+        $('[name="cong_dan_id"]').val(congDanSelectedId);
+        $('[name="mqh_id"]').val(mqhSelectedId);
+
+        $("#cong_dan_list option[value='"+congDanId+"']").attr("disabled", true);
+        $("#cong_dan_list option[value='"+congDanId+"']").addClass('selected-option');
+
+        $('#cong_dan_list').find($('option')).attr('selected',false);
+        $('#mqh_list').find($('option')).attr('selected',false);
+
+        rebuildListNKSelected();
+	});
+
+	$("#listNK").on("click", "span.remove-cong-dan", function(){
+        let congDanId = $(this).attr('cong-dan-id');
+
+        var index = congDanSelectedId.indexOf(congDanId);
+        if (index > -1) {
+            congDanSelectedId.splice(index, 1);
+            mqhSelectedId.splice(index, 1);
+            congDanSelectedName.splice(index, 1);
+            mqhSelectedName.splice(index, 1);
+        }
+
+        $('[name="cong_dan_id"]').val(congDanSelectedId);
+        $('[name="mqh_id"]').val(mqhSelectedId);
+
+        $("#cong_dan_list option[value='"+congDanId+"']").attr("disabled", false);
+        $("#cong_dan_list option[value='"+congDanId+"']").removeClass('selected-option');
+
+        rebuildListNKSelected();
+    });
+
+    function rebuildListNKSelected(){
+        let listNK = '';
+        if(congDanSelectedId.length == 0){
+            listNK = '<div class="alert alert-warning alert-dismissible init-nk-selected">Vui lòng chọn nhân khẩu từ danh sách bên cạnh!</div>';
+        }else{
+            for (let i = 0; i < congDanSelectedId.length; i++) {
+                listNK += '<div class="alert alert-info alert-dismissible init-nk-selected">';
+                listNK += '<button type="button" class="close"><span aria-hidden="true" class="remove-cong-dan" cong-dan-id="'+congDanSelectedId[i]+'">&times;</span></button>';
+                listNK += congDanSelectedName[i] + ' <strong>' + '(' + mqhSelectedName[i]+') </strong>';
+                listNK += '</div>';
+            }
+        }
+        $("#listNK").html(listNK);
+    }
+    // END PROCESS LOGIC ADD NHAN KHAU VAO HOP DONG ========================================================================
 
     //Cap nhat val cua hidden input search field/type
 	$("a.select-field").click(function(e) {
@@ -176,7 +218,8 @@ $(document).ready(function() {
 
 
 	//Confirm button delete item
-	$('.btn-delete').on('click', function() {
+
+    $('.btn-delete').on('click', function() {
 		if(!confirm('Are you sure?'))
 			return false;
 	});

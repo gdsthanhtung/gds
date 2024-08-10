@@ -38,6 +38,11 @@ return [
             'prefix' => 'hopdong',
             'view' => 'hop_dong'
         ],
+        'nhankhau' => [
+            'ctrl' => 'nhankhau',
+            'prefix' => 'nhankhau',
+            'view' => 'nhan_khau'
+        ],
     ],
     'format' => [
         'longTime' => 'd/m/Y H:m:s',
@@ -131,6 +136,14 @@ return [
                 'cccd_image_front' => 'congdan/cccd_image_front',
                 'cccd_image_rear' => 'congdan/cccd_image_rear',
             ]
+        ],
+        'mqh' => [
+            'chuho' => 'Chủ hộ',
+            'conde' => 'Con đẻ',
+            'vo' => 'Vợ',
+            'chong' => 'Chồng',
+            'chaunoi' => 'Cháu nội',
+            'chaungoai' => 'Cháu ngoại',
         ]
     ]
 ];

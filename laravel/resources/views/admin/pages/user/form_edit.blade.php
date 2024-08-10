@@ -33,10 +33,10 @@
             'el'    => Form::text('email', $email, ['class' => $formInputClass, 'required' => true])
         ],[
             'label' => Form::label('status', 'Trạng thái', ['class' => $formLabelClass]),
-            'el'    => Form::select('status', $statusEnum, $status, ['class' => $formInputClass, 'placeholder' => 'Select a item...'])
+            'el'    => Form::select('status', $statusEnum, $status, ['class' => $formInputClass, 'placeholder' => 'Select an item...'])
         ],[
             'label' => Form::label('level', 'Level', ['class' => $formLabelClass]),
-            'el'    => Form::select('level', $levelEnum, $level, ['class' => $formInputClass, 'placeholder' => 'Select a item...'])
+            'el'    => Form::select('level', $levelEnum, $level, ['class' => $formInputClass, 'placeholder' => 'Select an item...'])
         ],[
             'label' => Form::label('avatar', 'Avatar', ['class' => $formLabelClass]),
             'el'    => Form::file('avatar', ['class' => $formInputClass]),

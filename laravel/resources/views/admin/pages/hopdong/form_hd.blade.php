@@ -34,11 +34,11 @@
         ],
         [
             'label' => Form::label('cong_dan_id', 'Đại diện thuê phòng', ['class' => $formLabelClass]),
-            'el'    => Form::select('cong_dan_id', $dataCongDan, $congDanId, ['class' => $formInputClass, 'placeholder' => 'Select a item...'])
+            'el'    => Form::select('cong_dan_id', $dataCongDan, $congDanId, ['class' => $formInputClass, 'placeholder' => 'Select an item...'])
         ],
         [
             'label' => Form::label('phong_id', 'Phòng trọ', ['class' => $formLabelClass]),
-            'el'    => Form::select('phong_id', $dataPhongTro, $phongId, ['class' => $formInputClass, 'placeholder' => 'Select a item...'])
+            'el'    => Form::select('phong_id', $dataPhongTro, $phongId, ['class' => $formInputClass, 'placeholder' => 'Select an item...'])
         ],
         [
             'label' => Form::label('thue_tu_ngay', 'Thuê từ ngày', ['class' => $formLabelClass]),
@@ -70,7 +70,7 @@
         ],
         [
             'label' => Form::label('status', 'Trạng thái', ['class' => $formLabelClass]),
-            'el'    => Form::select('status', $statusEnum, $status, ['class' => $formInputClass, 'placeholder' => 'Select a item...' ])
+            'el'    => Form::select('status', $statusEnum, $status, ['class' => $formInputClass, 'placeholder' => 'Select an item...' ])
         ],
         [
             'label' => Form::label('ghi_chu', 'Ghi chú', ['class' => $formLabelClass]),
@@ -83,7 +83,7 @@
     ];
 @endphp
 
-@if($id) <div class="col-md-7 col-sm-7 col-xs-7"> @else <div class="col-md-12 col-sm-12 col-xs-12"> @endif
+@if($id) <div class="col-md-5 col-sm-5 col-xs-5"> @else <div class="col-md-12 col-sm-12 col-xs-12"> @endif
     <div class="x_panel">
         @include($pathViewTemplate . 'x_title', ['title' => ($id) ? 'Điều chỉnh Hợp đồng' : 'Thêm mới Hợp đồng'])
 

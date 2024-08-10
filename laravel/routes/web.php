@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\CongDanController;
 use App\Http\Controllers\Admin\PhongTroController;
 use App\Http\Controllers\Admin\HopDongController;
+use App\Http\Controllers\Admin\NhanKhauController;
 
 /*
 |--------------------------------------------------------------------------
@@ -106,7 +107,14 @@ Route::prefix($prefixAdmin)->middleware('check.permission')->group(function () {
             Route::get('/delete/{id}', 'delete')->where(['id' => '[0-9]+'])->name($ctrl.'/delete');
             Route::get('/change-status/{id}/{status}', 'change_status')->where(['id' => '[0-9]+', 'status' => '[a-z]+'])->name($ctrl.'/change-status');
             Route::post('/save', 'save')->name($ctrl.'/save');
-            Route::post('/save-nk', 'save_nk')->name($ctrl.'/save-nk');
+        });
+    });
+
+    $prefix = Config::get('custom.route.nhankhau.prefix', 'nhankhau');
+    $ctrl   = Config::get('custom.route.nhankhau.ctrl', 'nhankhau');
+    Route::prefix($prefix)->group(function () use ($ctrl) {
+        Route::controller(NhanKhauController::class)->group(function () use ($ctrl) {
+            Route::post('/save', 'save')->name($ctrl.'/save');
         });
     });
 });
