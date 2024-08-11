@@ -1,5 +1,6 @@
 @php
 use App\Helpers\Template;
+use App\Helpers\Modal;
 use App\Helpers\Highlight;
 @endphp
 
@@ -48,14 +49,9 @@ use App\Helpers\Highlight;
                                 $modifiedHis    = Template::showItemHistory($item['modified_by_name'], $item['modified']);
                                 $actionBtn      = Template::showActionButton($ctrl, $id);
 
-                                $nhanKhau = (isset($nkInHopDong[$id])) ? $nkInHopDong[$id] : null;
-                                $nhanKhauInfo = $nhanKhauJson = '';
-                                if($nhanKhau) {
-                                    foreach($nhanKhau as $nk){
-                                        $nhanKhauInfo .= "<li class='cursor-pointer'>".$nk['fullname']."</li>";
-                                    }
-                                    $nhanKhauJson = json_encode($nhanKhau);
-                                }
+                                $nhanKhau       = (isset($nkInHopDong[$id])) ? $nkInHopDong[$id] : null;
+                                $nhanKhauInfo   = Modal::showNhanKhau($id, $nhanKhau);
+
                             @endphp
 
                             <td>{{ $no }}</td>
@@ -82,7 +78,7 @@ use App\Helpers\Highlight;
                                 <p><strong>Hưởng định mức Điện:</strong> {!! $approveE !!}</p>
                                 <p><strong>Hưởng định mức Nước:</strong> {!! $approveW !!}</p>
                             </td>
-                            <td><ul data-toggle="modal" data-target="#nhanKhauModal" data-avatar-path="{{ asset("images/congdan/avatar/") }}" data-nhan-khau="{{ $nhanKhauJson }}"> {!! $nhanKhauInfo !!} </ul></td>
+                            <td> {!! $nhanKhauInfo !!}</td>
                             <td>{!! $status !!}</td>
                             <td><b>Tạo bởi:</b> {!! $createdHis !!} <b>Điều chỉnh:</b> {!! $modifiedHis !!}</td>
                             <td class="last">{!! $actionBtn !!}</td>
@@ -93,24 +89,5 @@ use App\Helpers\Highlight;
                 @endif
             </tbody>
         </table>
-    </div>
-</div>
-
-<!-- Modal -->
-<div class="modal fade" id="nhanKhauModal" tabindex="-1" role="dialog" aria-labelledby="Nhân Khẩu">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabel">THÔNG TIN NHÂN KHẨU</h4>
-        </div>
-        <div class="modal-body">
-            <div class="content"></div>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
-        </div>
     </div>
 </div>

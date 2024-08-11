@@ -9,10 +9,14 @@
     $congDanId = $id ? $data['cong_dan_id'] : '';
     $hiddenCongDanId = Form::hidden('cong_dan_id_current', $congDanId);
 
-    $hiddenID = Form::hidden('hop_dong_id', $id);
     $status = $id ? $data['status'] : '';
     $statusEnum = Config::get('custom.enum.selectStatus');
     $mqhEnum = Config::get('custom.enum.mqh');
+
+
+    $hiddenID = Form::hidden('hop_dong_id', $id);
+    $hiddenMqhID = Form::hidden('mqh_id', '');
+    $hiddenCdID = Form::hidden('cong_dan_id', '');
 
     $initNkSelected = '<div class="alert alert-warning alert-dismissible init-nk-selected">Vui lòng chọn nhân khẩu từ danh sách bên cạnh!</div>';
     $divSix = '<div class="col-md-9 col-sm-9 col-xs-9" style="padding-left: 0; padding-bottom: 10px;">';
@@ -29,11 +33,7 @@
             'elClass'   => 'col-md-9 col-sm-9 col-xs-9'
         ],
         [
-            'label'     => '',
-            'el'        => Form::hidden('mqh_id', '').Form::hidden('cong_dan_id', '')
-        ],
-        [
-            'el'        => $hiddenID . Form::submit('Lưu', ['class' => 'btn btn-success']),
+            'el'        => $hiddenID . $hiddenMqhID . $hiddenCdID . Form::submit('Lưu', ['class' => 'btn btn-success']),
             'type'      => 'btn-submit',
         ],
     ];

@@ -16,11 +16,10 @@ $(document).ready(function() {
     });
 
     // START MODAL NHAN KHAU IN HOP DONG MODULE LIST =========================================================================
-    $('#nhanKhauModal').on('show.bs.modal', function (event) {
+    $('.nhanKhauModal').on('show.bs.modal', function (event) {
         let button = $(event.relatedTarget);
         let data = button.data('nhan-khau');
         let avatarPath = button.data('avatar-path');
-        console.log(data);
 
         let listNK = '';
         for (let i = 0; i < data.length; i++) {
