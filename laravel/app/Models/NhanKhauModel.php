@@ -16,38 +16,39 @@ class NhanKhauModel extends Model
     const CREATED_AT = 'created';
     const UPDATED_AT = 'modified';
 
-    protected $tableUser = 'users';
-    protected $tablePhongTro = 'phong_tros';
     protected $tableCongDan = 'cong_dans';
 
     protected $crudNotAccepted = ['_token', 'cong_dan_list', 'mqh_list', 'id'];
 
     public function save($params = null, $options = null){
         $result = null;
-        $id = (isset($params['id'])) ? $params['id'] : null;
+        $hopDongId = (isset($params['hop_dong_id'])) ? $params['hop_dong_id'] : null;
         $loginUserId = Session::get('userInfo')['id'];
         $params['modified'] = Carbon::now();
 
+        if(!$hopDongId) return false;
+
+        $mqhs = explode(",", $params['mqh_id']);
+        $congDans = explode(",", $params['cong_dan_id']);
+
+        $insertData = [];
+        foreach($congDans as $key => $congDan){
+            $item = [
+                'hop_dong_id'   => $hopDongId,
+                'cong_dan_id'   => $congDan,
+                'mqh_chu_phong' => $mqhs[$key],
+                'hop_dong_id'   => $hopDongId,
+                'created_by'    => $loginUserId,
+                'modified_by'   => $loginUserId,
+                'created'       => Carbon::now(),
+                'modified'      => Carbon::now(),
+            ];
+            $insertData[] = $item;
+        }
+
         $rsDeleteOldData = Self::where('hop_dong_id', $params['hop_dong_id'])->delete();
+        $result = Self::insert($insertData);
 
-        $mqh = explode(",", $params['mqh_id']);
-        $congDan = explode(",", $params['cong_dan_id']);
-
-        dd($params, $rsDeleteOldData, $mqh, $congDan);
-
-
-        // if($options['task'] == 'add' || $options['task'] == 'edit'){
-        //     $params['thue_tu_ngay'] = Carbon::parse( $params['thue_tu_ngay'])->format('Y-m-d');
-        //     $params['thue_den_ngay'] = Carbon::parse( $params['thue_den_ngay'])->format('Y-m-d');
-        // }
-
-        // if($options['task'] == 'add'){
-        //     $paramsNew = array_diff_key($params, array_flip($this->crudNotAccepted));
-        //     $paramsNew['created'] = Carbon::now();
-        //     $paramsNew['created_by'] = $paramsNew['modified_by'] = $loginUserId;
-        //     $result = Self::insert($paramsNew);
-        // }
-
-        return $result;
+        return true;
     }
 }

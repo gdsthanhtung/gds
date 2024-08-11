@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use App\Models\CongDanModel;
 
 class HopDongModel extends Model
 {
@@ -19,11 +20,12 @@ class HopDongModel extends Model
     protected $tableUser = 'users';
     protected $tablePhongTro = 'phong_tros';
     protected $tableCongDan = 'cong_dans';
+    protected $tableNhanKhau = 'nhan_khaus';
 
     protected $crudNotAccepted = ['_token'];
 
     public function listItems($params = null, $options = null){
-        $this->table = $this->table.' as main';
+        $table = $this->table.' as main';
         $result = null;
         $perPage = $params["pagination"]['perPage'];
 
@@ -33,7 +35,8 @@ class HopDongModel extends Model
         $fieldAccepted  = $params["filter"]['fieldAccepted'];
 
         if($options['task'] == 'admin-list-items'){
-            $query = Self::select(DB::raw('main.*, pt.name as pt_name, cd.avatar as cd_avatar, cd.fullname as cd_fullname, cd.cccd_number as cd_cccd_number, cd.status as cd_status, c_user.fullname as created_by_name, u_user.fullname as modified_by_name'));
+            $query = Self::from($table);
+            $query->select(DB::raw('main.*, pt.name as pt_name, cd.avatar as cd_avatar, cd.fullname as cd_fullname, cd.cccd_number as cd_cccd_number, cd.status as cd_status, c_user.fullname as created_by_name, u_user.fullname as modified_by_name'));
             if($searchValue)
             if($searchField == 'all'){
                 unset($fieldAccepted[0]);
@@ -55,15 +58,44 @@ class HopDongModel extends Model
         return $result;
     }
 
+    public function assignNK($listHopDong = []){
+        if(!$listHopDong) return [];
+
+        $hopDongIds = [];
+        $hopDongIds = array_map(function($listHopDong) {
+            return $listHopDong['id'];
+        }, $listHopDong);
+
+        if(!$hopDongIds) return [];
+
+        $tableNhanKhau = $this->tableNhanKhau.' as nk';
+        $tableCongDan = $this->tableCongDan.' as cd';
+
+        $query = Self::from($tableNhanKhau);
+        $query->select(DB::raw('nk.id, nk.hop_dong_id, nk.cong_dan_id, cd.fullname, cd.cccd_number, cd.status, cd.avatar, cd.dob, cd.cccd_dos, cd.gender'));
+        $query->whereIn('nk.hop_dong_id', $hopDongIds);
+        $query->leftJoin($tableCongDan, 'nk.cong_dan_id', '=', 'cd.id');
+        $result = $query->orderBy('cd.fullname', 'asc')->get()->toArray();
+
+        $rsGroup = [];
+        if($result) foreach($result as $key => $item){
+            $rsGroup[$item['hop_dong_id']][] = $item;
+        }
+
+        return $rsGroup;
+    }
+
     public function countItems($params = null, $options = null){
         $result = null;
+        $table = $this->table.' as main';
 
         $searchField    = $params['filter']['searchField'];
         $searchValue    = $params["filter"]['searchValue'];
         $fieldAccepted  = $params["filter"]['fieldAccepted'];
 
         if($options['task'] == 'admin-count-items'){
-            $query = Self::selectRaw('count(main.id) as total, main.status');
+            $query = Self::from($table);
+            $query->selectRaw('count(main.id) as total, main.status');
             if($searchValue)
                 if($searchField == 'all'){
                     unset($fieldAccepted[0]);

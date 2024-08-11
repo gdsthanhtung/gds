@@ -70,6 +70,6 @@ class NhanKhauController extends Controller
             $params = $rq->all();
             $rs = $this->mainModel->save($params);
         }
-        return redirect()->route($this->moduleName)->with('notify', Notify::export($rs));
+        return redirect()->route('hopdong')->with('notify', Notify::export($rs));
     }
 }

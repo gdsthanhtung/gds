@@ -58,10 +58,16 @@ class HopDongController extends Controller
         $data = $this->mainModel->listItems($this->params, ['task' => 'admin-list-items']);
         $countByStatus = $this->mainModel->countItems($this->params, ['task' => 'admin-count-items']);
 
+        $nkInHopDong = [];
+        if($data){
+            $nkInHopDong = $this->mainModel->assignNK($data->toArray()['data']);
+        }
+
         $shareData = [
             'data' => $data,
             'countByStatus' => $countByStatus,
-            'params' => $this->params
+            'params' => $this->params,
+            'nkInHopDong' => $nkInHopDong
         ];
         return view($this->getPathView('index'), $shareData);
     }

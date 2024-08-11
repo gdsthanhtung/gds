@@ -15,6 +15,41 @@ $(document).ready(function() {
         $(this).datepicker();
     });
 
+    // START MODAL NHAN KHAU IN HOP DONG MODULE LIST =========================================================================
+    $('#nhanKhauModal').on('show.bs.modal', function (event) {
+        let button = $(event.relatedTarget);
+        let data = button.data('nhan-khau');
+        let avatarPath = button.data('avatar-path');
+        console.log(data);
+
+        let listNK = '';
+        for (let i = 0; i < data.length; i++) {
+            listNK +=   '<div class="media"> \
+                            <div class="media-left media-middle"> \
+                                <a href="#"> \
+                                    <img class="img-circle img-user-mgmt" src="'+avatarPath+'/'+data[i]['avatar']+'" alt="'+data[i]['fullname']+'"> \
+                                </a> \
+                            </div> \
+                            <div class="media-body"> \
+                                <h5 class="media-heading">'+data[i]['fullname']+'</h5> \
+                                CCCD: '+data[i]['cccd_number']+' <br> \
+                                Ngày cấp: '+data[i]['cccd_dos']+' <br> \
+                                Trạng thái: '+capitalizeFirstLetter(data[i]['status'])+' <br> \
+                                Ngày sinh: '+data[i]['dob']+' <br> \
+                                Giới tính: '+capitalizeFirstLetter(data[i]['gender'])+' <br> \
+                            </div> \
+                        </div>';
+        }
+        let modal = $(this);
+        modal.find('.content').html(listNK);
+    })
+
+    function capitalizeFirstLetter(str) {
+    return str[0].toUpperCase() + str.slice(1);
+    }
+    // END MODAL NHAN KHAU IN HOP DONG MODULE LIST ===========================================================================
+
+
     // START PROCESS LOGIC ADD NHAN KHAU VAO HOP DONG ========================================================================
     let congDanSelectedId = [];
     let mqhSelectedId = [];

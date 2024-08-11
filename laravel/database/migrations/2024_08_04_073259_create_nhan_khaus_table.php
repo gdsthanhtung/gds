@@ -16,7 +16,6 @@ return new class extends Migration
             $table->integer('hop_dong_id');
             $table->integer('cong_dan_id');
             $table->string('mqh_chu_phong',20);
-            $table->string('status', 10);
             $table->integer('created_by');
             $table->timestamp('created', 0)->nullable();
             $table->integer('modified_by');
