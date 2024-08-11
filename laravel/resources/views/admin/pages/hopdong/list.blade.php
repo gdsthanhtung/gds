@@ -78,7 +78,7 @@ use App\Helpers\Highlight;
                                 <p><strong>Hưởng định mức Điện:</strong> {!! $approveE !!}</p>
                                 <p><strong>Hưởng định mức Nước:</strong> {!! $approveW !!}</p>
                             </td>
-                            <td> {!! $nhanKhauInfo !!}</td>
+                            <td>{!! $nhanKhauInfo !!}</td>
                             <td>{!! $status !!}</td>
                             <td><b>Tạo bởi:</b> {!! $createdHis !!} <b>Điều chỉnh:</b> {!! $modifiedHis !!}</td>
                             <td class="last">{!! $actionBtn !!}</td>
@@ -90,4 +90,28 @@ use App\Helpers\Highlight;
             </tbody>
         </table>
     </div>
+</div>
+
+
+<!-- Trigger the modal with a button -->
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Modal Header</h4>
+      </div>
+      <div class="modal-body">
+        <p>Some text in the modal.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
 </div>
