@@ -1,10 +1,15 @@
 <?php
 namespace App\Helpers;
+use App\Helpers\Template;
 use Config;
 
 class Modal {
     public static function showNhanKhau($hopDongId, $nhanKhau){
         if(!$nhanKhau) return '-';
+
+        $mqhEnum = Config::get('custom.enum.mqh');
+        $genderEnum = Config::get('custom.enum.gender');
+        $statusEnum = Config::get('custom.enum.selectStatus');
 
         $nhanKhauDetail = [];
         $nhanKhauInfo = '';
@@ -21,12 +26,13 @@ class Modal {
                                         <a href="#">'.$avatar.'</a>
                                     </div>
                                     <div class="media-body">
-                                        <h5 class="media-heading">'.$item['fullname'].'</h5>
+                                        <h5 class="media-heading">'.$item['fullname'].' ('.$mqhEnum[$item['mqh_chu_phong']].')</h5>
                                         CCCD: '.$item['cccd_number'].' <br>
-                                        Ngày cấp: '.$item['cccd_dos'].' <br>
-                                        Trạng thái: '.ucfirst($item['status']).' <br>
-                                        Ngày sinh: '.$item['dob'].' <br>
-                                        Giới tính: '.ucfirst($item['gender']).' <br>
+                                        Ngày cấp: '.Template::showDate($item['cccd_dos']).' <br>
+                                        Trạng thái: '.$statusEnum[$item['status']].' <br>
+                                        Ngày sinh: '.Template::showDate($item['dob']).' <br>
+                                        Giới tính: '.$genderEnum[$item['gender']].' <br>
+
                                     </div>
                                 </div>';
         }

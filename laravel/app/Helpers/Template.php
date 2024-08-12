@@ -153,4 +153,45 @@ class Template {
         }
         return $html;
     }
+
+    public static function buildNhanKhauInHopDong($id, $nkInHopDong = []){
+        $mqhEnum = Config::get('custom.enum.mqh');
+        $nkIdOptionSelected = [];
+        $nkNameOptionSelected = [];
+        $mqhIdOptionSelected = [];
+        $mqhNameOptionSelected = [];
+        $initNkSelected = '';
+        if($nkInHopDong){
+            foreach($nkInHopDong[$id] as $nk){
+                $nkInfo = $nk['fullname'].' - '.$nk['cccd_number'].' - '.$nk['status'];
+                $initNkSelected .= '<div class="alert alert-info alert-dismissible init-nk-selected">';
+                $initNkSelected .= '<button type="button" class="close"><span aria-hidden="true" class="remove-cong-dan" cong-dan-id="'.$nk['cong_dan_id'].'">&times;</span></button>';
+                $initNkSelected .= $nk['fullname'].' - '.$nk['cccd_number'].' - '.$nk['status'].' <strong> ('.$mqhEnum[$nk['mqh_chu_phong']].') </strong>';
+                $initNkSelected .= '</div>';
+                $nkIdOptionSelected[]       = (string)$nk['cong_dan_id'];
+                $nkNameOptionSelected[]     = $nkInfo;
+                $mqhIdOptionSelected[]      = (string)$nk['mqh_chu_phong'];
+                $mqhNameOptionSelected[]    = $mqhEnum[$nk['mqh_chu_phong']];
+            }
+        }else{
+            $initNkSelected = '<div class="alert alert-warning alert-dismissible init-nk-selected">Vui lòng chọn nhân khẩu từ danh sách bên cạnh!</div>';
+        }
+        return [
+            'initNkSelected'        => $initNkSelected,
+            'nkIdOptionSelected'    => $nkIdOptionSelected,
+            'nkNameOptionSelected'  => $nkNameOptionSelected,
+            'mqhIdOptionSelected'   => $mqhIdOptionSelected,
+            'mqhNameOptionSelected' => $mqhNameOptionSelected,
+        ];
+    }
+
+    public static function buildSelectCongDanList($dataCongDan = [], $nkIdOptionSelected){
+        $selectCongDanList = '<select class="form-control col-md-7 col-xs-12" id="cong_dan_list" name="cong_dan_list"><option value="">Select an item...</option>';
+        if($dataCongDan) foreach ($dataCongDan as $cdId => $cd) {
+            $disable = (in_array($cdId, $nkIdOptionSelected)) ? 'disabled="disabled" class="selected-option"' : '';
+            $selectCongDanList .= "<option $disable value='$cdId'>$cd</option>";
+        }
+        $selectCongDanList .= '</select>';
+        return $selectCongDanList;
+    }
 }

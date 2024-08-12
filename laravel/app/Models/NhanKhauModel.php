@@ -29,7 +29,7 @@ class NhanKhauModel extends Model
         if(!$hopDongId) return false;
 
         $mqhs = explode(",", $params['mqh_id']);
-        $congDans = explode(",", $params['cong_dan_id']);
+        $congDans = explode(",", $params['cd_id']);
 
         $insertData = [];
         foreach($congDans as $key => $congDan){

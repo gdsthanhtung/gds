@@ -3,39 +3,40 @@
     use App\Helpers\FormTemplate;
     use Carbon\Carbon;
 
-    $formLabelClass = Config::get('custom.template.formLabel.class');
-    $formInputClass = Config::get('custom.template.formInput.class');
+    $formLabelClass     = Config::get('custom.template.formLabel.class');
+    $formInputClass     = Config::get('custom.template.formInput.class');
 
-    $congDanId = $id ? $data['cong_dan_id'] : '';
-    $hiddenCongDanId = Form::hidden('cong_dan_id_current', $congDanId);
+    $congDanId          = $id ? $data['cong_dan_id'] : '';
+    $hiddenCongDanId    = Form::hidden('cong_dan_id_current', $congDanId);
 
-    $status = $id ? $data['status'] : '';
-    $statusEnum = Config::get('custom.enum.selectStatus');
-    $mqhEnum = Config::get('custom.enum.mqh');
+    $status             = $id ? $data['status'] : '';
+    $statusEnum         = Config::get('custom.enum.selectStatus');
+    $mqhEnum            = Config::get('custom.enum.mqh');
 
-    $hiddenID = Form::hidden('hop_dong_id', $id);
-    $hiddenMqhID = Form::hidden('mqh_id', '');
-    $hiddenCdID = Form::hidden('cong_dan_id', '');
+    $hiddenID           = Form::hidden('hop_dong_id', $id);
+    $hiddenMqhID        = Form::hidden('mqh_id', '');
+    $hiddenCdID         = Form::hidden('cd_id', '');
 
-    $divSix = '<div class="col-md-9 col-sm-9 col-xs-9" style="padding-left: 0; padding-bottom: 10px;">';
+    $divSix             = '<div class="col-md-9 col-sm-9 col-xs-9" style="padding-left: 0; padding-bottom: 10px;">';
 
-    if($nkInHopDong){
-        $initNkSelected = '';
-        foreach($nkInHopDong[$id] as $nk){
-            $initNkSelected .= '<div class="alert alert-info alert-dismissible init-nk-selected">';
-            $initNkSelected .= '<button type="button" class="close"><span aria-hidden="true" class="remove-cong-dan" cong-dan-id="'.$nk['cong_dan_id'].'">&times;</span></button>';
-            $initNkSelected .= $nk['fullname'].' - '.$nk['cccd_number'].' - '.$nk['status'].' <strong> ('.$mqhEnum[$nk['mqh_chu_phong']].') </strong>';
-            $initNkSelected .= '</div>';
-        }
-    }else{
-        $initNkSelected = '<div class="alert alert-warning alert-dismissible init-nk-selected">Vui lòng chọn nhân khẩu từ danh sách bên cạnh!</div>';
-    }
+    $rsInitNkSelected       = Template::buildNhanKhauInHopDong($id, $nkInHopDong);
+    $initNkSelected         = $rsInitNkSelected['initNkSelected'];
+    $nkIdOptionSelected     = $rsInitNkSelected['nkIdOptionSelected'];
+    $nkNameOptionSelected   = $rsInitNkSelected['nkNameOptionSelected'];
+    $mqhIdOptionSelected    = $rsInitNkSelected['mqhIdOptionSelected'];
+    $mqhNameOptionSelected  = $rsInitNkSelected['mqhNameOptionSelected'];
 
+    $initJscongDanSelectedId    = Form::hidden('congDanSelectedId',     json_encode($nkIdOptionSelected),       ['id' => 'congDanSelectedId']);
+    $initJscongDanSelectedName  = Form::hidden('congDanSelectedName',   json_encode($nkNameOptionSelected),     ['id' => 'congDanSelectedName']);
+    $initJsmqhSelectedId        = Form::hidden('mqhSelectedId',         json_encode($mqhIdOptionSelected),      ['id' => 'mqhSelectedId']);
+    $initJsmqhSelectedName      = Form::hidden('mqhSelectedName',       json_encode($mqhNameOptionSelected),    ['id' => 'mqhSelectedName']);
+
+    $selectCongDanList  = Template::buildSelectCongDanList($dataCongDan, $nkIdOptionSelected);
 
     $element = [
         [
             'label'     => Form::label('cong_dan_list', 'Công Dân', ['class' => $formLabelClass. 'multiselect-container']),
-            'el'        => Form::select('cong_dan_list', $dataCongDan, 0, ['class' => $formInputClass, 'placeholder' => 'Select an item...' ]),
+            'el'        => $selectCongDanList,
             'elClass'   => 'col-md-9 col-sm-9 col-xs-9'
         ],
         [
@@ -44,7 +45,8 @@
             'elClass'   => 'col-md-9 col-sm-9 col-xs-9'
         ],
         [
-            'el'        => $hiddenID . $hiddenMqhID . $hiddenCdID . Form::submit('Lưu', ['class' => 'btn btn-success']),
+            'el'        =>  $initJscongDanSelectedId . $initJscongDanSelectedName . $initJsmqhSelectedId . $initJsmqhSelectedName .
+                            $hiddenID . $hiddenMqhID . $hiddenCdID . Form::submit('Lưu', ['class' => 'btn btn-success']),
             'type'      => 'btn-submit',
         ],
     ];

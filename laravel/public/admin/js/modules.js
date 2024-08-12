@@ -27,11 +27,15 @@ $(document).ready(function() {
 
 
     // START PROCESS LOGIC ADD NHAN KHAU VAO HOP DONG ========================================================================
-    let congDanSelectedId = [];
-    let mqhSelectedId = [];
-    let congDanSelectedName = [];
-    let mqhSelectedName = [];
+    let congDanSelectedId = JSON.parse($('#congDanSelectedId').val());
+    let congDanSelectedName = JSON.parse($('#congDanSelectedName').val());
+    let mqhSelectedId = JSON.parse($('#mqhSelectedId').val());
+    let mqhSelectedName = JSON.parse($('#mqhSelectedName').val());
 
+    console.log(congDanSelectedId);
+    console.log(congDanSelectedName);
+    console.log(mqhSelectedId);
+    console.log(mqhSelectedName);
 
     $("#add-cong-dan").click(function(e) {
 		let congDanId   = $('#cong_dan_list').val();
@@ -48,7 +52,12 @@ $(document).ready(function() {
         congDanSelectedName.push(congDanName);
         mqhSelectedName.push(mqhName);
 
-        $('[name="cong_dan_id"]').val(congDanSelectedId);
+        console.log(congDanSelectedId);
+        console.log(congDanSelectedName);
+        console.log(mqhSelectedId);
+        console.log(mqhSelectedName);
+
+        $('[name="cd_id"]').val(congDanSelectedId);
         $('[name="mqh_id"]').val(mqhSelectedId);
 
         $("#cong_dan_list option[value='"+congDanId+"']").attr("disabled", true);
@@ -71,7 +80,7 @@ $(document).ready(function() {
             mqhSelectedName.splice(index, 1);
         }
 
-        $('[name="cong_dan_id"]').val(congDanSelectedId);
+        $('[name="cd_id"]').val(congDanSelectedId);
         $('[name="mqh_id"]').val(mqhSelectedId);
 
         $("#cong_dan_list option[value='"+congDanId+"']").attr("disabled", false);
