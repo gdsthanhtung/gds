@@ -21,7 +21,7 @@ $(document).ready(function() {
     })
 
     function capitalizeFirstLetter(str) {
-    return str[0].toUpperCase() + str.slice(1);
+        return str[0].toUpperCase() + str.slice(1);
     }
     // END MODAL NHAN KHAU IN HOP DONG MODULE LIST ===========================================================================
 

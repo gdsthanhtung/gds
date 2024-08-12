@@ -138,12 +138,16 @@ return [
             ]
         ],
         'mqh' => [
-            'chuho' => 'Chủ hộ',
-            'conde' => 'Con đẻ',
-            'vo' => 'Vợ',
-            'chong' => 'Chồng',
-            'chaunoi' => 'Cháu nội',
-            'chaungoai' => 'Cháu ngoại',
+            10  => 'Chủ hộ',
+            20  => 'Ông nội',
+            30  => 'Bà nội',
+            40  => 'Ông ngoại',
+            50  => 'Bà ngoại',
+            60  => 'Chồng',
+            70  => 'Vợ',
+            80  => 'Con đẻ',
+            90  => 'Cháu nội',
+            100 => 'Cháu ngoại',
         ]
     ]
 ];

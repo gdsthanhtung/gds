@@ -13,13 +13,24 @@
     $statusEnum = Config::get('custom.enum.selectStatus');
     $mqhEnum = Config::get('custom.enum.mqh');
 
-
     $hiddenID = Form::hidden('hop_dong_id', $id);
     $hiddenMqhID = Form::hidden('mqh_id', '');
     $hiddenCdID = Form::hidden('cong_dan_id', '');
 
-    $initNkSelected = '<div class="alert alert-warning alert-dismissible init-nk-selected">Vui lòng chọn nhân khẩu từ danh sách bên cạnh!</div>';
     $divSix = '<div class="col-md-9 col-sm-9 col-xs-9" style="padding-left: 0; padding-bottom: 10px;">';
+
+    if($nkInHopDong){
+        $initNkSelected = '';
+        foreach($nkInHopDong[$id] as $nk){
+            $initNkSelected .= '<div class="alert alert-info alert-dismissible init-nk-selected">';
+            $initNkSelected .= '<button type="button" class="close"><span aria-hidden="true" class="remove-cong-dan" cong-dan-id="'.$nk['cong_dan_id'].'">&times;</span></button>';
+            $initNkSelected .= $nk['fullname'].' - '.$nk['cccd_number'].' - '.$nk['status'].' <strong> ('.$mqhEnum[$nk['mqh_chu_phong']].') </strong>';
+            $initNkSelected .= '</div>';
+        }
+    }else{
+        $initNkSelected = '<div class="alert alert-warning alert-dismissible init-nk-selected">Vui lòng chọn nhân khẩu từ danh sách bên cạnh!</div>';
+    }
+
 
     $element = [
         [

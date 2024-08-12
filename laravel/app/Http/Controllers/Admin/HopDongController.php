@@ -58,10 +58,7 @@ class HopDongController extends Controller
         $data = $this->mainModel->listItems($this->params, ['task' => 'admin-list-items']);
         $countByStatus = $this->mainModel->countItems($this->params, ['task' => 'admin-count-items']);
 
-        $nkInHopDong = [];
-        if($data){
-            $nkInHopDong = $this->mainModel->assignNK($data->toArray()['data']);
-        }
+        $nkInHopDong = ($data) ? $this->mainModel->assignNK($data->toArray()['data']) : [];
 
         $shareData = [
             'data' => $data,
@@ -93,11 +90,14 @@ class HopDongController extends Controller
             $phongTroModel = new PhongTroModel();
             $dataPhongTro = $phongTroModel->listItems([], ['task' => 'admin-list-items-to-select']);
 
+            $nkInHopDong = ($data) ? $this->mainModel->assignNK([$data->toArray()]) : [];
+
         $shareData = [
             'data' => $data,
             'id' => $id,
             'dataCongDan' => $dataCongDan,
-            'dataPhongTro' => $dataPhongTro
+            'dataPhongTro' => $dataPhongTro,
+            'nkInHopDong' => $nkInHopDong
         ];
         return view($this->getPathView('form'), $shareData);
 
