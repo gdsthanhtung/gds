@@ -119,3 +119,8 @@ span.highlight{
 .cursor-pointer {
     cursor: pointer;
 }
+
+.badge-danger{
+    color: #fff;
+    background-color: #dc3545;
+}

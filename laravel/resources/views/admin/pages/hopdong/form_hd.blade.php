@@ -10,8 +10,8 @@
     $phongId        = $id ? $data['phong_id'] : '';
     $congDanId      = $id ? $data['cong_dan_id'] : '';
 
-    $fromDate       = $id ? $data['thue_tu_ngay']  : Carbon::now()->format('d-m-Y');    $fromDate   = Carbon::parse($fromDate)->format('d-m-Y');
-    $toDate         = $id ? $data['thue_den_ngay'] : Carbon::now()->format('d-m-Y');    $toDate     = Carbon::parse($toDate)->format('d-m-Y');
+    $fromDate       = $id ? $data['thue_tu_ngay']  : Carbon::now()->format('d-m-Y');                                $fromDate   = Carbon::parse($fromDate)->format('d-m-Y');
+    $toDate         = $id ? $data['thue_den_ngay'] : Carbon::create(Carbon::now()->format('d-m-Y'))->addYear(1);    $toDate     = Carbon::parse($toDate)->format('d-m-Y');
 
     $price          = $id ? $data['gia_phong'] : '';
     $numberE        = $id ? $data['chi_so_dien'] : '';
@@ -24,6 +24,7 @@
     $note           = $id ? $data['ghi_chu'] : '';
 
     $hiddenID       = Form::hidden('id', $id);
+    $hiddenTask     = Form::hidden('task', ($id) ? 'edit' : 'add');
     $statusEnum     = Config::get('custom.enum.selectStatus');
     $yesnoEnum      = Config::get('custom.enum.selectYesNo');
 
@@ -77,7 +78,7 @@
             'el'    => Form::textarea('ghi_chu', $note, ['class' => $formInputClass, 'required' => true, 'rows' => 3])
         ],
         [
-            'el' => $hiddenID . Form::submit('Lưu', ['class' => 'btn btn-success']),
+            'el' => $hiddenID . $hiddenTask . Form::submit('Lưu', ['class' => 'btn btn-success']),
             'type'  => 'btn-submit'
         ]
     ];

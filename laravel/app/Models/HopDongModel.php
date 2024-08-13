@@ -22,7 +22,7 @@ class HopDongModel extends Model
     protected $tableCongDan = 'cong_dans';
     protected $tableNhanKhau = 'nhan_khaus';
 
-    protected $crudNotAccepted = ['_token'];
+    protected $crudNotAccepted = ['_token', 'task'];
 
     public function listItems($params = null, $options = null){
         $table = $this->table.' as main';
@@ -137,6 +137,7 @@ class HopDongModel extends Model
 
         if($options['task'] == 'add'){
             $paramsNew = array_diff_key($params, array_flip($this->crudNotAccepted));
+            $paramsNew['ma_hop_dong'] = Carbon::now()->format('YmdHi');
             $paramsNew['created'] = Carbon::now();
             $paramsNew['created_by'] = $paramsNew['modified_by'] = $loginUserId;
             $result = Self::insert($paramsNew);

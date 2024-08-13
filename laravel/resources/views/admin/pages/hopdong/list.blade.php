@@ -34,7 +34,7 @@ use App\Helpers\Highlight;
 
                                 $cdStatus       = ucfirst($item['cd_status']);
                                 $fromDate       = Template::showDate($item['thue_tu_ngay']);
-                                $toDate         = Template::showDate($item['thue_den_ngay']);
+                                $toDate         = Template::showDate($item['thue_den_ngay'], $compareToday = true);
                                 $approveE       = ($item['huong_dinh_muc_dien']) ? 'Có' : 'Không';
                                 $approveW       = ($item['huong_dinh_muc_nuoc']) ? 'Có' : 'Không';
                                 $avatar         = ($item['cd_avatar']) ? 'avatar/'.$item['cd_avatar'] : Config::get("custom.enum.defaultPath.avatar");
@@ -51,7 +51,6 @@ use App\Helpers\Highlight;
 
                                 $nhanKhau       = (isset($nkInHopDong[$id])) ? $nkInHopDong[$id] : null;
                                 $nhanKhauInfo   = Modal::showNhanKhau($id, $nhanKhau);
-
                             @endphp
 
                             <td>{{ $no }}</td>

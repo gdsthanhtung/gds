@@ -113,39 +113,46 @@ class CongDanRequest extends FormRequest
      */
     public function messages(): array
     {
+        $requiredMsg = ':attribute không được để trống';
+        $betweenMsg = ':attribute (:input) không phù hợp, vui lòng nhập :min - :max ký tự';
+        $uniqueMsg = ':attribute (:input) đã được sử dụng, vui lòng nhập :attribute khác';
+        $inMsg = ':attribute (:input) không đúng, vui lòng chọn lại';
+        $wrongFormatMsg = ':attribute không đúng định dạng';
+        $limitSizeFileMsg = ':attribute không được lớn hơn 5MB';
+
         return [
-            'fullname.required' => ':attribute không được để trống',
-            'fullname.between'  => ':attribute (:input) không phù hợp, vui lòng nhập :min - :max ký tự',
+            'fullname.required' => $requiredMsg,
+            'fullname.between'  => $betweenMsg,
 
-            'cccd_number.required'  => ':attribute không được để trống',
-            'cccd_number.between'   => ':attribute (:input) không phù hợp, vui lòng nhập :min - :max ký tự',
-            'cccd_number.unique'    => ':attribute (:input) đã được sử dụng, vui lòng nhập :attribute khác',
+            'cccd_number.required'  => $requiredMsg,
+            'cccd_number.between'   => $betweenMsg,
+            'cccd_number.unique'    => $uniqueMsg,
 
-            'cccd_dos.required' => ':attribute không được để trống',
-            'cccd_dos.date'     => ':attribute không đúng định dạng',
+            'cccd_dos.required' => $requiredMsg,
+            'cccd_dos.date'     => $wrongFormatMsg,
 
-            'gender.in' => ':attribute (:input) không đúng, vui lòng chọn lại',
+            'gender.in' => $inMsg,
 
-            'dob.required'  => ':attribute không được để trống',
-            'dob.date'      => ':attribute không đúng định dạng',
+            'dob.required'  => $requiredMsg,
+            'dob.date'      => $wrongFormatMsg,
 
-            'address.required'  => ':attribute không được để trống',
-            'address.between'   => ':attribute (:input) không phù hợp, vui lòng nhập :min - :max ký tự',
+            'address.required'  => $requiredMsg,
+            'address.between'   => $betweenMsg,
 
-            'phone.required'    => ':attribute không được để trống',
-            'phone.between'     => ':attribute (:input) không phù hợp, vui lòng nhập :min - :max ký tự',
-            'phone.unique'      => ':attribute (:input) đã được sử dụng, vui lòng nhập :attribute khác',
+            'phone.required'    => $requiredMsg,
+            'phone.between'     => $betweenMsg,
+            'phone.unique'      => $uniqueMsg,
 
-            'status.in' => ':attribute (:input) không đúng, vui lòng chọn lại',
+            'status.in' => $inMsg,
 
-            'avatar.required'   => ':attribute không được để trống',
-            'avatar.max'        => ':attribute không được lớn hơn 5MB',
+            'avatar.required'   => $requiredMsg,
+            'avatar.max'        => $limitSizeFileMsg,
 
-            'cccd_image_front.required' => ':attribute không được để trống',
-            'cccd_image_front.max'      => ':attribute không được lớn hơn 5MB',
+            'cccd_image_front.required' => $requiredMsg,
+            'cccd_image_front.max'      => $limitSizeFileMsg,
 
-            'cccd_image_rear.required'  => ':attribute không được để trống',
-            'cccd_image_rear.max'       => ':attribute không được lớn hơn 5MB'
+            'cccd_image_rear.required'  => $requiredMsg,
+            'cccd_image_rear.max'       => $limitSizeFileMsg
         ];
     }
 

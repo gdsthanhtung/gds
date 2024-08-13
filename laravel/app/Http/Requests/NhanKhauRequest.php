@@ -22,7 +22,38 @@ class NhanKhauRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'cd_id' => ['bail', 'required'],
+            'mqh_id' => ['bail', 'required'],
+            'hop_dong_id' => ['bail', 'required'],
+        ];
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        $requiredMsg = ':attribute không được để trống';
+        return [
+            'cd_id.required' => $requiredMsg,
+            'mqh_id.required' => $requiredMsg,
+            'hop_dong_id.required' => $requiredMsg
+        ];
+    }
+
+    /**
+     * Get custom attributes for validator errors.
+     *
+     * @return array<string, string>
+     */
+    public function attributes(): array
+    {
+        return [
+            'cd_id' => 'Thông tin công dân',
+            'mqh_id' => 'Mối quan hệ với chủ hộ',
+            'hop_dong_id' => 'Hợp đồng',
         ];
     }
 }

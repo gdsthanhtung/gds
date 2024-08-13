@@ -1,10 +1,17 @@
 <?php
 namespace App\Helpers;
 use Config;
+use Carbon\Carbon;
 
 class Template {
-    public static function showDate($date){
-        return sprintf ("%s", date(Config::get('custom.format.shortTime'), strtotime($date)));
+    public static function showDate($date, $compareToday = false){
+        $d = sprintf ("%s", date(Config::get('custom.format.shortTime'), strtotime($date)));
+        if($compareToday == false){
+            return $d;
+        }else{
+            $rs = (strtotime($date) >= strtotime(Carbon::now())) ? $d : '<span class="badge badge-danger">'.$d.'</span>';
+            return $rs;
+        }
     }
 
     public static function showItemHistory($by, $time){
