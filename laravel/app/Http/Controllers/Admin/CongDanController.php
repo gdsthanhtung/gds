@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\View;
 use App\Http\Requests\CongDanRequest as MainRequest;
 use App\Helpers\Notify;
 use Config;
+use PDF;
 
 class CongDanController extends Controller
 {
@@ -82,9 +83,39 @@ class CongDanController extends Controller
             'data' => $data,
             'id' => $id
         ];
-        return view($this->getPathView('form'), $shareData);
+        //return view($this->getPathView('form'), $shareData);
+
+        $pdf = PDF::loadView($this->getPathView('form'), $shareData);
+        return $pdf->download('disney.pdf');
 
     }
+
+
+    public function ct01(Request $rq)
+    {
+        $data = [];
+        $id = $rq->id;
+
+        if($id){
+             $params = [
+                'id'    => $id
+            ];
+            $data = $this->mainModel->getItem($params, ['task' => 'get-item']);
+        }
+
+        if(!$data && $id)
+            return redirect()->route($this->moduleName)->with('notify', ['type' => 'danger', 'message' => $this->pageTitle.' id is invalid!']);
+
+        $shareData = [
+            'data' => $data,
+            'id' => $id
+        ];
+        return view($this->getPathView('ct01'), $shareData);
+
+        //$pdf = PDF::loadView($this->getPathView('ct01'), $shareData);
+        //return $pdf->download('disney.pdf');
+    }
+
 
     public function delete(Request $rq)
     {
