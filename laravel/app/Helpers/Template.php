@@ -4,11 +4,13 @@ use Config;
 use Carbon\Carbon;
 
 class Template {
-    public static function showDate($date, $compareToday = false){
+    public static function showDate($date, $compareToday = false, $separator = false){
         $d = sprintf ("%s", date(Config::get('custom.format.shortTime'), strtotime($date)));
         if($compareToday == false){
+            if($separator) $d = str_replace('-', $separator, $d);
             return $d;
         }else{
+            if($separator) $d = str_replace('-', $separator, $d);
             $rs = (strtotime($date) >= strtotime(Carbon::now())) ? $d : '<span class="badge badge-danger">'.$d.'</span>';
             return $rs;
         }

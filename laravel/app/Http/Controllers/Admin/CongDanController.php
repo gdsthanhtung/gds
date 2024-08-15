@@ -83,11 +83,7 @@ class CongDanController extends Controller
             'data' => $data,
             'id' => $id
         ];
-        //return view($this->getPathView('form'), $shareData);
-
-        $pdf = PDF::loadView($this->getPathView('form'), $shareData);
-        return $pdf->download('disney.pdf');
-
+        return view($this->getPathView('form'), $shareData);
     }
 
 
@@ -108,12 +104,13 @@ class CongDanController extends Controller
 
         $shareData = [
             'data' => $data,
-            'id' => $id
+            'id' => $id,
+            'case' => 'GH'
         ];
-        return view($this->getPathView('ct01'), $shareData);
+        //return view($this->getPathView('ct01'), $shareData);
 
-        //$pdf = PDF::loadView($this->getPathView('ct01'), $shareData);
-        //return $pdf->download('disney.pdf');
+        $pdf = PDF::loadView($this->getPathView('ct01'), $shareData);
+        return $pdf->download('disney.pdf');
     }
 
 
