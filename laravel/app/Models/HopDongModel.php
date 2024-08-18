@@ -75,7 +75,7 @@ class HopDongModel extends Model
         $query->select(DB::raw('nk.id, nk.hop_dong_id, nk.cong_dan_id, nk.mqh_chu_phong, cd.fullname, cd.cccd_number, cd.status, cd.avatar, cd.dob, cd.cccd_dos, cd.gender'));
         $query->whereIn('nk.hop_dong_id', $hopDongIds);
         $query->leftJoin($tableCongDan, 'nk.cong_dan_id', '=', 'cd.id');
-        $result = $query->orderBy('cd.fullname', 'asc')->get()->toArray();
+        $result = $query->orderBy('nk.mqh_chu_phong', 'asc')->get()->toArray();
 
         $rsGroup = [];
         if($result) foreach($result as $key => $item){

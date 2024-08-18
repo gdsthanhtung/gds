@@ -10,6 +10,7 @@ use App\Http\Requests\CongDanRequest as MainRequest;
 use App\Helpers\Notify;
 use Config;
 use PDF;
+use App\Models\HopDongModel as HopDongModel;
 
 class CongDanController extends Controller
 {
@@ -96,14 +97,18 @@ class CongDanController extends Controller
             ];
             $data = $this->mainModel->getItem($params, ['task' => 'get-item-with-hop-dong']);
         }
-        dd($data);
+
         if(!$data && $id)
             return redirect()->route($this->moduleName)->with('notify', ['type' => 'danger', 'message' => $this->pageTitle.' id is invalid!']);
+
+        $hopDongModel = new HopDongModel();
+        $nkInHopDong = ($data['hop_dong_id']) ? $hopDongModel->assignNK([['id' => $data['hop_dong_id']]])[$data['hop_dong_id']] : [];
 
         $shareData = [
             'data' => $data,
             'id' => $id,
-            'case' => 'GH'
+            'case' => 'GH',
+            'nkInHopDong' => $nkInHopDong
         ];
 
         //return view($this->getPathView('ct01'), $shareData);

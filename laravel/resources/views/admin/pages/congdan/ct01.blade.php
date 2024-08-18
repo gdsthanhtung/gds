@@ -13,6 +13,9 @@
     $gender = $genderEnum[$data['gender']];
     $cccd = str_split($data['cccd_number']);
 
+    $mqhEnum = Config::get('custom.enum.mqh');
+    $genderEnum = Config::get('custom.enum.gender');
+
     $fontSizeChuHo = (in_array($id, Config::get('custom.enum.longNameId'))) ? 'size12' : 'size13';
 @endphp
 
@@ -291,23 +294,14 @@
             </thead>
             <tbody>
                 @for($i=1;$i<=8;$i++)
-                    @if($i == 1)
+                    @if(isset($nkInHopDong[$i]))
                         <tr>
-                            <th class="tdh-nhan-khau">{{$i}}</th>
-                            <td class="tdh-nhan-khau">NGUYỄN THỊ BÍCH VÂN</td>
-                            <td class="tdh-nhan-khau">27/12/1990</td>
-                            <td class="tdh-nhan-khau">Nam</td>
-                            <td class="tdh-nhan-khau">079090021500</td>
-                            <td class="tdh-nhan-khau">Mẹ</td>
-                        </tr>
-                    @elseif($i == 2)
-                        <tr>
-                            <th class="tdh-nhan-khau">{{$i}}</th>
-                            <td class="tdh-nhan-khau">HUỲNH VĂN SƠN</td>
-                            <td class="tdh-nhan-khau">27/12/1990</td>
-                            <td class="tdh-nhan-khau">Nam</td>
-                            <td class="tdh-nhan-khau">079090021500</td>
-                            <td class="tdh-nhan-khau">Ba</td>
+                            <th class="tdh-nhan-khau">{{ $i }}</th>
+                            <td class="tdh-nhan-khau">{{ $nkInHopDong[$i]['fullname'] }}</td>
+                            <td class="tdh-nhan-khau">{{ Template::showDate($nkInHopDong[$i]['dob']) }}</td>
+                            <td class="tdh-nhan-khau">{{ $genderEnum[$nkInHopDong[$i]['gender']] }}</td>
+                            <td class="tdh-nhan-khau">{{ $nkInHopDong[$i]['cccd_number'] }}</td>
+                            <td class="tdh-nhan-khau">{{ $mqhEnum[$nkInHopDong[$i]['mqh_chu_phong']] }}</td>
                         </tr>
                     @else
                     <tr>
