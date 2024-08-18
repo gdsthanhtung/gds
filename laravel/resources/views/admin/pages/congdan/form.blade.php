@@ -15,6 +15,7 @@
     $address        = $id ? $data['address'] : '';
     $phone          = $id ? $data['phone'] : '';
     $status         = $id ? $data['status'] : '';
+    $isCity         = $id ? $data['is_city'] : '';
 
     $avatar         = $id ? $data['avatar'] : '';
     $cccdImageFront = $id ? $data['cccd_image_front'] : '';
@@ -28,7 +29,7 @@
 
     $statusEnum     = Config::get('custom.enum.selectStatus');
     $genderEnum     = Config::get('custom.enum.gender');
-
+    $isCityEnum     = Config::get('custom.enum.isCity');
     $pathImage      = Config::get("custom.enum.path.$ctrl");
 
     $element = [
@@ -54,6 +55,14 @@
             'label' => Form::label('phone', 'Số Điện Thoại', ['class' => $formLabelClass]),
             'el'    => Form::text('phone', $phone, ['class' => $formInputClass, 'required' => true])
         ],[
+            'label' => Form::label('is_city', 'Hộ Khẩu', ['class' => $formLabelClass]),
+            'el'    => Form::select('is_city', $isCityEnum, $isCity, ['class' => $formInputClass, 'placeholder' => 'Select an item...'])
+        ],
+        [
+            'label' => Form::label('is_city', 'Hộ Khẩu', ['class' => $formLabelClass]),
+            'el'    => Template::radioSelect($isCityEnum, $elName = 'is_city', $isCity)
+        ],
+        [
             'label' => Form::label('status', 'Trạng Thái', ['class' => $formLabelClass]),
             'el'    => Form::select('status', $statusEnum, $status, ['class' => $formInputClass, 'placeholder' => 'Select an item...'])
         ],[

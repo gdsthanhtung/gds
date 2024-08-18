@@ -149,6 +149,10 @@ return [
             80  => 'Con đẻ',
             90  => 'Cháu nội',
             100 => 'Cháu ngoại',
+        ],
+        'isCity' => [
+            0 => 'Tỉnh',
+            1 => 'Thành phố'
         ]
     ]
 ];

@@ -38,6 +38,7 @@ use App\Helpers\Highlight;
                                 $avatar             = ($item['avatar']) ? 'avatar/'.$item['avatar'] : Config::get("custom.enum.defaultPath.avatar");
                                 $avatar             = Template::showItemAvatar($ctrl, $avatar, $item['name']);
                                 $status             = Template::showItemStatus($ctrl, $id, $item['status']);
+                                $isCity             = Config::get("custom.enum.isCity.".$item['is_city']);
 
                                 $cccd_image_front   = 'cccd_front/'.$item['cccd_image_front'];
                                 $cccd_image_rear    = 'cccd_rear/'.$item['cccd_image_rear'];
@@ -62,6 +63,7 @@ use App\Helpers\Highlight;
                             <td width="25%">
                                 <p><strong>Họ tên:</strong> {!! $fullname !!}</p>
                                 <p><strong>Đ/C thường trú:</strong> {!! $address !!}</p>
+                                <p><strong>Hộ khẩu:</strong> {!! $isCity !!}</p>
                                 <p><strong>Giới tính:</strong> {!! $gender !!}</p>
                             </td>
                             <td><a href="#"><i class="fa fa-home"></i> {!! $room !!}</a></td>

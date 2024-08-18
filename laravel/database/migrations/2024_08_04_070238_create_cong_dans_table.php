@@ -20,6 +20,7 @@ return new class extends Migration
             $table->date('dob');
             $table->string('address');
             $table->string('phone', 20);
+            $table->integer('is_city', 1);
             $table->string('status', 10);
             $table->string('avatar', 50);
             $table->string('cccd_image_front', 50);
