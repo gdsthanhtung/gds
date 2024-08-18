@@ -86,9 +86,7 @@ class CongDanController extends Controller
         return view($this->getPathView('form'), $shareData);
     }
 
-
-    public function ct01(Request $rq)
-    {
+    public function ct01(Request $rq) {
         $data = [];
         $id = $rq->id;
 
@@ -96,9 +94,9 @@ class CongDanController extends Controller
              $params = [
                 'id'    => $id
             ];
-            $data = $this->mainModel->getItem($params, ['task' => 'get-item']);
+            $data = $this->mainModel->getItem($params, ['task' => 'get-item-with-hop-dong']);
         }
-
+        dd($data);
         if(!$data && $id)
             return redirect()->route($this->moduleName)->with('notify', ['type' => 'danger', 'message' => $this->pageTitle.' id is invalid!']);
 
@@ -107,10 +105,12 @@ class CongDanController extends Controller
             'id' => $id,
             'case' => 'GH'
         ];
+
         //return view($this->getPathView('ct01'), $shareData);
 
         $pdf = PDF::loadView($this->getPathView('ct01'), $shareData);
-        return $pdf->download('disney.pdf');
+        return $pdf->stream()->header('Content-Type','application/pdf');
+        //return $pdf->download('disney.pdf');
     }
 
 

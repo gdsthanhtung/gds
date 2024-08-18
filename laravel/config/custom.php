@@ -60,6 +60,7 @@ return [
         ]
     ],
     'enum' => [
+        'longNameId'    => array(),
         'ruleStatus'    => [
             'active'    => ['name' => 'Kích hoạt', 'class' => 'btn-success'],
             'inactive'  => ['name' => 'Chưa kích hoạt', 'class' => 'btn-warning'],

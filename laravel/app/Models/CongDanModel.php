@@ -150,6 +150,13 @@ class CongDanModel extends Model
             $result = Self::select('*')->where('id', $params['id'])->first();
         }
 
+        if($options['task'] == 'get-item-with-hop-dong'){
+            $query = Self::select('main.*, hp.id')->where('id', $params['id']);
+            $query->from($this->table.' as main');
+            $query->leftJoin('hopdongs as hd', 'hd.cong_dan_id', '=', 'main.id');
+            $result = ($result) ? $result->first() : null;
+        }
+
         if($options['task'] == 'do-login'){
             $result = Self::select(['id', 'username', 'fullname', 'email', 'status', 'level', 'avatar'])
                         ->firstWhere(['email' => $params['email'], 'password' => md5($params['password']), 'status' => 'active']);
