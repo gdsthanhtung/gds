@@ -9,8 +9,6 @@
     $defaultHoaDon  = Config::get('custom.enum.hoaDon');
 
     $hopDongId      = $id ? $data['hop_dong_id'] : '';
-    $congDanId      = $id ? $data['cong_dan_id'] : '';
-    $phongId        = $id ? $data['phong_id'] : '';
 
     $fromDate       = $id ? $data['tu_ngay']  : Carbon::now()->format('d-m-Y');                                $fromDate   = Carbon::parse($fromDate)->format('d-m-Y');
     $toDate         = $id ? $data['den_ngay'] : Carbon::create(Carbon::now()->format('d-m-Y'))->addYear(1);    $toDate     = Carbon::parse($toDate)->format('d-m-Y');
@@ -35,11 +33,18 @@
     $status         = $id ? $data['status'] : 'inactive';
     $note           = $id ? $data['ghi_chu'] : '';
 
-    $hiddenHopDongList = Form::text('hop-dong-list', json_encode($dataHopDong));
-    $hiddenID       = Form::hidden('id', $id);
-    $hiddenTask     = Form::hidden('task', ($id) ? 'edit' : 'add');
     $statusEnum     = Config::get('custom.enum.selectStatusHoaDon');
     $yesnoEnum      = Config::get('custom.enum.selectYesNo');
+    $eRangeEnum     = Config::get('custom.enum.eRange');
+    $wRangeEnum     = Config::get('custom.enum.wRange');
+
+    $hiddenHopDongList  = Form::text('hop-dong-list', json_encode($dataHopDong), ['id' => 'hop-dong-list']);
+    $hiddenYesNoEnum    = Form::text('yes-no-enum', json_encode($yesnoEnum), ['id' => 'yes-no-enum']);
+    $hiddenERange       = Form::text('range_dien', json_encode($eRangeEnum[0]), ['id' => 'e-range']);
+    $hiddenWRange       = Form::text('range_nuoc', json_encode($wRangeEnum[0]), ['id' => 'w-range']);
+
+    $hiddenID           = Form::hidden('id', $id);
+    $hiddenTask         = Form::hidden('task', ($id) ? 'edit' : 'add');
 
 
     dump($dataHopDong);
@@ -50,12 +55,12 @@
             'el'    => Form::select('hop_dong_id', $selectHopDong, $hopDongId, ['class' => $formInputClass, 'required' => true, 'placeholder' => 'Select an item...'])
         ],
         [
-            'label' => Form::label('cong_dan_id', 'Đại diện thuê phòng', ['class' => $formLabelClass]),
-            'el'    => Form::text('cong_dan_id', '', ['class' => $formInputClass, 'disabled' => true])
+            'label' => Form::label('huong_dinh_muc_dien', 'Hưởng định mức Điện', ['class' => $formLabelClass]),
+            'el'    => Form::label('huong_dinh_muc_dien', $yesnoEnum[$approveE], ['class' => $formLabelClass. ' text-left', 'id' => 'approve-e']),
         ],
         [
-            'label' => Form::label('phong_id', 'Phòng', ['class' => $formLabelClass]),
-            'el'    => Form::text('phong_id', '', ['class' => $formInputClass, 'disabled' => true])
+            'label' => Form::label('huong_dinh_muc_nuoc', 'Hưởng định mức Nước', ['class' => $formLabelClass]),
+            'el'    => Form::label('huong_dinh_muc_nuoc', $yesnoEnum[$approveW], ['class' => $formLabelClass. ' text-left', 'id' => 'approve-w']),
         ],
         [
             'label' => Form::label('tu_ngay', 'Từ ngày', ['class' => $formLabelClass]),
@@ -84,14 +89,6 @@
                             <div class="input-group-addon">Đã sử dụng trong kỳ</div>'.
                             Form::text('chi_so_dien', $numberE, ['class' => 'form-control text-center', 'disabled' => true]).'
                         </div>'
-        ],
-        [
-            'label' => Form::label('huong_dinh_muc_dien', 'Hưởng định mức Điện', ['class' => $formLabelClass]),
-            'el'    => Form::label('huong_dinh_muc_dien', $yesnoEnum[$approveE], ['class' => $formLabelClass. ' text-left']),
-        ],
-        [
-            'label' => Form::label('huong_dinh_muc_nuoc', 'Hưởng định mức Nước', ['class' => $formLabelClass]),
-            'el'    => Form::label('huong_dinh_muc_nuoc', $yesnoEnum[$approveW], ['class' => $formLabelClass. ' text-left']),
         ],
         [
             'label' => Form::label('tien_phong', 'Tiền phòng', ['class' => $formLabelClass]),
@@ -126,7 +123,8 @@
             'el'    => Form::textarea('ghi_chu', $note, ['class' => $formInputClass, 'required' => true, 'rows' => 3])
         ],
         [
-            'el' => $hiddenHopDongList . $hiddenID . $hiddenTask . Form::submit('Lưu', ['class' => 'btn btn-success']),
+            'el' => $hiddenERange . $hiddenWRange . $hiddenYesNoEnum . $hiddenHopDongList . $hiddenID . $hiddenTask .
+                    Form::submit('Lưu', ['class' => 'btn btn-success']),
             'type'  => 'btn-submit'
         ]
     ];

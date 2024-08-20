@@ -20,6 +20,8 @@
     $approveE       = $id ? $data['huong_dinh_muc_dien'] : 0;
     $approveW       = $id ? $data['huong_dinh_muc_nuoc'] : 0;
 
+    $useInternet    = $id ? $data['use_internet'] : 0;
+
     $status         = $id ? $data['status'] : '';
     $note           = $id ? $data['ghi_chu'] : '';
 
@@ -52,6 +54,10 @@
         [
             'label' => Form::label('gia_phong', 'Giá phòng', ['class' => $formLabelClass]),
             'el'    => Form::number('gia_phong', $price, ['class' => $formInputClass, 'required' => true])
+        ],
+        [
+            'label' => Form::label('use_internet', 'Sử dụng Internet', ['class' => $formLabelClass]),
+            'el'    => Template::radioSelect($yesnoEnum, $elName = 'use_internet', $useInternet)
         ],
         [
             'label' => Form::label('chi_so_dien', 'Chỉ số điện', ['class' => $formLabelClass]),

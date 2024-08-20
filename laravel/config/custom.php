@@ -189,7 +189,7 @@ return [
         ],
         'hoaDon' => [
             'tienRac' => 30000,
-            'tienNet' => 40000
+            'tienNet' => 80000
         ]
     ]
 ];

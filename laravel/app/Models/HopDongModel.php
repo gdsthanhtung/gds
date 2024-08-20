@@ -58,7 +58,7 @@ class HopDongModel extends Model
 
         if($options['task'] == 'admin-list-items-for-select'){
             $query = Self::from($table);
-            $query->select(DB::raw('main.*, pt.name as pt_name, cd.avatar as cd_avatar, cd.fullname as cd_fullname, cd.cccd_number as cd_cccd_number, cd.status as cd_status, c_user.fullname as created_by_name, u_user.fullname as modified_by_name'));
+            $query->select(DB::raw('main.*, pt.name as pt_name, cd.avatar as cd_avatar, cd.fullname as cd_fullname, cd.cccd_number as cd_cccd_number, cd.status as cd_status, cd.is_city, c_user.fullname as created_by_name, u_user.fullname as modified_by_name'));
 
             $query->where('main.status', 'active');
 

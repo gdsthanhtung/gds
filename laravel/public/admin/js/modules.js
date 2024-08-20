@@ -16,6 +16,23 @@ $(document).ready(function() {
         $(this).datepicker();
     });
 
+    // START PROCESS SELEC T HOPDONG TO CACL HOADON =========================================================================
+    $('#hop_dong_id').on('change', function (event) {
+        let hopDongList   = JSON.parse($('#hop-dong-list').val());
+        let yesNoEnum   = JSON.parse($('#yes-no-enum').val());
+        let hopdongId = $(this).val()
+        let hd = hopDongList[hopdongId];
+
+        $('#tien_phong').val(hd['gia_phong']);
+        $('#approve-e').html(yesNoEnum[hd['huong_dinh_muc_dien']]);
+        $('#approve-w').html(yesNoEnum[hd['huong_dinh_muc_nuoc']]);
+
+        console.log(hopDongList);
+
+    })
+    // END PROCESS SELEC T HOPDONG TO CACL HOADON =========================================================================
+
+
     // START MODAL NHAN KHAU IN HOP DONG MODULE LIST =========================================================================
     $('#nhanKhauModal4').on('show.bs.modal', function (event) {
         // Do-something...

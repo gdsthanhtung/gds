@@ -36,7 +36,7 @@ class HoaDonModel extends Model
 
         if($options['task'] == 'admin-list-items'){
             $query = Self::from($table);
-            $query->select(DB::raw('main.*, pt.name as pt_name, cd.avatar as cd_avatar, cd.fullname as cd_fullname, cd.cccd_number as cd_cccd_number, cd.status as cd_status, c_user.fullname as created_by_name, u_user.fullname as modified_by_name'));
+            $query->select(DB::raw('main.*, c_user.fullname as created_by_name, u_user.fullname as modified_by_name'));
             if($searchValue)
             if($searchField == 'all'){
                 unset($fieldAccepted[0]);
@@ -48,8 +48,6 @@ class HoaDonModel extends Model
             if($filterStatus != 'all'){
                 $query->where('main.status', $filterStatus);
             }
-            $query->leftJoin($this->tablePhongTro.' as pt', 'pt.id', '=', 'main.phong_id');
-            $query->leftJoin($this->tableCongDan.' as cd', 'cd.id', '=', 'main.cong_dan_id');
             $query->leftJoin($this->tableUser.' as c_user', 'c_user.id', '=', 'main.created_by');
             $query->leftJoin($this->tableUser.' as u_user', 'u_user.id', '=', 'main.modified_by');
             $result = $query->orderBy('main.id', 'desc')->paginate($perPage);
@@ -76,8 +74,6 @@ class HoaDonModel extends Model
                 }else{
                     $query->where($searchField, 'LIKE', "%$searchValue%");
                 }
-            $query->leftJoin($this->tablePhongTro.' as pt', 'pt.id', '=', 'main.phong_id');
-            $query->leftJoin($this->tableCongDan.' as cd', 'cd.id', '=', 'main.cong_dan_id');
             $result = $query->groupBy('status')->get()->toArray();
         }
 

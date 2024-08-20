@@ -23,6 +23,7 @@ return new class extends Migration
             $table->integer('chi_so_nuoc');
             $table->boolean('huong_dinh_muc_dien');
             $table->boolean('huong_dinh_muc_nuoc');
+            $table->boolean('use_internet');
             $table->string('status', 10);
             $table->string('ghi_chu');
 
