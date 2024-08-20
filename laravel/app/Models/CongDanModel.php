@@ -111,6 +111,8 @@ class CongDanModel extends Model
             $paramsNew = array_diff_key($params, array_flip($this->crudNotAccepted));
             $paramsNew['created'] = Carbon::now();
             $paramsNew['created_by'] = $paramsNew['modified_by'] = $loginUserId;
+            $paramsNew['dob'] = Carbon::parse($paramsNew['dob'])->format('Y-m-d');
+            $paramsNew['cccd_dos'] = Carbon::parse($paramsNew['cccd_dos'])->format('Y-m-d');
 
             foreach($typeImages as $type){
                 $rsUpload = $this->processImage($type, $params, $paramsNew, $delOldImage = false);
@@ -123,6 +125,8 @@ class CongDanModel extends Model
         if($options['task'] == 'edit'){
             $paramsNew = array_diff_key($params, array_flip($this->crudNotAccepted));
             $paramsNew['modified_by'] = $loginUserId;
+            $paramsNew['dob'] = Carbon::parse($paramsNew['dob'])->format('Y-m-d');
+            $paramsNew['cccd_dos'] = Carbon::parse($paramsNew['cccd_dos'])->format('Y-m-d');
 
             foreach($typeImages as $type){
                 $rsUpload = $this->processImage($type, $params, $paramsNew, $delOldImage = true);

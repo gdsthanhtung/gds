@@ -8,10 +8,10 @@
 
     $fullname       = $id ? $data['fullname'] : '';
     $cccdNumber     = $id ? $data['cccd_number'] : '';
-    $cccdDos        = $id ? $data['cccd_dos'] : '2000-12-31'; $cccdDos = Carbon::parse($cccdDos)->format('Y-m-d');
+    $cccdDos        = $id ? $data['cccd_dos'] : Carbon::now()->format('d-m-Y'); $cccdDos = Carbon::parse($cccdDos)->format('d-m-Y');
 
     $gender         = $id ? $data['gender'] : '';
-    $dob            = $id ? $data['dob'] : '2000-12-31'; $dob = Carbon::parse($dob)->format('Y-m-d');
+    $dob            = $id ? $data['dob'] : Carbon::now()->format('d-m-Y'); $dob = Carbon::parse($dob)->format('d-m-Y');
     $address        = $id ? $data['address'] : '';
     $phone          = $id ? $data['phone'] : '';
     $status         = $id ? $data['status'] : '';
@@ -34,35 +34,30 @@
 
     $element = [
         [
-            'label' => Form::label('fullname', 'Họ Tên', ['class' => $formLabelClass]),
-            'el'    => Form::text('fullname', $fullname, ['class' => $formInputClass, 'required' => true])
-        ],[
             'label' => Form::label('cccd_number', 'Số CCCD', ['class' => $formLabelClass]),
             'el'    => Form::text('cccd_number', $cccdNumber, ['class' => $formInputClass, 'required' => true])
         ],[
-            'label' => Form::label('cccd_dos', 'Ngày Cấp CCCD', ['class' => $formLabelClass]),
-            'el'    => Form::date('cccd_dos', $cccdDos, ['class' => $formInputClass, 'required' => true])
+            'label' => Form::label('fullname', 'Họ Tên', ['class' => $formLabelClass]),
+            'el'    => Form::text('fullname', $fullname, ['class' => $formInputClass, 'required' => true])
         ],[
             'label' => Form::label('gender', 'Giới Tính', ['class' => $formLabelClass]),
             'el'    => Form::select('gender', $genderEnum, $gender, ['class' => $formInputClass, 'placeholder' => 'Select an item...'])
         ],[
             'label' => Form::label('dob', 'Ngày Sinh', ['class' => $formLabelClass]),
-            'el'    => Form::date('dob', $dob, ['class' => $formInputClass, 'required' => true])
+            'el'    => Form::text('dob', $dob, ['class' => $formInputClass.' datepicker', 'required' => true])
         ],[
             'label' => Form::label('address', 'Địa Chỉ Thường Trú', ['class' => $formLabelClass]),
             'el'    => Form::textarea('address', $address, ['class' => $formInputClass, 'required' => true, 'rows' => 3])
+        ],[
+            'label' => Form::label('cccd_dos', 'Ngày Cấp CCCD', ['class' => $formLabelClass]),
+            'el'    => Form::text('cccd_dos', $cccdDos, ['class' => $formInputClass.' datepicker', 'required' => true])
         ],[
             'label' => Form::label('phone', 'Số Điện Thoại', ['class' => $formLabelClass]),
             'el'    => Form::text('phone', $phone, ['class' => $formInputClass, 'required' => true])
         ],[
             'label' => Form::label('is_city', 'Hộ Khẩu', ['class' => $formLabelClass]),
-            'el'    => Form::select('is_city', $isCityEnum, $isCity, ['class' => $formInputClass, 'placeholder' => 'Select an item...'])
-        ],
-        [
-            'label' => Form::label('is_city', 'Hộ Khẩu', ['class' => $formLabelClass]),
             'el'    => Template::radioSelect($isCityEnum, $elName = 'is_city', $isCity)
-        ],
-        [
+        ],[
             'label' => Form::label('status', 'Trạng Thái', ['class' => $formLabelClass]),
             'el'    => Form::select('status', $statusEnum, $status, ['class' => $formInputClass, 'placeholder' => 'Select an item...'])
         ],[
@@ -94,42 +89,70 @@
         @include($pathViewTemplate . 'page_header',
             [
                 'title' => $pageTitle,
-                'button' => '<a href="'.route($ctrl).'" class="btn btn-info"><i class="fa fa-arrow-left"></i> Quay lại</a>'
+                'button' => '
+                    <button class="btn btn-warning" id="cong-dan-quick-add" data-toggle="modal" data-target="#modalCongDanQuickAdd">Quick add</button>
+                    <a href="'.route($ctrl).'" class="btn btn-info"><i class="fa fa-arrow-left"></i> Quay lại</a>'
             ])
 
         @if (session('notify'))
             @include($pathViewTemplate . 'notify')
         @endif
 
+        <!--box-form-->
         <div class="row">
-            <!--box-form-->
-            <div class="row">
-                <div class="col-md-12 col-sm-12 col-xs-12">
-                    <div class="x_panel">
-                        @include($pathViewTemplate . 'x_title', ['title' => 'Thêm mới'])
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    @include($pathViewTemplate . 'x_title', ['title' => 'Thêm mới'])
 
-                        @include($pathViewTemplate . 'error')
+                    @include($pathViewTemplate . 'error')
 
-                        <div class="x_content">
-                            {!!
-                                Form::open([
-                                    'url' => route($ctrl.'/save'),
-                                    'accept-charset' => 'UTF-8',
-                                    'method' => 'POST',
-                                    'enctype' => 'multipart/form-data',
-                                    'class' => 'form-horizontal form-label-left',
-                                    'id' => 'main-form'
-                                ])
-                            !!}
+                    <div class="x_content">
+                        {!!
+                            Form::open([
+                                'url' => route($ctrl.'/save'),
+                                'accept-charset' => 'UTF-8',
+                                'method' => 'POST',
+                                'enctype' => 'multipart/form-data',
+                                'class' => 'form-horizontal form-label-left',
+                                'id' => 'main-form'
+                            ])
+                        !!}
 
-                                {!! FormTemplate::export($element) !!}
+                            {!! FormTemplate::export($element) !!}
 
-                            {!! Form::close() !!}
-                        </div>
+                        {!! Form::close() !!}
                     </div>
                 </div>
             </div>
-            <!--end-box-form-->
+        </div>
+        <!--end-box-form-->
+    </div>
+
+    <!-- Modal -->
+    <div id="modalCongDanQuickAdd" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Nhập thông tin Công Dân tự động</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                      <label for="cccd-content" class="col-form-label">Thông tin CCCD:</label>
+                      <textarea class="form-control" id="cccd-content" rows="8"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="process-cccd-content">Xử lý</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
         </div>
     </div>
+
 @endsection

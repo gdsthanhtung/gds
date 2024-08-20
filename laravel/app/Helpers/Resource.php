@@ -19,8 +19,12 @@ class Resource {
 
     public static function uploadImage($dirName, $image, $type = 'default')
     {
+        //if(!$image) return false;
+
         $imageName = Carbon::now()->format('ymdhisu').'.'.$image->clientExtension();
-        $img = Image::read($image->path());
+        //dump($image);
+        //dd($image->getPathname());
+        $img = Image::read($image->getPathname());
 
         switch ($type) {
             case 'avatar':

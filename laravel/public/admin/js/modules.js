@@ -10,6 +10,7 @@ $(document).ready(function() {
 	let $selectChangeAttrAjax = $("select[name =  selectChangeAttrAjax]");
 
     $.fn.datepicker.defaults.format = "dd-mm-yyyy";
+    $('.datepicker').datepicker();
 
     $('.input-daterange input').each(function() {
         $(this).datepicker();
@@ -18,6 +19,26 @@ $(document).ready(function() {
     // START MODAL NHAN KHAU IN HOP DONG MODULE LIST =========================================================================
     $('#nhanKhauModal4').on('show.bs.modal', function (event) {
         // Do-something...
+    })
+
+    $('#process-cccd-content').on('click', function (event) {
+        let congDanContent   = $('#cccd-content').val();
+        let arrContent = congDanContent.split("\n");
+        console.log(arrContent);
+        $('#fullname').val(arrContent[2].substr(11));
+        $('#cccd_number').val(arrContent[0].substr(9));
+        $('#address').val(arrContent[5].substr(16));
+
+        let cccd_dos = arrContent[6].substr(15).replaceAll('/', '-');
+        console.log(cccd_dos);
+
+        $('#cccd_dos').val(cccd_dos);
+
+        let dob = arrContent[4].substr(11).replaceAll('/', '-');
+        $('#dob').val(dob);
+
+        let gender = (arrContent[3].substr(11) == 'Nam') ? 'M' : 'W';
+        $("#gender option[value='"+gender+"']").attr("selected", true);
     })
 
     function capitalizeFirstLetter(str) {

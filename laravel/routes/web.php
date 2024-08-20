@@ -118,4 +118,15 @@ Route::prefix($prefixAdmin)->middleware('check.permission')->group(function () {
             Route::post('/save', 'save')->name($ctrl.'/save');
         });
     });
+    $prefix = Config::get('custom.route.hoadon.prefix', 'hoadon');
+    $ctrl   = Config::get('custom.route.hoadon.ctrl', 'hoadon');
+    Route::prefix($prefix)->group(function () use ($ctrl) {
+        Route::controller(HopDongController::class)->group(function () use ($ctrl) {
+            Route::get('/', 'show')->name($ctrl);
+            Route::get('/form/{id?}', 'form')->where(['id' => '[0-9]+'])->name($ctrl.'/form');
+            Route::get('/delete/{id}', 'delete')->where(['id' => '[0-9]+'])->name($ctrl.'/delete');
+            Route::get('/change-status/{id}/{status}', 'change_status')->where(['id' => '[0-9]+', 'status' => '[a-z]+'])->name($ctrl.'/change-status');
+            Route::post('/save', 'save')->name($ctrl.'/save');
+        });
+    });
 });
