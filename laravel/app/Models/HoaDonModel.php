@@ -12,8 +12,8 @@ use App\Models\CongDanModel;
 class HoaDonModel extends Model
 {
     use HasFactory;
-    protected $table = 'hop_dongs';
-    protected $uploadDir = 'hop_dong';
+    protected $table = 'hoa_dons';
+    protected $uploadDir = 'hoa_don';
     const CREATED_AT = 'created';
     const UPDATED_AT = 'modified';
 

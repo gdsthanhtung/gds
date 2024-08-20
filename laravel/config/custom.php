@@ -43,6 +43,11 @@ return [
             'prefix' => 'nhankhau',
             'view' => 'nhan_khau'
         ],
+        'hoadon' => [
+            'ctrl' => 'hoadon',
+            'prefix' => 'hoadon',
+            'view' => 'hoa_don'
+        ],
     ],
     'format' => [
         'longTime' => 'd/m/Y H:m:s',
@@ -70,6 +75,10 @@ return [
         'selectStatus' => [
             'active' => 'Kích hoạt',
             'inactive' => 'Chưa kích hoạt'
+        ],
+        'selectStatusHoaDon' => [
+            'active' => 'Đã thanh toán',
+            'inactive' => 'Chưa thanh toán'
         ],
         'selectYesNo' => [
             '0' => 'No',
@@ -101,6 +110,9 @@ return [
             'cd.cccd_number' => ['name' => 'Tìm theo Số CCCD'],
             'pt.name' => ['name' => 'Tìm theo Số phòng'],
         ],
+        'searchSelectionHoaDon' => [
+            'all' => ['name' => 'Tìm Tất cả']
+        ],
         'selectionInModule' => [
             'default' => ['all'],
             'slider' => ['all', 'name', 'description', 'link'],
@@ -108,6 +120,7 @@ return [
             'phongtro' => ['all', 'name'],
             'congdan' => ['all', 'fullname', 'cccd_number', 'address', 'phone'],
             'hopdong' => ['all', 'main.id', 'main.ma_hop_dong', 'cd.fullname', 'cd.cccd_number', 'pt.name'],
+            'hoadon' => ['all'],
         ],
         'ruleBtn' => [
             'edit'      => ['class' => 'btn-success',               'title' => 'Điều chỉnh',    'icon' => 'fa-pencil',  'route' => "/form"],
@@ -121,6 +134,7 @@ return [
             'phongtro' => ['edit', 'delete'],
             'congdan' => ['edit', 'delete'],
             'hopdong' => ['edit', 'delete'],
+            'hoadon' => ['edit', 'delete'],
         ],
         'gender' => [
             'M' => 'Nam',
@@ -153,6 +167,29 @@ return [
         'isCity' => [
             0 => 'Tỉnh',
             1 => 'Thành phố'
+        ],
+        'eRange' => [
+            [
+                "time" => "202408",
+                "detail" => [
+                    "100" => 3000,
+                    "200" => 3500,
+                    "10000"=> 4000
+                ]
+            ]
+        ],
+        'wRange' => [
+            [
+                "time" => "202408",
+                "detail" => [
+                    "0" => 15000,
+                    "100" => 27000
+                ]
+            ]
+        ],
+        'hoaDon' => [
+            'tienRac' => 30000,
+            'tienNet' => 40000
         ]
     ]
 ];

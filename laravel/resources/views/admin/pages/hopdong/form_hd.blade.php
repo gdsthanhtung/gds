@@ -38,7 +38,7 @@
             'el'    => Form::select('cong_dan_id', $dataCongDan, $congDanId, ['class' => $formInputClass, 'placeholder' => 'Select an item...'])
         ],
         [
-            'label' => Form::label('phong_id', 'Phòng trọ', ['class' => $formLabelClass]),
+            'label' => Form::label('phong_id', 'Phòng', ['class' => $formLabelClass]),
             'el'    => Form::select('phong_id', $dataPhongTro, $phongId, ['class' => $formInputClass, 'placeholder' => 'Select an item...'])
         ],
         [

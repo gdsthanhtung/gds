@@ -128,3 +128,7 @@ span.highlight{
 .datepicker {
     padding: 10px !important;
 }
+
+.text-left {
+    text-align: left !important;
+}

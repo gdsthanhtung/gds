@@ -10,16 +10,16 @@ use App\Http\Requests\HoaDonRequest  as MainRequest;
 use App\Helpers\Notify;
 use Config;
 
-use App\Models\CongDanModel;
-use App\Models\PhongTroModel;
+use App\Models\HopDongModel;
+use App\Helpers\Template;
 
 class HoaDonController extends Controller
 {
     private $mainModel;
     private $pathView;
     private $pathViewTemplate;
-    private $moduleName = "hopdong";
-    private $pageTitle = "Hợp Đồng";
+    private $moduleName = "hoadon";
+    private $pageTitle = "Hóa Đơn";
     private $params = [];
 
     public function __construct(){
@@ -81,17 +81,21 @@ class HoaDonController extends Controller
         if(!$data && $id)
             return redirect()->route($this->moduleName)->with('notify', ['type' => 'danger', 'message' => $this->pageTitle.' id is invalid!']);
 
-            $congDanModel = new CongDanModel();
-            $dataCongDan = $congDanModel->listItems([], ['task' => 'admin-list-items-to-select']);
+        $hopDongModel = new HopDongModel();
+        $dataHopDongTmp = $hopDongModel->listItems([], ['task' => 'admin-list-items-for-select']);
 
-            $phongTroModel = new PhongTroModel();
-            $dataPhongTro = $phongTroModel->listItems([], ['task' => 'admin-list-items-to-select']);
+        $selectHopDong = $dataHopDong = [];
+        if($dataHopDongTmp) foreach($dataHopDongTmp as $hd){
+            $selectHopDong[$hd['id']] = $hd['ma_hop_dong'].' - '.$hd['pt_name'].' - '.$hd['cd_fullname'];
+            $dataHopDong[$hd['id']] = $hd;
+        }
+        dump($selectHopDong);
 
         $shareData = [
             'data' => $data,
             'id' => $id,
-            'dataCongDan' => $dataCongDan,
-            'dataPhongTro' => $dataPhongTro
+            'dataHopDong' => $dataHopDong,
+            'selectHopDong' => $selectHopDong
         ];
         return view($this->getPathView('form'), $shareData);
 

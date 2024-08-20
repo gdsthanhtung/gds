@@ -27,14 +27,15 @@ class HopDongModel extends Model
     public function listItems($params = null, $options = null){
         $table = $this->table.' as main';
         $result = null;
-        $perPage = $params["pagination"]['perPage'];
-
-        $filterStatus   = $params['filter']['status'];
-        $searchField    = $params['filter']['searchField'];
-        $searchValue    = $params["filter"]['searchValue'];
-        $fieldAccepted  = $params["filter"]['fieldAccepted'];
 
         if($options['task'] == 'admin-list-items'){
+            $perPage = $params["pagination"]['perPage'];
+
+            $filterStatus   = $params['filter']['status'];
+            $searchField    = $params['filter']['searchField'];
+            $searchValue    = $params["filter"]['searchValue'];
+            $fieldAccepted  = $params["filter"]['fieldAccepted'];
+
             $query = Self::from($table);
             $query->select(DB::raw('main.*, pt.name as pt_name, cd.avatar as cd_avatar, cd.fullname as cd_fullname, cd.cccd_number as cd_cccd_number, cd.status as cd_status, c_user.fullname as created_by_name, u_user.fullname as modified_by_name'));
             if($searchValue)
@@ -53,6 +54,19 @@ class HopDongModel extends Model
             $query->leftJoin($this->tableUser.' as c_user', 'c_user.id', '=', 'main.created_by');
             $query->leftJoin($this->tableUser.' as u_user', 'u_user.id', '=', 'main.modified_by');
             $result = $query->orderBy('main.id', 'desc')->paginate($perPage);
+        }
+
+        if($options['task'] == 'admin-list-items-for-select'){
+            $query = Self::from($table);
+            $query->select(DB::raw('main.*, pt.name as pt_name, cd.avatar as cd_avatar, cd.fullname as cd_fullname, cd.cccd_number as cd_cccd_number, cd.status as cd_status, c_user.fullname as created_by_name, u_user.fullname as modified_by_name'));
+
+            $query->where('main.status', 'active');
+
+            $query->leftJoin($this->tablePhongTro.' as pt', 'pt.id', '=', 'main.phong_id');
+            $query->leftJoin($this->tableCongDan.' as cd', 'cd.id', '=', 'main.cong_dan_id');
+            $query->leftJoin($this->tableUser.' as c_user', 'c_user.id', '=', 'main.created_by');
+            $query->leftJoin($this->tableUser.' as u_user', 'u_user.id', '=', 'main.modified_by');
+            $result = $query->orderBy('main.id', 'desc')->get()->toArray();
         }
 
         return $result;
