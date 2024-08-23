@@ -25,20 +25,22 @@ return new class extends Migration
 
             $table->boolean('huong_dinh_muc_dien');
             $table->boolean('huong_dinh_muc_nuoc');
+            $table->boolean('is_city');
 
-            $table->string('range_dien');   //json
-            $table->string('range_nuoc');   //json
+            $table->text('range_dien');   //json
+            $table->text('range_nuoc');   //json
 
             $table->integer('tien_phong');  //Hop-dong
             $table->integer('tien_dien');   //Range-dinh-muc-enum
             $table->integer('tien_nuoc');   //Range-dinh-muc-enum
             $table->integer('tien_net');    //Enum
             $table->integer('tien_rac');    //Enum
+            $table->integer('tong_cong');
 
             $table->string('chi_phi_khac'); //json
 
             $table->string('status', 10);
-            $table->string('ghi_chu');
+            $table->string('ghi_chu')->nullable();
 
             $table->integer('created_by');
             $table->timestamp('created', 0)->nullable();

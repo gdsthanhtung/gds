@@ -22,7 +22,7 @@ class HoaDonModel extends Model
     protected $tableCongDan = 'cong_dans';
     protected $tableNhanKhau = 'nhan_khaus';
 
-    protected $crudNotAccepted = ['_token', 'task'];
+    protected $crudNotAccepted = ['_token', 'task', 'is-city-enum', 'hoa-don-enum', 'yes-no-enum', 'hop-dong-list'];
 
     public function listItems($params = null, $options = null){
         $table = $this->table.' as main';
@@ -100,13 +100,12 @@ class HoaDonModel extends Model
         }
 
         if($options['task'] == 'add' || $options['task'] == 'edit'){
-            $params['thue_tu_ngay'] = Carbon::parse( $params['thue_tu_ngay'])->format('Y-m-d');
-            $params['thue_den_ngay'] = Carbon::parse( $params['thue_den_ngay'])->format('Y-m-d');
+            $params['tu_ngay'] = Carbon::parse( $params['tu_ngay'])->format('Y-m-d');
+            $params['den_ngay'] = Carbon::parse( $params['den_ngay'])->format('Y-m-d');
         }
 
         if($options['task'] == 'add'){
             $paramsNew = array_diff_key($params, array_flip($this->crudNotAccepted));
-            $paramsNew['ma_hop_dong'] = Carbon::now()->format('YmdHi');
             $paramsNew['created'] = Carbon::now();
             $paramsNew['created_by'] = $paramsNew['modified_by'] = $loginUserId;
             $result = Self::insert($paramsNew);

@@ -16,21 +16,147 @@ $(document).ready(function() {
         $(this).datepicker();
     });
 
-    // START PROCESS SELEC T HOPDONG TO CACL HOADON =========================================================================
+    // START PROCESS SELECT HOPDONG TO CACL HOADON =========================================================================
     $('#hop_dong_id').on('change', function (event) {
-        let hopDongList   = JSON.parse($('#hop-dong-list').val());
+        let hopDongList = JSON.parse($('#hop-dong-list').val());
         let yesNoEnum   = JSON.parse($('#yes-no-enum').val());
-        let hopdongId = $(this).val()
-        let hd = hopDongList[hopdongId];
+        let hoaDonEnum  = JSON.parse($('#hoa-don-enum').val());
+        let isCityEnum  = JSON.parse($('#is-city-enum').val());
+        let hopdongId   = $(this).val();
+        let hd          = hopDongList[hopdongId];
 
-        $('#tien_phong').val(hd['gia_phong']);
-        $('#approve-e').html(yesNoEnum[hd['huong_dinh_muc_dien']]);
-        $('#approve-w').html(yesNoEnum[hd['huong_dinh_muc_nuoc']]);
+        $('.zero').val(0);
+        $('.n-a').html('N/A');
 
-        console.log(hopDongList);
-
+        if(hd !== undefined){
+            $('#tien_phong').val(hd['gia_phong']);
+            $('#is-city').html(isCityEnum[hd['is_city']]);
+            $('#approve-e').html(yesNoEnum[hd['huong_dinh_muc_dien']]);
+            $('#approve-w').html(yesNoEnum[hd['huong_dinh_muc_nuoc']]);
+            $('#is-city-input').val(hd['is_city']);
+            $('#approve-e-input').val(hd['huong_dinh_muc_dien']);
+            $('#approve-w-input').val(hd['huong_dinh_muc_nuoc']);
+            $('#tien_rac').val(hoaDonEnum['tienRac']);
+            $('#tien_net').val(0); if(hd['use_internet'] === 1) $('#tien_net').val(hoaDonEnum['tienNet']);
+        }
+        processW();
+        processE();
+        calTongHoaDon();
     })
-    // END PROCESS SELEC T HOPDONG TO CACL HOADON =========================================================================
+
+    $('.chi_so_dien').on('keyup', function (event) {
+        processE();
+    })
+
+    $('.chi_so_nuoc').on('keyup', function (event) {
+        processW();
+    })
+
+    function processE(){
+        let range   = JSON.parse($('#e-range').val())['detail'];
+        let moi     = Number($('#chi_so_dien').val());
+        let cu      = Number($('#chi_so_dien_ky_truoc').val());
+        let used    = Math.abs(moi-cu);
+        if(moi == 0) return;
+        if (moi < cu) {
+            alert('Chỉ số mới không được nhỏ hơn chỉ số kỳ trước');
+            $('#tien_dien').val(0);
+            $('#chi-tiet-dien').html('N/A');
+            return;
+        }
+
+        if(used > 2000) {
+            alert('Lượng nước sử dụng quá lớn (hơn 2000 m3), vui lòng kiểm tra lại.');
+            return;
+        }
+
+        let cost = 0;
+        let eCaled = 0;
+        let rPrice = [];
+        let htmlDetail = '';
+        for (let i = 0; i < range.length; i++) {
+            let limit = range[i].limit;
+            let price = range[i].price;
+            let e = used - (limit + eCaled);
+            if(e < 0){
+                let x = used - eCaled;
+                cost += x*price;
+                rPrice.push([{'cs': x},{'pr': price},{'cs': x*price}]);
+                htmlDetail += '<tr><th scope="row">'+(i+1)+'</th><td>'+x+'</td><td>'+vnd(price)+'</td><td>'+vnd(x*price)+'</td></tr>';
+                break;
+            }else{
+                rPrice.push([{'cs': limit},{'pr': price},{'cs': limit*price}]);
+                htmlDetail += '<tr><th scope="row">'+(i+1)+'</th><td>'+limit+'</td><td>'+vnd(price)+'</td><td>'+vnd(limit*price)+'</td></tr>';
+                cost += limit*price;
+            }
+            eCaled += limit;
+        }
+        //console.log(eCaled, rPrice, cost);
+        $('#su_dung_dien').val(used);
+        $('#tien_dien').val(cost);
+
+        if(htmlDetail){
+            htmlDetail += '<tr><th scope="row">Tổng</th><td colspan="2">'+eCaled+'(kw)</td><td>'+vnd(cost)+'</td></tr>';
+        }
+        let tableHtml = '<table class="table table-bordered chi-tiet-dien-nuoc"><thead><tr><th scope="col">#</th><th scope="col">Lượng điện (kw)</th><th scope="col">Giá</th><th scope="col">Số tiền</th></tr></thead><tbody>'+htmlDetail+'</tbody></table>'
+        $('#chi-tiet-dien').html(tableHtml);
+    }
+
+    function processW(){
+        let range   = JSON.parse($('#w-range').val())['detail'];
+        let moi     = Number($('#chi_so_nuoc').val());
+        let cu      = Number($('#chi_so_nuoc_ky_truoc').val());
+        let used    = Math.abs(moi-cu);
+        if(moi == 0) return;
+        if (moi < cu) {
+            alert('Chỉ số mới không được nhỏ hơn chỉ số kỳ trước');
+            $('#tien_nuoc').val(0);
+            $('#chi-tiet-nuoc').html('N/A');
+            return;
+        }
+
+        let hopDongList = JSON.parse($('#hop-dong-list').val());
+        let hopdongId   = $('#hop_dong_id').val();
+        let hd          = hopDongList[hopdongId];
+        let cost        = 0;
+        let htmlDetail  = 'N/A';
+
+        if(hd == undefined){
+            $('#chi-tiet-nuoc').html('<span class="text-danger">Chọn Hợp đồng trước...</span>');
+            return;
+        }else{
+            cost = used * range[Number(hd['is_city'])];
+            htmlDetail  = '<tr><th scope="row">Tổng</th><td>'+used+'(m3)</td><td>'+range[Number(hd['is_city'])]+'</td><td>'+vnd(cost)+'</td></tr>';;
+        }
+
+        $('#su_dung_nuoc').val(used);
+        $('#tien_nuoc').val(cost);
+        let tableHtml = '<table class="table table-bordered chi-tiet-dien-nuoc"><thead><tr><th scope="col">#</th><th scope="col">Lượng nước (m3)</th><th scope="col">Giá</th><th scope="col">Số tiền</th></tr></thead><tbody>'+htmlDetail+'</tbody></table>'
+        $('#chi-tiet-nuoc').html(tableHtml);
+    }
+
+    $('.zero').on('keyup', function (event) {
+        calTongHoaDon();
+    })
+
+    function calTongHoaDon(){
+        let tienPhong   = Number($('#tien_phong').val());
+        let tienDien    = Number($('#tien_dien').val());
+        let tienNuoc    = Number($('#tien_nuoc').val());
+        let tienRac     = Number($('#tien_rac').val());
+        let tienNet     = Number($('#tien_net').val());
+        let tienKhac    = Number($('#tien_khac').val());
+        //console.log(tienDien, tienNuoc, tienPhong, tienNet, tienRac, tienKhac);
+        let tong = tienDien + tienNuoc + tienPhong + tienNet + tienRac + tienKhac;
+        let tc = vnd(tong);
+        $('#tc').val(tc);
+        $('#tong-cong').val(tong);
+    }
+
+    function vnd(data){
+        return data.toLocaleString('vi-VN', {style : 'currency', currency : 'VND'});
+    }
+    // END PROCESS SELECT HOPDONG TO CACL HOADON =========================================================================
 
 
     // START MODAL NHAN KHAU IN HOP DONG MODULE LIST =========================================================================

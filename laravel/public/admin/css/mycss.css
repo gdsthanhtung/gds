@@ -132,3 +132,24 @@ span.highlight{
 .text-left {
     text-align: left !important;
 }
+
+.chi-tiet-dien-nuoc {
+    width: 350px;
+    font-size: 13px;
+    text-align: right !important;
+}
+
+#tc {
+    border: 0px solid #fff;
+    background-color: #fff;
+    color: #46b8da;
+    font-size: 130%;
+    font-weight: bold;
+}
+
+.input-like-text {
+    padding-top: 7px;
+    border: none;
+    background: none;
+    font-weight: bolder;
+}

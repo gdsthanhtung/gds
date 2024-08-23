@@ -4,6 +4,11 @@ use Config;
 use Carbon\Carbon;
 
 class Template {
+    public static function showNum($data, $currency = false){
+        $c = ($currency) ? ' đ' : '';
+        return number_format($data, 0, ',', '.').$c;
+    }
+
     public static function showDate($date, $compareToday = false, $separator = false){
         $d = sprintf ("%s", date(Config::get('custom.format.shortTime'), strtotime($date)));
         if($compareToday == false){
@@ -24,6 +29,13 @@ class Template {
 
     public static function showItemStatus($ctrl, $id, $status){
         $rule = Config::get('custom.enum.ruleStatus');
+        $tpl = (isset($rule[$status])) ? $rule[$status] : $rule['unknown'];
+        $link = route($ctrl.'/change-status', ['id' => $id, 'status' => $status]);
+        return sprintf ("<a href='%s' type='button' class='btn btn-round %s'>%s</a>", $link, $tpl['class'], $tpl['name']);
+    }
+
+    public static function showItemStatusHoaDon($ctrl, $id, $status){
+        $rule = Config::get('custom.enum.ruleStatusHoaDon');
         $tpl = (isset($rule[$status])) ? $rule[$status] : $rule['unknown'];
         $link = route($ctrl.'/change-status', ['id' => $id, 'status' => $status]);
         return sprintf ("<a href='%s' type='button' class='btn btn-round %s'>%s</a>", $link, $tpl['class'], $tpl['name']);

@@ -89,7 +89,6 @@ class HoaDonController extends Controller
             $selectHopDong[$hd['id']] = $hd['ma_hop_dong'].' - '.$hd['pt_name'].' - '.$hd['cd_fullname'];
             $dataHopDong[$hd['id']] = $hd;
         }
-        dump($selectHopDong);
 
         $shareData = [
             'data' => $data,

@@ -15,10 +15,11 @@
         <div class="row">
             @include($pathViewTemplate . 'error')
 
-            @include($pathView.'form_hd')
             @if($id)
-                @include($pathView.'form_nk')
+                @include($pathView.'form_hd_view')
                 @include($pathView.'form_at')
+            @else
+                @include($pathView.'form_hd')
             @endif
         </div>
     </div>

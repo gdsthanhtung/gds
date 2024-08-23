@@ -57,11 +57,14 @@ return [
         'formLabel' => [
             'class' => 'control-label col-md-3 col-sm-3 col-xs-12'
         ],
+        'formLabelRight' => [
+            'class' => 'control-label col-md-9 col-sm-9 col-xs-12 text-left'
+        ],
         'formInput' => [
-            'class' => 'form-control col-md-7 col-xs-12'
+            'class' => 'form-control col-md-7 col-sm-7 col-xs-12'
         ],
         'formInputDateRange' => [
-            'class' => 'form-control col-md-3 col-xs-6'
+            'class' => 'form-control col-md-3 col-sm-7 col-xs-6'
         ]
     ],
     'enum' => [
@@ -69,6 +72,12 @@ return [
         'ruleStatus'    => [
             'active'    => ['name' => 'Kích hoạt', 'class' => 'btn-success'],
             'inactive'  => ['name' => 'Chưa kích hoạt', 'class' => 'btn-warning'],
+            'all'       => ['name' => 'Tất cả', 'class' => 'btn-primary'],
+            'unknown'   => ['name' => 'Không xác định', 'class' => 'btn-danger']
+        ],
+        'ruleStatusHoaDon'    => [
+            'active'    => ['name' => 'Đã thanh toán', 'class' => 'btn-success'],
+            'inactive'  => ['name' => 'Chưa thanh toán', 'class' => 'btn-warning'],
             'all'       => ['name' => 'Tất cả', 'class' => 'btn-primary'],
             'unknown'   => ['name' => 'Không xác định', 'class' => 'btn-danger']
         ],
@@ -172,9 +181,70 @@ return [
             [
                 "time" => "202408",
                 "detail" => [
-                    "100" => 3000,
-                    "200" => 3500,
-                    "10000"=> 4000
+                    [
+                        'limit'=> 100,
+                        'price'=> 3000
+                    ],[
+                        'limit'=> 100,
+                        'price'=> 3100
+                    ],[
+                        'limit'=> 100,
+                        'price'=> 3200
+                    ],[
+                        'limit'=> 100,
+                        'price'=> 3300
+                    ],[
+                        'limit'=> 100,
+                        'price'=> 3400
+                    ],[
+                        'limit'=> 100,
+                        'price'=> 3500
+                    ],[
+                        'limit'=> 100,
+                        'price'=> 3600
+                    ],[
+                        'limit'=> 100,
+                        'price'=> 3700
+                    ],[
+                        'limit'=> 100,
+                        'price'=> 3800
+                    ],[
+                        'limit'=> 100,
+                        'price'=> 3900
+                    ],[
+                        'limit'=> 100,
+                        'price'=> 4000
+                    ],[
+                        'limit'=> 100,
+                        'price'=> 4100
+                    ],[
+                        'limit'=> 100,
+                        'price'=> 4200
+                    ],[
+                        'limit'=> 100,
+                        'price'=> 4300
+                    ],[
+                        'limit'=> 100,
+                        'price'=> 4400
+                    ],[
+                        'limit'=> 100,
+                        'price'=> 4500
+                    ],[
+                        'limit'=> 100,
+                        'price'=> 4600
+                    ],[
+                        'limit'=> 100,
+                        'price'=> 4700
+                    ],[
+                        'limit'=> 100,
+                        'price'=> 4800
+                    ],[
+                        'limit'=> 100,
+                        'price'=> 4900
+                    ],[
+                        'limit'=> 100,
+                        'price'=> 5000
+                    ]
                 ]
             ]
         ],
@@ -183,7 +253,7 @@ return [
                 "time" => "202408",
                 "detail" => [
                     "0" => 15000,
-                    "100" => 27000
+                    "1" => 27000
                 ]
             ]
         ],
