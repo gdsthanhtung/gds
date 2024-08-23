@@ -42,15 +42,8 @@
     $hoaDonEnum     = Config::get('custom.enum.hoaDon');
     $isCityEnum     = Config::get('custom.enum.isCity');
 
-    $hiddenHopDongList  = Form::text('hop-dong-list', json_encode($dataHopDong), ['id' => 'hop-dong-list']);
-    $hiddenHoaDonEnum   = Form::text('hoa-don-enum', json_encode($hoaDonEnum), ['id' => 'hoa-don-enum']);
-    $hiddenYesNoEnum    = Form::text('yes-no-enum', json_encode($yesnoEnum), ['id' => 'yes-no-enum']);
-    $hiddenIsCityEnum   = Form::text('is-city-enum', json_encode($isCityEnum), ['id' => 'is-city-enum']);
-    $hiddenERange       = Form::text('range_dien', json_encode($eRangeEnum[0]), ['id' => 'e-range']);
-    $hiddenWRange       = Form::text('range_nuoc', json_encode($wRangeEnum[0]), ['id' => 'w-range']);
-
-    $eDetail = Calc::calcE($rangeE, $data['chi_so_dien']);
-    $wDetail = Calc::calcW($rangeW, $data['chi_so_nuoc'], $isCity);
+    $eDetail = Calc::calcE($rangeE, $data['chi_so_dien'] - $data['chi_so_dien_ky_truoc']);
+    $wDetail = Calc::calcW($rangeW, $data['chi_so_nuoc'] - $data['chi_so_nuoc_ky_truoc'], $isCity);
 
     $element = [
         [

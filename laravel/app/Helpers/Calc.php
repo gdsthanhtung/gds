@@ -18,12 +18,14 @@ class Calc {
                 $x = $used - $eCaled;
                 $cost += ($x*$price);
                 $htmlDetail .= '<tr><th scope="row">'.($i+1).'</th><td>'.$x.'</td><td>'.Template::showNum($price, true).'</td><td>'.Template::showNum($x*$price, true).'</td></tr>';
+                $eCaled += $x;
                 break;
             }else{
                 $cost += ($limit*$price);
                 $htmlDetail .= '<tr><th scope="row">'.($i+1).'</th><td>'.$limit.'</td><td>'.Template::showNum($price, true).'</td><td>'.Template::showNum($limit*$price, true).'</td></tr>';
+                $eCaled += $limit;
             }
-            $eCaled += $limit;
+
         }
 
         if($htmlDetail){

@@ -83,13 +83,14 @@ $(document).ready(function() {
                 cost += x*price;
                 rPrice.push([{'cs': x},{'pr': price},{'cs': x*price}]);
                 htmlDetail += '<tr><th scope="row">'+(i+1)+'</th><td>'+x+'</td><td>'+vnd(price)+'</td><td>'+vnd(x*price)+'</td></tr>';
+                eCaled += x;
                 break;
             }else{
                 rPrice.push([{'cs': limit},{'pr': price},{'cs': limit*price}]);
                 htmlDetail += '<tr><th scope="row">'+(i+1)+'</th><td>'+limit+'</td><td>'+vnd(price)+'</td><td>'+vnd(limit*price)+'</td></tr>';
                 cost += limit*price;
+                eCaled += limit;
             }
-            eCaled += limit;
         }
         //console.log(eCaled, rPrice, cost);
         $('#su_dung_dien').val(used);
