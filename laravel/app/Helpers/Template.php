@@ -72,9 +72,9 @@ class Template {
         return $html;
     }
 
-    public static function showButtonFilter($ctrl, $countByStatus, $params){
+    public static function showButtonFilter($ctrl, $countByStatus, $params, $enum = 'ruleStatus'){
         $html = "";
-        $rule = Config::get('custom.enum.ruleStatus');
+        $rule = Config::get('custom.enum.'.$enum);
 
         $searchValue    = ($params["filter"]['searchValue']) ? '&searchValue='.$params["filter"]['searchValue'] : '';
         $searchField    = ($params["filter"]['searchValue']) ? '&searchField='.$params["filter"]['searchField'] : '';

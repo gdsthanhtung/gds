@@ -2,7 +2,7 @@
 
 @php
     use App\Helpers\Template;
-    $statusFilter = Template::showButtonFilter($ctrl, $countByStatus, $params);
+    $statusFilter = Template::showButtonFilter($ctrl, $countByStatus, $params, 'ruleStatusHoaDon');
     $searchArea = Template::showsearchArea($ctrl, $params, 'searchSelectionHopDong');
 @endphp
 @section('content')
