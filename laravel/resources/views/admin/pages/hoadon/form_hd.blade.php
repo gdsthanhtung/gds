@@ -9,8 +9,8 @@
     $hopDongId      = $id ? $data['hop_dong_id'] : '';
     $isCity         = $id ? $data['is_city'] : 0;
 
-    $fromDate       = $id ? $data['tu_ngay']  : Carbon::now()->format('d-m-Y');                                $fromDate   = Carbon::parse($fromDate)->format('d-m-Y');
-    $toDate         = $id ? $data['den_ngay'] : Carbon::create(Carbon::now()->format('d-m-Y'))->addYear(1);    $toDate     = Carbon::parse($toDate)->format('d-m-Y');
+    $fromDate       = $id ? $data['tu_ngay']  : Carbon::now()->startOfMonth()->format('d-m-Y');                 $fromDate   = Carbon::parse($fromDate)->format('d-m-Y');
+    $toDate         = $id ? $data['den_ngay'] : Carbon::create(Carbon::now()->endOfMonth()->format('d-m-Y'));   $toDate     = Carbon::parse($toDate)->format('d-m-Y');
 
     $numberEOld     = $id ? $data['chi_so_dien_ky_truoc'] : 0;
     $numberWOld     = $id ? $data['chi_so_nuoc_ky_truoc'] : 0;
@@ -171,3 +171,4 @@
         </div>
     </div>
 </div>
+

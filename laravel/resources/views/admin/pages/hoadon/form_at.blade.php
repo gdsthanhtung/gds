@@ -11,7 +11,7 @@
         <div class="x_content">
             <div class="x_content">
                 <div class="col-md-6 col-sm-6 col-xs-6">
-                    <p><a href="{{route('congdan/ct01', ['id' => $data['cong_dan_id']])}}" target="_blank" class="btn btn-warning">Mẫu CT01</a></p>
+                    <p><a href="{{route($ctrl.'/export', ['id' => $id])}}" target="_blank" class="btn btn-warning">In hóa đơn</a></p>
                 </div>
 
                 <div class="col-md-6 col-sm-6 col-xs-6">

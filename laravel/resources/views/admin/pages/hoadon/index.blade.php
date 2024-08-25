@@ -10,7 +10,8 @@
         @include($pathViewTemplate . 'page_header',
             [
                 'title' => $pageTitle,
-                'button' => '<a href="'.route($ctrl."/form").'" class="btn btn-success"><i class="fa fa-plus-circle"></i> Thêm mới</a>'
+                'button' => '<a href="'.route($ctrl."/export",['task' => 'uncharged']).'" class="btn btn-primary"><i class="fa fa-file"></i> Xuất HĐ chưa thanh toán</a>
+                             <a href="'.route($ctrl."/form").'" class="btn btn-success"><i class="fa fa-plus-circle"></i> Thêm mới</a>'
             ])
 
         @include($pathViewTemplate.'notify')

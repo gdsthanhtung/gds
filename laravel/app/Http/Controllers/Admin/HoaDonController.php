@@ -12,6 +12,7 @@ use Config;
 
 use App\Models\HopDongModel;
 use App\Helpers\Template;
+use PDF;
 
 class HoaDonController extends Controller
 {
@@ -131,5 +132,62 @@ class HoaDonController extends Controller
             $rs = $this->mainModel->saveItem($params, ['task' => $task]);
         }
         return redirect()->route($this->moduleName)->with('notify', Notify::export($rs));
+    }
+
+    public function prev_invoice(Request $rq)
+    {
+        $data = [];
+        $id = $rq->id;
+        $type = $rq->type;
+
+        if($id){
+             $params = [
+                'id'    => $id
+            ];
+            $data = $this->mainModel->getItem($params, ['task' => 'get-prev-invoice']);
+        }
+        if($type == 'json'){
+            return response()->json($data);
+        }else{
+            return $data;
+        }
+
+    }
+
+    public function export(Request $rq)
+    {
+        $id = 0;
+        $data = [];
+        $task = $rq->task;
+        if($task == 'uncharged'){
+            $params = [
+                'status'    => 'inactive'
+            ];
+            $data = $this->mainModel->getItem($params, ['task' => 'get-item-by-status']);
+        }else{
+            $id = $rq->id;
+            $id = explode(',', $id);
+            if($id){
+                $params = [
+                    'id'    => $id
+                ];
+                $data = $this->mainModel->getItem($params, ['task' => 'get-item-in']);
+            }
+        }
+
+        if(!$data)
+            return redirect()->route($this->moduleName)->with('notify', ['type' => 'danger', 'message' => 'Data is not available!']);
+
+        $shareData = [
+            'dataHoaDon' => $data,
+            'id' => $id
+        ];
+
+        //return view($this->getPathView('export'), $shareData);
+
+        $pdf = PDF::loadView($this->getPathView('export'), $shareData);
+        //return $pdf->stream()->header('Content-Type','application/pdf');
+        return $pdf->download('hoadon.pdf');
+
     }
 }

@@ -17,7 +17,8 @@ $(document).ready(function() {
     });
 
     // START PROCESS SELECT HOPDONG TO CACL HOADON =========================================================================
-    $('#hop_dong_id').on('change', function (event) {
+    $('#hop_dong_id').on('change', function (e) {
+        e.preventDefault();
         let hopDongList = JSON.parse($('#hop-dong-list').val());
         let yesNoEnum   = JSON.parse($('#yes-no-enum').val());
         let hoaDonEnum  = JSON.parse($('#hoa-don-enum').val());
@@ -38,6 +39,25 @@ $(document).ready(function() {
             $('#approve-w-input').val(hd['huong_dinh_muc_nuoc']);
             $('#tien_rac').val(hoaDonEnum['tienRac']);
             $('#tien_net').val(0); if(hd['use_internet'] === 1) $('#tien_net').val(hoaDonEnum['tienNet']);
+
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url : "prev-invoice",
+                data : {'id': hopdongId, 'type': 'json'},
+                type : 'GET',
+                dataType : 'json',
+                success : function(result){
+                    if(result){
+                        $('#chi_so_dien_ky_truoc').val(result.chi_so_dien);
+                        $('#chi_so_nuoc_ky_truoc').val(result.chi_so_nuoc);
+                    }else{
+                        $('#chi_so_dien_ky_truoc').val(0);
+                        $('#chi_so_nuoc_ky_truoc').val(0);
+                    }
+                }
+            });
         }
         processW();
         processE();

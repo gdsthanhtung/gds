@@ -21,6 +21,7 @@ class HoaDonModel extends Model
     protected $tablePhongTro = 'phong_tros';
     protected $tableCongDan = 'cong_dans';
     protected $tableNhanKhau = 'nhan_khaus';
+    protected $tableHopDong = 'hop_dongs';
 
     protected $crudNotAccepted = ['_token', 'task', 'is-city-enum', 'hoa-don-enum', 'yes-no-enum', 'hop-dong-list'];
 
@@ -124,6 +125,25 @@ class HoaDonModel extends Model
         $result = null;
         if($options['task'] == 'get-item'){
             $result = Self::select('*')->where('id', $params['id'])->first();
+        }
+        if($options['task'] == 'get-item-in'){
+            $query = Self::from($this->table.' as main');
+            $query->select(DB::raw('main.*, pt.name as pt_name, cd.fullname as cd_fullname'));
+            $query->leftJoin($this->tableHopDong.' as hdg', 'hdg.id',   '=', 'main.hop_dong_id');
+            $query->leftJoin($this->tablePhongTro.' as pt', 'pt.id',    '=', 'hdg.phong_id');
+            $query->leftJoin($this->tableCongDan.' as cd',  'cd.id',    '=', 'hdg.cong_dan_id');
+            $result = $query->whereIn('main.id', $params['id'])->get()->toArray();
+        }
+        if($options['task'] == 'get-item-by-status'){
+            $query = Self::from($this->table.' as main');
+            $query->select(DB::raw('main.*, pt.name as pt_name, cd.fullname as cd_fullname'));
+            $query->leftJoin($this->tableHopDong.' as hdg', 'hdg.id',   '=', 'main.hop_dong_id');
+            $query->leftJoin($this->tablePhongTro.' as pt', 'pt.id',    '=', 'hdg.phong_id');
+            $query->leftJoin($this->tableCongDan.' as cd',  'cd.id',    '=', 'hdg.cong_dan_id');
+            $result = $query->where('main.status', $params['status'])->get()->toArray();
+        }
+        if($options['task'] == 'get-prev-invoice'){
+            $result = Self::select('*')->where('hop_dong_id', $params['id'])->latest()->first();
         }
         return $result;
     }
