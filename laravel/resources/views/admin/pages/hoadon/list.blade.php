@@ -36,8 +36,8 @@ use App\Helpers\Highlight;
                                 $avatar         = ($item['cd_avatar']) ? 'avatar/'.$item['cd_avatar'] : Config::get("custom.enum.defaultPath.avatar");
                                 $avatar         = Template::showItemAvatar('congdan', $avatar, $item['cd_avatar']);
 
-                                $numberE        = Template::numberFormat($item['chi_so_dien'] - $item['chi_so_dien_ky_truoc']);
-                                $numberW        = Template::numberFormat($item['chi_so_nuoc'] - $item['chi_so_nuoc_ky_truoc']);
+                                $numberE        = Template::showNum($item['chi_so_dien'] - $item['chi_so_dien_ky_truoc']);
+                                $numberW        = Template::showNum($item['chi_so_nuoc'] - $item['chi_so_nuoc_ky_truoc']);
 
                                 $tongCong       = Template::showNum($item['tong_cong'], true);
 

@@ -40,9 +40,9 @@ use App\Helpers\Highlight;
                                 $avatar         = ($item['cd_avatar']) ? 'avatar/'.$item['cd_avatar'] : Config::get("custom.enum.defaultPath.avatar");
                                 $avatar         = Template::showItemAvatar('congdan', $avatar, $item['cd_avatar']);
 
-                                $price          = Template::currencyFormat($item['gia_phong']);
-                                $numberE        = Template::numberFormat($item['chi_so_dien']);
-                                $numberW        = Template::numberFormat($item['chi_so_nuoc']);
+                                $price          = Template::showNum($item['gia_phong'], true);
+                                $numberE        = Template::showNum($item['chi_so_dien']);
+                                $numberW        = Template::showNum($item['chi_so_nuoc']);
 
                                 $status         = Template::showItemStatus($ctrl, $id, $item['status']);
                                 $createdHis     = Template::showItemHistory($item['created_by_name'], $item['created']);

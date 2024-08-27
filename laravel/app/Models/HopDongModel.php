@@ -58,7 +58,9 @@ class HopDongModel extends Model
 
         if($options['task'] == 'admin-list-items-for-select'){
             $query = Self::from($table);
-            $query->select(DB::raw('main.*, pt.name as pt_name, cd.avatar as cd_avatar, cd.fullname as cd_fullname, cd.cccd_number as cd_cccd_number, cd.status as cd_status, cd.is_city, c_user.fullname as created_by_name, u_user.fullname as modified_by_name'));
+            $query->select(DB::raw('main.*, pt.name as pt_name, cd.avatar as cd_avatar, cd.fullname as cd_fullname, cd.cccd_number as cd_cccd_number,
+                                    cd.status as cd_status, cd.is_city, c_user.fullname as created_by_name, u_user.fullname as modified_by_name,
+                                    is_city_0, is_city_1'));
 
             $query->where('main.status', 'active');
 
@@ -66,6 +68,15 @@ class HopDongModel extends Model
             $query->leftJoin($this->tableCongDan.' as cd', 'cd.id', '=', 'main.cong_dan_id');
             $query->leftJoin($this->tableUser.' as c_user', 'c_user.id', '=', 'main.created_by');
             $query->leftJoin($this->tableUser.' as u_user', 'u_user.id', '=', 'main.modified_by');
+            $query->leftJoin(DB::raw('
+                    (SELECT nk.hop_dong_id, COUNT(cd.is_city) as count_is_city,
+                    COUNT(IF(cd.is_city = 1, cd.is_city, NULL)) AS is_city_1,
+                    COUNT(IF(cd.is_city = 0, cd.is_city, NULL)) AS is_city_0
+                    FROM nhan_khaus as nk
+                    LEFT JOIN cong_dans as cd ON cd.id = nk.cong_dan_id
+                    GROUP BY nk.hop_dong_id
+                    ORDER BY  nk.hop_dong_id)
+                 AS nk_city'), 'nk_city.hop_dong_id', '=', 'main.id');
             $result = $query->orderBy('main.id', 'desc')->get()->toArray();
         }
 

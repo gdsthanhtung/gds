@@ -152,17 +152,6 @@ class Template {
         return $html;
     }
 
-    public static function currencyFormat($number, $suffix = 'đ') {
-        if (!empty($number)) {
-            return number_format($number, 0, ',', '.') . "{$suffix}";
-        }
-    }
-    public static function numberFormat($number) {
-        if (!empty($number)) {
-            return number_format($number, 0, '.', ',');
-        }
-    }
-
     public static function radioSelect($listToSelect = [], $elName = 'noname', $valToChecked = null){
         $html = '';
         foreach ($listToSelect as $value => $title) {

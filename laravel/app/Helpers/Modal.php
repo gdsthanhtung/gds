@@ -26,7 +26,7 @@ class Modal {
                                         <a href="#">'.$avatar.'</a>
                                     </div>
                                     <div class="media-body">
-                                        <h5 class="media-heading">'.$item['fullname'].' ('.$mqhEnum[$item['mqh_chu_phong']].')</h5>
+                                        <h5 class="media-heading">'.$item['fullname'].' <br> ('.$mqhEnum[$item['mqh_chu_phong']].')</h5>
                                         CCCD: '.$item['cccd_number'].' <br>
                                         Ngày cấp: '.Template::showDate($item['cccd_dos']).' <br>
                                         Trạng thái: '.$statusEnum[$item['status']].' <br>

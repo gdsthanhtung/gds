@@ -86,7 +86,7 @@ $(document).ready(function() {
         }
 
         if(used > 2000) {
-            alert('Lượng nước sử dụng quá lớn (hơn 2000 m3), vui lòng kiểm tra lại.');
+            alert('Lượng điện sử dụng quá lớn (hơn 2000kw), vui lòng kiểm tra lại.');
             return;
         }
 
@@ -149,6 +149,7 @@ $(document).ready(function() {
             cost = used * range[Number(hd['is_city'])];
             htmlDetail  = '<tr><th scope="row">Tổng</th><td>'+used+'(m3)</td><td>'+range[Number(hd['is_city'])]+'</td><td>'+vnd(cost)+'</td></tr>';;
         }
+        console.log(hd);
 
         $('#su_dung_nuoc').val(used);
         $('#tien_nuoc').val(cost);
