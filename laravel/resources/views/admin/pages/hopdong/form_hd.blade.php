@@ -81,7 +81,7 @@
         ],
         [
             'label' => Form::label('ghi_chu', 'Ghi chú', ['class' => $formLabelClass]),
-            'el'    => Form::textarea('ghi_chu', $note, ['class' => $formInputClass, 'required' => true, 'rows' => 3])
+            'el'    => Form::textarea('ghi_chu', $note, ['class' => $formInputClass, 'rows' => 3])
         ],
         [
             'el' => $hiddenID . $hiddenTask . Form::submit('Lưu', ['class' => 'btn btn-success']),

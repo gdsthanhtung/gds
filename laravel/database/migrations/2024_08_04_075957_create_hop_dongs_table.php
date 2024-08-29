@@ -25,7 +25,7 @@ return new class extends Migration
             $table->boolean('huong_dinh_muc_nuoc');
             $table->boolean('use_internet');
             $table->string('status', 10);
-            $table->string('ghi_chu');
+            $table->string('ghi_chu')->nullable();
 
             $table->integer('created_by');
             $table->timestamp('created', 0)->nullable();

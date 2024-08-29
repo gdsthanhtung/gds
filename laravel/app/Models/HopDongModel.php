@@ -74,6 +74,7 @@ class HopDongModel extends Model
                     COUNT(IF(cd.is_city = 0, cd.is_city, NULL)) AS is_city_0
                     FROM nhan_khaus as nk
                     LEFT JOIN cong_dans as cd ON cd.id = nk.cong_dan_id
+                    WHERE cd.status = "active"
                     GROUP BY nk.hop_dong_id
                     ORDER BY  nk.hop_dong_id)
                  AS nk_city'), 'nk_city.hop_dong_id', '=', 'main.id');
