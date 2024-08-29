@@ -186,7 +186,7 @@ class HoaDonController extends Controller
         //return view($this->getPathView('export'), $shareData);
 
         $pdf = PDF::loadView($this->getPathView('export'), $shareData);
-        //return $pdf->stream()->header('Content-Type','application/pdf');
+        return $pdf->stream()->header('Content-Type','application/pdf');
         return $pdf->download('hoadon.pdf');
 
     }

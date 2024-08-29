@@ -6,6 +6,7 @@
     $qrThanhToan = public_path('images/hoadon/qr-thanh-toan/scb-hvs.jpg');
 
     use App\Helpers\Template;
+    use App\Helpers\Calc;
     use Carbon\Carbon;
 
     $i = 1;
@@ -68,15 +69,15 @@
         }
 
         .normal-text {
-            margin: 5px;
+            margin: 3px;
         }
 
         .height-high {
-            height: 5px;
+            height: 2px;
         }
 
         .height-normal {
-            height: 3px;
+            height: 1px;
         }
 
         .font-size10 {
@@ -113,9 +114,13 @@
             padding-top: 5px;
         }
 
+        p {
+            line-height: 85%;
+        }
+
         .table {
             border-collapse: collapse;
-            line-height: 90%;
+            line-height: 85%;
             width: 100%;
             font-weight: normal !important
         }
@@ -123,7 +128,7 @@
         .body-content{
             border-radius: 7px;
             border: 1px solid gray;
-            padding: 15px;
+            padding: 10px 15px;
             margin-bottom: 20px
         }
 
@@ -137,12 +142,19 @@
             margin: 20px 0;
         }
 
-        td.right{
-            padding-right: 10px
-        }
-
         .qr{
             border-radius: 5px;
+        }
+        .line-dotted{
+            border-bottom: 1px dotted gray;
+        }
+
+        #detail-e-w td{
+            vertical-align: top;
+        }
+
+        .chi-phi{
+            padding-left: 10px
         }
     </style>
 </head>
@@ -173,63 +185,71 @@
             $phong          = $data['pt_name'];
             $now            = Carbon::parse($data['created'])->format('d/m/Y H:i:s');
             $note           = ($data['ghi_chu']) ? "(".$data['ghi_chu'].")" : '';
+
+            $detailE = Calc::calcE($data['range_dien'], $data['chi_so_dien'] - $data['chi_so_dien_ky_truoc'], true);
+            $detailW = Calc::calcW($data['tien_nuoc_detail'], true);
         @endphp
         <div class="body-content">
             <table class="table">
                 <tbody>
                     <tr>
                         <td>
-                            <p class="center normal-text font-size17"><strong>HÓA ĐƠN TIỀN NHÀ</strong></p>
-                            <p class="center normal-text font-size12">Từ ngày {{ $fromDate }} đến {{ $toDate }}</p>
+                            <p class="left normal-text font-size17"><strong>HÓA ĐƠN TIỀN NHÀ</strong></p>
+                            <p class="left normal-text font-size12">Từ ngày {{ $fromDate }} đến {{ $toDate }}</p>
                         </td>
-                        <td rowspan="2" width="200px" class="center">
+                        <td rowspan="2" width="300px" class="center">
                             <img class="qr" src="{!! $qrThanhToan !!}" height="80px">
-                            <p class="normal-text font-size11">CTK: HUYNH VAN SON<br>NH: Sacombank<br>STK: 060286635353</p>
+                            <p class="normal-text font-size11">CTK: HUYNH VAN SON<br>NH: Sacombank - STK: 060286635353</p>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <p class="normal-text font-size12"><strong>{{ $phong}}</strong></p>
-                            <p class="normal-text font-size12"><strong>Người thuê phòng: {{ $chuPhong }}</strong></p>
+                            <div class="height-high"></div>
+                            <div class="height-high"></div>
+                            <div class="height-high"></div>
+                            <div class="height-high"></div>
+                            <div class="height-high"></div>
+                            <div class="height-high"></div>
+                            <div class="height-high"></div>
+                            <div class="height-high"></div>
+                            <p class="normal-text font-size12"><strong>{{ $phong}} - {{ $chuPhong }}</strong></p>
                             <p class="left normal-text font-size11"><i>Ngày lập hóa đơn: {{ $now }}</i></p>
                         </td>
                     </tr>
                 </tbody>
             </table>
-
-
             <div class="break-line"></div>
             <div class="height-high"></div>
             <table class="table">
                 <tbody>
                     <tr>
                         <td class="right" width="30px">1. </td>
-                        <td class="left">Tiền phòng</td>
+                        <td class="left chi-phi">Tiền phòng</td>
                         <td class="right" width="120px">{{ $tienPhong }}</td>
                     </tr>
                     <tr>
                         <td class="right">2. </td>
-                        <td class="left">Tiền điện (số cũ: {{ $numberEOld }} | số mới: {{ $numberE }} | đã dùng: {{ $usedE }} kw)</td>
+                        <td class="left chi-phi">Tiền điện (số cũ: {{ $numberEOld }} | số mới: {{ $numberE }} | đã dùng: {{ $usedE }} kw)</td>
                         <td class="right">{{ $tienDien }}</td>
                     </tr>
                     <tr>
                         <td class="right">3. </td>
-                        <td class="left">Tiền nước (số cũ: {{ $numberWOld }} | số mới: {{ $numberW }} | đã dùng: {{ $usedW }} m3)</td>
+                        <td class="left chi-phi">Tiền nước (số cũ: {{ $numberWOld }} | số mới: {{ $numberW }} | đã dùng: {{ $usedW }} m&sup3;)</td>
                         <td class="right">{{ $tienNuoc }}</td>
                     </tr>
                     <tr>
                         <td class="right">4. </td>
-                        <td class="left">Tiền rác</td>
+                        <td class="left chi-phi">Tiền rác</td>
                         <td class="right">{{ $tienRac }}</td>
                     </tr>
                     <tr>
                         <td class="right">5. </td>
-                        <td class="left">Tiền internet</td>
+                        <td class="left chi-phi">Tiền internet</td>
                         <td class="right">{{ $tienNet }}</td>
                     </tr>
                     <tr>
                         <td class="right">6. </td>
-                        <td class="left">Chi phí khác {{ $note }}</td></td>
+                        <td class="left chi-phi">Chi phí khác {{ $note }}</td></td>
                         <td class="right">{{ $tienKhac }}</td>
                     </tr>
                 </tbody>
@@ -239,15 +259,28 @@
                 <tbody>
                     <tr >
                         <td class="right" width="30px"></td>
-                        <td class="left"><strong>TỔNG CỘNG</strong></td>
+                        <td class="left chi-phi"><strong>TỔNG CỘNG</strong></td>
                         <td class="right" width="120px"><strong>{{ $tongCong }}</strong></td>
                     </tr>
                 </tbody>
             </table>
             <div class="height-normal break-line"></div>
-            <p class="left normal-text font-size11"><i>Đề nghị quý khách thanh toán đủ số tiền trên trong vòng 3 ngày kể từ khi nhận được hóa đơn này.</i></p>
-            <p class="left normal-text font-size11"><i>Mọi thắc mắc liên quan đến việc thanh toán vui lòng liên hệ: 0908.12.50.50 (chú Tài)</i></p>
+            <div class="detail-e-w font-size11">
+                <table class="table" id="detail-e-w">
+                    <tr>
+                        <td width="100px" >Chi tiết Điện:</td>
+                        <td>{!! $detailE !!}</td>
+                        <td class="white">---</td>
+                        <td width="100px" class="right">Chi tiết Nước:</td>
+                        <td>{!! $detailW !!}</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="height-normal break-line"></div>
+            <p class="center normal-text font-size11"><i>Đề nghị thanh toán đủ số tiền trên <u> trong vòng 3 ngày</u> kể từ khi nhận được hóa đơn này.<br>Mọi thắc mắc liên quan đến việc thanh toán vui lòng liên hệ: 0908.12.50.50 (chú Tài)</i></p>
         </div>
+
         @php
             $soDu = $i % 2;
             if($soDu !== 0) {

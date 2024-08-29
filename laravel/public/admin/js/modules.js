@@ -31,10 +31,10 @@ $(document).ready(function() {
 
         if(hd !== undefined){
             $('#tien_phong').val(hd['gia_phong']);
-            $('#is-city').html(isCityEnum[hd['is_city']]);
+            $('#is-city').html(isCityEnum[0]+': '+hd['is_city_0']+' | '+isCityEnum[1]+': '+hd['is_city_1']);
             $('#approve-e').html(yesNoEnum[hd['huong_dinh_muc_dien']]);
             $('#approve-w').html(yesNoEnum[hd['huong_dinh_muc_nuoc']]);
-            $('#is-city-input').val(hd['is_city']);
+            $('#is-city-input').val(JSON.stringify([hd['is_city_0'], hd['is_city_1']]));
             $('#approve-e-input').val(hd['huong_dinh_muc_dien']);
             $('#approve-w-input').val(hd['huong_dinh_muc_nuoc']);
             $('#tien_rac').val(hoaDonEnum['tienRac']);
@@ -79,14 +79,14 @@ $(document).ready(function() {
         let used    = Math.abs(moi-cu);
         if(moi == 0) return;
         if (moi < cu) {
-            alert('Chỉ số mới không được nhỏ hơn chỉ số kỳ trước');
+            //alert('Chỉ số mới không được nhỏ hơn chỉ số kỳ trước');
             $('#tien_dien').val(0);
             $('#chi-tiet-dien').html('N/A');
             return;
         }
 
         if(used > 2000) {
-            alert('Lượng điện sử dụng quá lớn (hơn 2000kw), vui lòng kiểm tra lại.');
+            //alert('Lượng điện sử dụng quá lớn (hơn 2000kw), vui lòng kiểm tra lại.');
             return;
         }
 
@@ -121,6 +121,7 @@ $(document).ready(function() {
         }
         let tableHtml = '<table class="table table-bordered chi-tiet-dien-nuoc"><thead><tr><th scope="col">#</th><th scope="col">Lượng điện (kw)</th><th scope="col">Giá</th><th scope="col">Số tiền</th></tr></thead><tbody>'+htmlDetail+'</tbody></table>'
         $('#chi-tiet-dien').html(tableHtml);
+        $('#tien-dien-detail-input').val(JSON.stringify(tableHtml));
     }
 
     function processW(){
@@ -128,9 +129,8 @@ $(document).ready(function() {
         let moi     = Number($('#chi_so_nuoc').val());
         let cu      = Number($('#chi_so_nuoc_ky_truoc').val());
         let used    = Math.abs(moi-cu);
-        if(moi == 0) return;
-        if (moi < cu) {
-            alert('Chỉ số mới không được nhỏ hơn chỉ số kỳ trước');
+        if (moi < cu || moi == 0) {
+            //alert('Chỉ số mới không được nhỏ hơn chỉ số kỳ trước');
             $('#tien_nuoc').val(0);
             $('#chi-tiet-nuoc').html('N/A');
             return;
@@ -140,21 +140,90 @@ $(document).ready(function() {
         let hopdongId   = $('#hop_dong_id').val();
         let hd          = hopDongList[hopdongId];
         let cost        = 0;
-        let htmlDetail  = 'N/A';
+        let htmlDetail  = '';
+        let huong_dinh_muc_nuoc = hd['huong_dinh_muc_nuoc'];
+        let params      = {};
+        let isCity0 = 0; //So nhan khau tinh
+        let isCity1 = 0; //So nhan khau thanh pho
+
+        let rangePrice  = [0,0];
+        let rangeM3     = [0,0];
+        let limitTotalM3 =  0;
+        let over = 0;
+        let overCost = overPrice = 0;
 
         if(hd == undefined){
             $('#chi-tiet-nuoc').html('<span class="text-danger">Chọn Hợp đồng trước...</span>');
             return;
         }else{
-            cost = used * range[Number(hd['is_city'])];
-            htmlDetail  = '<tr><th scope="row">Tổng</th><td>'+used+'(m3)</td><td>'+range[Number(hd['is_city'])]+'</td><td>'+vnd(cost)+'</td></tr>';;
+            isCity0 = hd['is_city_0']; //So nhan khau tinh
+            isCity1 = hd['is_city_1']; //So nhan khau thanh pho
+
+            rangePrice  = range['price'];
+            rangeM3     = range['limitM3'];
+            limitTotalM3 =  (isCity0*rangeM3[0]) + isCity1*rangeM3[1];
+            over = used - limitTotalM3;
+            overCost = overPrice = 0;
+            if(huong_dinh_muc_nuoc == 0){
+                rangePrice[0] = rangePrice[1];
+            }
+
+            if(over >= 0){
+                m3ForPerson0 = (rangeM3[0]*isCity0);
+                m3ForPerson1 = (rangeM3[1]*isCity1);
+                overPrice = rangePrice[1];
+                overCost = over * overPrice;
+                if(over == 0){
+                    over = overCost = overPrice = 0;
+                }
+            }else{
+                over = overCost = overPrice = 0;
+                limitM3Persion0 = (isCity0*rangeM3[0]);
+                x = used - limitM3Persion0;
+                if(x >= 0){
+                    m3ForPerson0 = limitM3Persion0;
+                    m3ForPerson1 = x;
+                }else{
+                    m3ForPerson0 = used;
+                    m3ForPerson1 = 0;
+                }
+            }
+
+            costForPerson0 = m3ForPerson0*rangePrice[0];
+            costForPerson1 = m3ForPerson1*rangePrice[1];
+            cost = costForPerson0 + costForPerson1 + overCost;
+            htmlDetail  += '<tr><th scope="row">Tỉnh</th>           <td>'+isCity0+'</td><td>'+rangeM3[0]+'</td><td>'+m3ForPerson0+'</td><td>'+vnd(rangePrice[0])+'</td><td>'+vnd(costForPerson0)+'</td></tr>';
+            htmlDetail  += '<tr><th scope="row">Thành phố</th>      <td>'+isCity1+'</td><td>'+rangeM3[1]+'</td><td>'+m3ForPerson1+'</td><td>'+vnd(rangePrice[1])+'</td><td>'+vnd(costForPerson1)+'</td></tr>';
+            htmlDetail  += '<tr><th scope="row">Vượt h.mức</th>   <td>-</td><td>-</td><td>'+over+'</td><td>'+vnd(overPrice)+'</td><td>'+vnd(overCost)+'</td></tr>';
+            htmlDetail  += '<tr><th scope="row">Tổng</th>           <td>'+(isCity0+isCity1)+'</td><td>-</td><td>'+used+'</td><td>-</td><td>'+vnd(cost)+'</td></tr>';
+
+
         }
-        console.log(hd);
+
+        params.isCity0           = isCity0;
+        params.isCity1           = isCity1;
+        params.rangePrice        = rangePrice;
+        params.rangeM3           = rangeM3;
+        params.limitTotalM3      = limitTotalM3;
+        params.over              = over;
+        params.overCost          = overCost;
+        params.overPrice         = overPrice;
+        params.m3ForPerson0      = m3ForPerson0;
+        params.m3ForPerson1      = m3ForPerson1;
+        params.costForPerson0    = costForPerson0;
+        params.costForPerson1    = costForPerson1;
+        params.cost              = cost;
+        params.used              = used;
 
         $('#su_dung_nuoc').val(used);
         $('#tien_nuoc').val(cost);
-        let tableHtml = '<table class="table table-bordered chi-tiet-dien-nuoc"><thead><tr><th scope="col">#</th><th scope="col">Lượng nước (m3)</th><th scope="col">Giá</th><th scope="col">Số tiền</th></tr></thead><tbody>'+htmlDetail+'</tbody></table>'
+        let tableHtml = '<table class="table table-bordered chi-tiet-dien-nuoc"><thead><tr><th scope="col"></th><th scope="col">Nhân khẩu</th><th scope="col">Hạn mức(m&sup3;)</th><th scope="col">Sử dụng(m&sup3;)</th><th scope="col">Giá</th><th scope="col">Số tiền</th></tr></thead><tbody>'+htmlDetail+'</tbody></table>'
         $('#chi-tiet-nuoc').html(tableHtml);
+
+        const detail = {};
+        detail.param = params;
+        detail.html = tableHtml;
+        $('#tien-nuoc-detail-input').val(JSON.stringify(detail));
     }
 
     $('.zero').on('keyup', function (event) {

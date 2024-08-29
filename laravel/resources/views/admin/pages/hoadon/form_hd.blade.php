@@ -6,32 +6,32 @@
     $formLabelClass = Config::get('custom.template.formLabel.class');
     $formInputClass = Config::get('custom.template.formInput.class');
 
-    $hopDongId      = $id ? $data['hop_dong_id'] : '';
-    $isCity         = $id ? $data['is_city'] : 0;
+    $hopDongId      = '';
+    $isCity         = 0;
 
-    $fromDate       = $id ? $data['tu_ngay']  : Carbon::now()->startOfMonth()->format('d-m-Y');                 $fromDate   = Carbon::parse($fromDate)->format('d-m-Y');
-    $toDate         = $id ? $data['den_ngay'] : Carbon::create(Carbon::now()->endOfMonth()->format('d-m-Y'));   $toDate     = Carbon::parse($toDate)->format('d-m-Y');
+    $fromDate       = Carbon::now()->startOfMonth()->format('d-m-Y');                 $fromDate   = Carbon::parse($fromDate)->format('d-m-Y');
+    $toDate         = Carbon::create(Carbon::now()->endOfMonth()->format('d-m-Y'));   $toDate     = Carbon::parse($toDate)->format('d-m-Y');
 
-    $numberEOld     = $id ? $data['chi_so_dien_ky_truoc'] : 0;
-    $numberWOld     = $id ? $data['chi_so_nuoc_ky_truoc'] : 0;
-    $numberE        = $id ? $data['chi_so_dien'] : 0;
-    $numberW        = $id ? $data['chi_so_nuoc'] : 0;
+    $numberEOld     = 0;
+    $numberWOld     = 0;
+    $numberE        = 0;
+    $numberW        = 0;
 
-    $approveE       = $id ? $data['huong_dinh_muc_dien'] : 0;
-    $approveW       = $id ? $data['huong_dinh_muc_nuoc'] : 0;
+    $approveE       = 0;
+    $approveW       = 0;
 
-    $rangeE         = $id ? $data['range_dien'] : json_encode(Config::get('custom.enum.eRange'));
-    $rangeW         = $id ? $data['range_nuoc'] : json_encode(Config::get('custom.enum.wRange'));
-    $tienPhong      = $id ? $data['tien_phong'] : 0;
-    $tienDien       = $id ? $data['tien_dien'] : 0;
-    $tienNuoc       = $id ? $data['tien_nuoc'] : 0;
-    $tienNet        = $id ? $data['tien_net'] : 0;
-    $tienRac        = $id ? $data['tien_rac'] : 0;
-    $tienKhac       = $id ? $data['tien_khac'] : 0;
-    $tongCong       = $id ? $data['tong_cong'] : 0;
+    $rangeE         = json_encode(Config::get('custom.enum.eRange'));
+    $rangeW         = json_encode(Config::get('custom.enum.wRange'));
+    $tienPhong      = 0;
+    $tienDien       = 0;
+    $tienNuoc       = 0;
+    $tienNet        = 0;
+    $tienRac        = 0;
+    $tienKhac       = 0;
+    $tongCong       = 0;
 
-    $status         = $id ? $data['status'] : 'inactive';
-    $note           = $id ? $data['ghi_chu'] : '';
+    $status         = 'inactive';
+    $note           = '';
 
     $statusEnum     = Config::get('custom.enum.selectStatusHoaDon');
     $yesnoEnum      = Config::get('custom.enum.selectYesNo');
@@ -92,8 +92,8 @@
             'label' => Form::label('tien_dien', 'Tiền điện', ['class' => $formLabelClass]),
             'el'    => '<div class="input-group">'.
                             Form::number('tien_dien', $tienDien, ['class' => $formInputClass . ' zero', 'required' => true]).'
-                            <div class="input-group-addon n-a" id="chi-tiet-dien">N/A</div>
-                        </div>'
+                            <div class="input-group-addon n-a" id="chi-tiet-dien"></div>
+                        </div>'.Form::hidden('tien_dien_detail', $isCity, ['id' => 'tien-dien-detail-input'])
         ],
         [
             'label' => Form::label('chi_so_nuoc', 'Chỉ số Nước mới', ['class' => $formLabelClass]),
@@ -109,8 +109,8 @@
             'label' => Form::label('tien_nuoc', 'Tiền nước', ['class' => $formLabelClass]),
             'el'    => '<div class="input-group">'.
                             Form::number('tien_nuoc', $tienNuoc, ['class' => $formInputClass . ' zero', 'required' => true]).'
-                            <div class="input-group-addon n-a" id="chi-tiet-nuoc">N/A</div>
-                        </div>'
+                            <div class="input-group-addon n-a" id="chi-tiet-nuoc"></div>
+                        </div>'.Form::hidden('tien_nuoc_detail', $isCity, ['id' => 'tien-nuoc-detail-input'])
         ],
         [
             'label' => Form::label('tien_phong', 'Tiền phòng', ['class' => $formLabelClass]),

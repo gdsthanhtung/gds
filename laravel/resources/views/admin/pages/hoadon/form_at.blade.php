@@ -2,7 +2,7 @@
 
 @endphp
 
-<div class="col-md-3 col-sm-3 col-xs-3">
+<div class="col-md-2 col-sm-2 col-xs-2">
     <div class="x_panel">
         @include($pathViewTemplate . 'x_title', [
             'title' => 'Chức năng',

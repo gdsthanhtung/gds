@@ -9,7 +9,6 @@
     $formLabelRightClass = Config::get('custom.template.formLabelRight.class');
 
     $hopDongId      = $data['hop_dong_id'];
-    $isCity         = $data['is_city'];
 
     $fromDate       = $data['tu_ngay']; $fromDate   = Carbon::parse($fromDate)->format('d-m-Y');
     $toDate         = $data['den_ngay']; $toDate     = Carbon::parse($toDate)->format('d-m-Y');
@@ -42,8 +41,10 @@
     $hoaDonEnum     = Config::get('custom.enum.hoaDon');
     $isCityEnum     = Config::get('custom.enum.isCity');
 
+    $city           = json_decode($data['is_city']);
+    $isCity         = $isCityEnum[0].': '.$city[0].' | '.$isCityEnum[1].': '.$city[1];
     $eDetail = Calc::calcE($rangeE, $data['chi_so_dien'] - $data['chi_so_dien_ky_truoc']);
-    $wDetail = Calc::calcW($rangeW, $data['chi_so_nuoc'] - $data['chi_so_nuoc_ky_truoc'], $isCity);
+    $wDetail = Calc::calcW($data['tien_nuoc_detail']);
     $elNine = 'col-md-9 col-sm-9 col-xs-9';
 
     $element = [
@@ -54,7 +55,7 @@
         ],
         [
             'label' => Form::label('', 'Hộ khẩu', ['class' => $formLabelClass]),
-            'el'    => Form::label('', $isCityEnum[$isCity], ['class' => $formLabelRightClass]),
+            'el'    => Form::label('', $isCity, ['class' => $formLabelRightClass]),
             'elClass' => $elNine
         ],
         [
@@ -74,12 +75,12 @@
         ],
         [
             'label' => Form::label('chi_so_dien', 'Số điện', ['class' => $formLabelClass]),
-            'el'    =>  Form::label('', 'Kỳ mới: ' . $numberE . ' | Kỳ trước: ' . $numberEOld . ' | Sử dụng trong kỳ: ' . ($numberE - $numberEOld), ['class' => $formLabelRightClass]),
+            'el'    =>  Form::label('', 'Kỳ mới: ' . $numberE . ' | Kỳ trước: ' . $numberEOld . ' | Sử dụng: ' . ($numberE - $numberEOld), ['class' => $formLabelRightClass]),
             'elClass' => $elNine
         ],
         [
             'label' => Form::label('chi_so_nuoc', 'Số nước', ['class' => $formLabelClass]),
-            'el'    =>  Form::label('', 'Kỳ mới: ' . $numberW . ' | Kỳ trước: ' . $numberWOld . ' | Sử dụng trong kỳ: ' . ($numberW - $numberWOld), ['class' => $formLabelRightClass]),
+            'el'    =>  Form::label('', 'Kỳ mới: ' . $numberW . ' | Kỳ trước: ' . $numberWOld . ' | Sử dụng: ' . ($numberW - $numberWOld), ['class' => $formLabelRightClass]),
             'elClass' => $elNine
         ],
         [
@@ -143,9 +144,9 @@
     ];
 @endphp
 
-@if($id) <div class="col-md-9 col-sm-9 col-xs-9"> @else <div class="col-md-12 col-sm-12 col-xs-12"> @endif
+@if($id) <div class="col-md-10 col-sm-10 col-xs-10"> @else <div class="col-md-12 col-sm-12 col-xs-12"> @endif
     <div class="x_panel">
-        @include($pathViewTemplate . 'x_title', ['title' => ($id) ? 'Điều chỉnh Hóa đơn' : 'Thêm mới Hóa đơn'])
+        @include($pathViewTemplate . 'x_title', ['title' => ($id) ? 'Chi tiết Hóa đơn' : 'Thêm mới Hóa đơn'])
 
         <div class="x_content">
             <div class="row">
