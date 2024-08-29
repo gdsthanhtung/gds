@@ -5,6 +5,7 @@
 
     $formLabelClass = Config::get('custom.template.formLabel.class');
     $formInputClass = Config::get('custom.template.formInput.class');
+    $formLabelRightClass = Config::get('custom.template.formLabelRight.class');
 
     $hopDongId      = '';
     $isCity         = 0;
@@ -56,18 +57,23 @@
             'el'    => Form::select('hop_dong_id', $selectHopDong, $hopDongId, ['class' => $formInputClass, 'required' => true, 'placeholder' => 'Select an item...'])
         ],
         [
+            'label' => Form::label('prev_invoice', 'Hóa đơn gần nhất', ['class' => $formLabelClass]),
+            'el'    => Form::label('prev_invoice', '-', ['class' => $formLabelRightClass. ' text-left input-like-text', 'id' => 'prev-invoice'])
+
+        ],
+        [
             'label' => Form::label('is_city', 'Hộ khẩu', ['class' => $formLabelClass]),
-            'el'    => Form::label('is_city', $isCityEnum[$isCity], ['class' => $formLabelClass. ' text-left input-like-text', 'id' => 'is-city', 'disabled' => true]).
+            'el'    => Form::label('is_city', $isCityEnum[$isCity], ['class' => $formLabelRightClass. ' text-left input-like-text', 'id' => 'is-city', 'disabled' => true]).
                        Form::hidden('is_city', $isCity, ['id' => 'is-city-input']),
         ],
         [
             'label' => Form::label('huong_dinh_muc_dien', 'Hưởng định mức Điện', ['class' => $formLabelClass]),
-            'el'    => Form::label('huong_dinh_muc_dien', $yesnoEnum[$approveE], ['class' => $formLabelClass. ' text-left input-like-text', 'id' => 'approve-e', 'disabled' => true]).
+            'el'    => Form::label('huong_dinh_muc_dien', $yesnoEnum[$approveE], ['class' => $formLabelRightClass. ' text-left input-like-text', 'id' => 'approve-e', 'disabled' => true]).
                        Form::hidden('huong_dinh_muc_dien', $approveE, ['id' => 'approve-e-input']),
         ],
         [
             'label' => Form::label('huong_dinh_muc_nuoc', 'Hưởng định mức Nước', ['class' => $formLabelClass]),
-            'el'    => Form::label('huong_dinh_muc_nuoc', $yesnoEnum[$approveW], ['class' => $formLabelClass. ' text-left input-like-text', 'id' => 'approve-w', 'disabled' => true]).
+            'el'    => Form::label('huong_dinh_muc_nuoc', $yesnoEnum[$approveW], ['class' => $formLabelRightClass. ' text-left input-like-text', 'id' => 'approve-w', 'disabled' => true]).
                        Form::hidden('huong_dinh_muc_nuoc', $approveW, ['id' => 'approve-w-input']),
         ],
         [

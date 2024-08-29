@@ -13,9 +13,9 @@
 <script src={{ asset("admin/js/custom.min.js");}}></script>
 <!-- Custom Modules Scripts -->
 <script src={{ asset("admin/js/modules.js");}}></script>
+<script src={{ asset("admin/js/moment.min.js");}}></script>
 
 <script src={{ asset("admin/asset/datepicker/js/bootstrap-datepicker.min.js");}}></script>
-
 <script src={{ asset("admin/asset/selectpicker/js/bootstrap-multiselect.js");}}></script>
 
 @if(Route::current()->getName() == 'hopdong/form')

@@ -25,10 +25,13 @@ return new class extends Migration
 
             $table->boolean('huong_dinh_muc_dien');
             $table->boolean('huong_dinh_muc_nuoc');
-            $table->boolean('is_city');
+            $table->string('is_city', 10);
 
             $table->text('range_dien');   //json
             $table->text('range_nuoc');   //json
+
+            $table->longText('chi_tiet_dien');   //json
+            $table->longText('chi_tiet_nuoc');   //json
 
             $table->integer('tien_phong');  //Hop-dong
             $table->integer('tien_dien');   //Range-dinh-muc-enum

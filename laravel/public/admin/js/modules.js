@@ -49,12 +49,18 @@ $(document).ready(function() {
                 type : 'GET',
                 dataType : 'json',
                 success : function(result){
-                    if(result){
+                    if($.isEmptyObject(result) == false){
                         $('#chi_so_dien_ky_truoc').val(result.chi_so_dien);
                         $('#chi_so_nuoc_ky_truoc').val(result.chi_so_nuoc);
+                        let ghiChu = (result.ghi_chu) ? ' | <span class="text-danger">'+result.ghi_chu+'</span>' : '';
+                        let tuNgay = moment(result.tu_ngay).format('DD/MM/YYYY');
+                        let denNgay = moment(result.den_ngay).format('DD/MM/YYYY');
+                        $('#prev-invoice').html("Kỳ: "+tuNgay+' - '+denNgay+ghiChu);
+
                     }else{
-                        $('#chi_so_dien_ky_truoc').val(0);
-                        $('#chi_so_nuoc_ky_truoc').val(0);
+                        $('#chi_so_dien_ky_truoc').val(Number(hd['chi_so_dien']));
+                        $('#chi_so_nuoc_ky_truoc').val(Number(hd['chi_so_nuoc']));
+                        $('#prev-invoice').html('-');
                     }
                 }
             });
