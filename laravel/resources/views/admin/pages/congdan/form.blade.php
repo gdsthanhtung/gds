@@ -11,11 +11,16 @@
     $cccdDos        = $id ? $data['cccd_dos'] : Carbon::now()->format('d-m-Y'); $cccdDos = Carbon::parse($cccdDos)->format('d-m-Y');
 
     $gender         = $id ? $data['gender'] : '';
-    $dob            = $id ? $data['dob'] : Carbon::now()->format('d-m-Y'); $dob = Carbon::parse($dob)->format('d-m-Y');
+    $dob            = $id ? $data['dob'] : Carbon::now()->format('d-m-Y');      $dob = Carbon::parse($dob)->format('d-m-Y');
     $address        = $id ? $data['address'] : '';
     $phone          = $id ? $data['phone'] : '';
     $status         = $id ? $data['status'] : '';
     $isCity         = $id ? $data['is_city'] : '';
+
+    $statusDKTT     = $id ? $data['dktt_status'] : '';
+    $fromDateDKTT   = $id ? $data['dktt_tu_ngay']  : Carbon::now()->format('d-m-Y');                                $fromDateDKTT   = Carbon::parse($fromDateDKTT)->format('d-m-Y');
+    $toDateDKTT     = $id ? $data['dktt_den_ngay'] : Carbon::create(Carbon::now()->format('d-m-Y'))->addYear(1);    $toDateDKTT     = Carbon::parse($toDateDKTT)->format('d-m-Y');
+
 
     $avatar         = $id ? $data['avatar'] : '';
     $cccdImageFront = $id ? $data['cccd_image_front'] : '';
@@ -28,6 +33,7 @@
     $hiddenTask             = Form::hidden('task', ($id) ? 'edit' : 'add');
 
     $statusEnum     = Config::get('custom.enum.selectStatus');
+    $statusEnumDKTT = Config::get('custom.enum.selectStatusDKTT');
     $genderEnum     = Config::get('custom.enum.gender');
     $isCityEnum     = Config::get('custom.enum.isCity');
     $pathImage      = Config::get("custom.enum.path.$ctrl");
@@ -53,10 +59,20 @@
             'el'    => Form::text('cccd_dos', $cccdDos, ['class' => $formInputClass.' datepicker', 'required' => true])
         ],[
             'label' => Form::label('phone', 'Số Điện Thoại', ['class' => $formLabelClass]),
-            'el'    => Form::text('phone', $phone, ['class' => $formInputClass, 'required' => true])
+            'el'    => Form::text('phone', $phone, ['class' => $formInputClass])
         ],[
             'label' => Form::label('is_city', 'Hộ Khẩu', ['class' => $formLabelClass]),
             'el'    => Template::radioSelect($isCityEnum, $elName = 'is_city', $isCity)
+        ],[
+            'label' => Form::label('dktt_status', 'Trạng Thái ĐK Tạm trú', ['class' => $formLabelClass]),
+            'el'    => Form::select('dktt_status', $statusEnumDKTT, $statusDKTT, ['class' => $formInputClass, 'placeholder' => 'Select an item...'])
+        ],[
+            'label' => Form::label('dktt_tu_ngay', 'Đăng ký tạm trú', ['class' => $formLabelClass]),
+            'el'    => '<div class="input-group input-daterange">'.
+                            Form::text('dktt_tu_ngay', $fromDateDKTT, ['class' => 'form-control']).'
+                            <div class="input-group-addon">đến</div>'.
+                            Form::text('dktt_den_ngay', $toDateDKTT, ['class' => 'form-control']).'
+                        </div>'
         ],[
             'label' => Form::label('status', 'Trạng Thái', ['class' => $formLabelClass]),
             'el'    => Form::select('status', $statusEnum, $status, ['class' => $formInputClass, 'placeholder' => 'Select an item...'])

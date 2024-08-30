@@ -89,6 +89,10 @@ return [
             'active' => 'Đã thanh toán',
             'inactive' => 'Chưa thanh toán'
         ],
+        'selectStatusDKTT' => [
+            'active' => 'Đã đăng ký',
+            'inactive' => 'Chưa đăng ký'
+        ],
         'selectYesNo' => [
             '0' => 'No',
             '1' => 'Yes'

@@ -107,6 +107,12 @@ class CongDanModel extends Model
             $result = Self::where('id', $id)->update($paramsNew);
         }
 
+        if($options['task'] == 'add' || $options['task'] == 'edit'){
+            $params['dktt_tu_ngay'] = Carbon::parse( $params['dktt_tu_ngay'])->format('Y-m-d');
+            $params['dktt_den_ngay'] = Carbon::parse( $params['dktt_den_ngay'])->format('Y-m-d');
+            $params['fullname'] = mb_strtoupper($params['fullname'], "UTF-8");
+        }
+
         if($options['task'] == 'add'){
             $paramsNew = array_diff_key($params, array_flip($this->crudNotAccepted));
             $paramsNew['created'] = Carbon::now();

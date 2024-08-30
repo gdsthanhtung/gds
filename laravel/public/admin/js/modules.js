@@ -16,6 +16,19 @@ $(document).ready(function() {
         $(this).datepicker();
     });
 
+
+    // START PROCESS VIEW CCCD ON MODAL =========================================================================
+    $('#cccdModal').on('show.bs.modal', function (event) {
+        let button      = $(event.relatedTarget); // Button that triggered the modal
+        let cccdfront   = JSON.parse(button.data('cccdfront'));
+        let cccdrear    = JSON.parse(button.data('cccdrear'));
+
+        let modal = $(this);
+        modal.find('#modal-cccd-front').html(cccdfront);
+        modal.find('#modal-cccd-rear').html(cccdrear);
+      })
+    // END PROCESS VIEW CCCD ON MODAL =========================================================================
+
     // START PROCESS SELECT HOPDONG TO CACL HOADON =========================================================================
     $('#hop_dong_id').on('change', function (e) {
         e.preventDefault();

@@ -21,6 +21,12 @@ class Template {
         }
     }
 
+    public static function showDateDKTT($date, $compareMonthAgo = 0){
+        $d = sprintf ("%s", date(Config::get('custom.format.shortTime'), strtotime($date)));
+        $rs = (strtotime(Carbon::now()) >= strtotime(Carbon::parse($date)->subMonth($compareMonthAgo))) ? '<span class="badge badge-danger">'.$d.'</span>' : $d;
+        return $rs;
+    }
+
     public static function showItemHistory($by, $time){
         return sprintf ("
             <p><i class='fa fa-user'></i> %s <br> <i class='fa fa-clock-o'></i> %s </p>
