@@ -14,6 +14,7 @@ use App\Helpers\Highlight;
                     <th class="column-title">Đăng ký tạm trú</th>
                     <th class="column-title">Trạng thái</th>
                     <th class="column-title">Lịch sử</th>
+                    <th class="column-title">Xuất file</th>
                     <th class="column-title">Hành động</th>
                 </tr>
             </thead>
@@ -49,6 +50,9 @@ use App\Helpers\Highlight;
                                 $dktt_from_date     = Template::showDate($item['dktt_tu_ngay']);
                                 $dktt_to_date       = Template::showDateDKTT($item['dktt_den_ngay'], $compareMonthAgo = 1);
 
+                                $exportCT01NEW      = Template::ct01($id, 'NEW');
+                                $exportCT01GH       = Template::ct01($id, 'GH');
+
                                 $createdHis         = Template::showItemHistory($item['created_by_name'], $item['created']);
                                 $modifiedHis        = Template::showItemHistory($item['modified_by_name'], $item['modified']);
                                 $actionBtn          = Template::showActionButton($ctrl, $id);
@@ -77,6 +81,7 @@ use App\Helpers\Highlight;
                             </td>
                             <td>{!! $status !!}</td>
                             <td><b>Tạo bởi:</b> {!! $createdHis !!} <b>Điều chỉnh:</b> {!! $modifiedHis !!}</td>
+                            <td class="last">{!! $exportCT01NEW !!} {!! $exportCT01GH !!}</td>
                             <td class="last">{!! $actionBtn !!}</td>
                         </tr>
                     @endforeach

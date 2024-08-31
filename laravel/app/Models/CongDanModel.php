@@ -161,10 +161,15 @@ class CongDanModel extends Model
         }
 
         if($options['task'] == 'get-item-with-hop-dong'){
-            $query = Self::select(DB::raw('main.*, hd.id as hop_dong_id'))->where('main.id', $params['id']);
+            $query = Self::select(DB::raw('main.*, hd.id as hop_dong_id'));
             $query->from($this->table.' as main');
             $query->leftJoin('hop_dongs as hd', 'hd.cong_dan_id', '=', 'main.id');
-            $result = ($query) ? $query->first() : null;
+            if($params['id'] == 'ALL') {
+                $query->where('main.status', 'active');
+            }else{
+                $query->where('main.id', $params['id']);
+            }
+                $result = ($query) ? $query->get()->toArray() : null;
         }
 
         if($options['task'] == 'do-login'){

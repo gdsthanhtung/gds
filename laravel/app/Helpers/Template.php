@@ -210,4 +210,10 @@ class Template {
         $selectCongDanList .= '</select>';
         return $selectCongDanList;
     }
+
+    public static function ct01($cdId, $task = 'NEW', $withFamify = false){
+        $text = ($cdId == 'ALL') ? "$cdId-CT01-$task" : "CT01-$task";
+        $class = ($task == 'NEW') ? 'primary' : 'warning';
+        return "<a href=".route('congdan/ct01', ['id' => $cdId, 'task' => $task, 'withFamily' => $withFamify])." target='_blank' class='btn btn-$class'>$text</a>";
+    }
 }

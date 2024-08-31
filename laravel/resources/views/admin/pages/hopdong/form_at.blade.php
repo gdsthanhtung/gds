@@ -1,5 +1,5 @@
 @php
-
+    use App\Helpers\Template;
 @endphp
 
 <div class="col-md-7 col-sm-7 col-xs-7">
@@ -11,7 +11,9 @@
         <div class="x_content">
             <div class="x_content">
                 <div class="col-md-6 col-sm-6 col-xs-6">
-                    <p><a href="{{route('congdan/ct01', ['id' => $data['cong_dan_id']])}}" target="_blank" class="btn btn-warning">Mẫu CT01</a></p>
+                    <p>
+                        {!! Template::ct01($data['cong_dan_id'], 'NEW', true) . Template::ct01($data['cong_dan_id'], 'GH', true) !!}
+                    </p>
                 </div>
 
                 <div class="col-md-6 col-sm-6 col-xs-6">

@@ -10,7 +10,8 @@
         @include($pathViewTemplate . 'page_header',
             [
                 'title' => $pageTitle,
-                'button' => '<a href="'.route($ctrl."/form").'" class="btn btn-success"><i class="fa fa-plus-circle"></i> Thêm mới</a>'
+                'button' => Template::ct01('ALL', 'NEW') . Template::ct01('ALL', 'GH')
+                            .'<a href="'.route("$ctrl/form").'" class="btn btn-success"><i class="fa fa-plus-circle"></i> Thêm mới</a>'
             ])
 
         @include($pathViewTemplate.'notify')

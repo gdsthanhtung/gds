@@ -92,7 +92,7 @@ Route::prefix($prefixAdmin)->middleware('check.permission')->group(function () {
         Route::controller(CongDanController::class)->group(function () use ($ctrl) {
             Route::get('/', 'show')->name($ctrl);
             Route::get('/form/{id?}', 'form')->where(['id' => '[0-9]+'])->name($ctrl.'/form');
-            Route::get('/ct01/{id?}', 'ct01')->where(['id' => '[0-9]+'])->name($ctrl.'/ct01');
+            Route::get('/ct01', 'ct01')->where(['id' => '[0-9a-Z]+', 'task' => '[a-Z]+'])->name($ctrl.'/ct01');
             Route::get('/delete/{id}', 'delete')->where(['id' => '[0-9]+'])->name($ctrl.'/delete');
             Route::get('/change-status/{id}/{status}', 'change_status')->where(['id' => '[0-9]+', 'status' => '[a-z]+'])->name($ctrl.'/change-status');
             Route::get('/change-level/{id}/{level}', 'change_level')->where(['id' => '[0-9]+', 'level' => '[a-z]+'])->name($ctrl.'/change-level');

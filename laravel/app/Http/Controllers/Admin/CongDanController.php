@@ -90,10 +90,13 @@ class CongDanController extends Controller
     public function ct01(Request $rq) {
         $data = [];
         $id = $rq->id;
+        $task = $rq->task;
+        $withFamily = $rq->withFamily;
 
         if($id){
              $params = [
-                'id'    => $id
+                'id'    => $id,
+                'task'  => $task
             ];
             $data = $this->mainModel->getItem($params, ['task' => 'get-item-with-hop-dong']);
         }
@@ -101,13 +104,16 @@ class CongDanController extends Controller
         if(!$data && $id)
             return redirect()->route($this->moduleName)->with('notify', ['type' => 'danger', 'message' => $this->pageTitle.' id is invalid!']);
 
-        $hopDongModel = new HopDongModel();
-        $nkInHopDong = ($data['hop_dong_id']) ? $hopDongModel->assignNK([['id' => $data['hop_dong_id']]])[$data['hop_dong_id']] : [];
+        $nkInHopDong = [];
+        if($withFamily){
+            $hopDongModel = new HopDongModel();
+            $nkInHopDong = $hopDongModel->assignNK($data);
+        }
 
         $shareData = [
             'data' => $data,
             'id' => $id,
-            'case' => 'GH',
+            'case' => $task,
             'nkInHopDong' => $nkInHopDong
         ];
 
