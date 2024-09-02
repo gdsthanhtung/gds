@@ -130,6 +130,7 @@ Route::prefix($prefixAdmin)->middleware('check.permission')->group(function () {
             Route::post('/save', 'save')->name($ctrl.'/save');
             Route::get('/prev-invoice/{id?}', 'prev_invoice')->where(['id' => '[0-9]+'])->name($ctrl.'/prev-invoice');
             Route::get('/export/{id?}', 'export')->where(['id' => '[0-9a-z]+'])->name($ctrl.'/export');
+            Route::get('/test', 'test')->where([])->name($ctrl.'/test');
         });
     });
 });

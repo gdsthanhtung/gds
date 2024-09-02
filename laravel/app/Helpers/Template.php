@@ -29,7 +29,7 @@ class Template {
 
     public static function showItemHistory($by, $time){
         return sprintf ("
-            <p><i class='fa fa-user'></i> %s <br> <i class='fa fa-clock-o'></i> %s </p>
+            <span class='text-secondary'><small><em><i class='bi bi-person'></i> %s <br> <i class='bi bi-clock'></i> %s </em></small></span>
         ", $by, date(Config::get('custom.format.shortTime'), strtotime($time)));
     }
 
@@ -37,14 +37,14 @@ class Template {
         $rule = Config::get('custom.enum.ruleStatus');
         $tpl = (isset($rule[$status])) ? $rule[$status] : $rule['unknown'];
         $link = route($ctrl.'/change-status', ['id' => $id, 'status' => $status]);
-        return sprintf ("<a href='%s' type='button' class='btn btn-round %s'>%s</a>", $link, $tpl['class'], $tpl['name']);
+        return sprintf ("<a href='%s' type='button' class='btn btn-sm rounded-pill btn-%s'>%s</a>", $link, $tpl['class'], $tpl['name']);
     }
 
     public static function showItemStatusHoaDon($ctrl, $id, $status){
         $rule = Config::get('custom.enum.ruleStatusHoaDon');
         $tpl = (isset($rule[$status])) ? $rule[$status] : $rule['unknown'];
         $link = route($ctrl.'/change-status', ['id' => $id, 'status' => $status]);
-        return sprintf ("<a href='%s' type='button' class='btn btn-round %s'>%s</a>", $link, $tpl['class'], $tpl['name']);
+        return sprintf ("<a href='%s' type='button' class='btn btn-sm btn-%s'>%s</a>", $link, $tpl['class'], $tpl['name']);
     }
 
     public static function showItemThumb($ctrl, $img, $alt){
@@ -71,8 +71,8 @@ class Template {
         foreach($listBtn as $item){
             $button = $rule[$item];
             $link = route($ctrl.$button['route'], ['id' => $id]);
-            $html .= sprintf('<a href="%s" type="button" class="btn btn-icon %s" data-toggle="tooltip" data-placement="top" data-original-title="%s">
-                                <i class="fa %s"></i></a>', $link, $button['class'], $button['title'], $button['icon']);
+            $html .= sprintf('<a href="%s" type="button" class="rounded-pill btn btn-sm btn-icon %s" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="%s">
+                                <i class="bi %s"></i>', $link, $button['class'], $button['title'], $button['icon']);
         }
         $html = '<div class="zvn-box-btn-filter">'.$html.'</div>';
         return $html;
@@ -95,13 +95,11 @@ class Template {
                 $tpl = (isset($rule[$status])) ? $rule[$status] : $rule['unknown'];
 
                 $link = route($ctrl).'?status='.$status.$searchField.$searchValue;
-                $class = ($params['filter']['status'] == $status) ? $tpl['class'] : 'btn-info';
-                $html .= sprintf('<a href="%s" type="button" class="btn %s">%s <span class="badge bg-white">%s</span></a>',
-                                    $link, $class, ucfirst($tpl['name']), $item['total']);
+                $class = ($params['filter']['status'] == $status) ? $tpl['class'] : 'secondary';
+                $html .= sprintf('<a href="%s" type="button" class="btn btn-%s md-2 mr-5">%s <span class="badge bg-white text-%s">%s</span></a>',
+                                    $link, $class, ucfirst($tpl['name']), $class, $item['total']);
             }
-            $html = '<div class="zvn-box-btn-filter">'.$html.'</div>';
         }
-
         return $html;
     }
 
@@ -118,25 +116,20 @@ class Template {
         $ctrl = (isset($selectionInModule[$ctrl]))  ? $ctrl : 'default';
 
         foreach($selectionInModule[$ctrl] as $item){
-            $selections .= sprintf("<li><a href='' class='select-field' data-field='%s'>%s</a></li>",  $item, $rule[$item]['name']);
+            $selections .= sprintf("<option class='select-field' data-field='%s'>%s</option>",  $item, $rule[$item]['name']);
         }
 
         $html = sprintf('<div class="input-group">
-                    <div class="input-group-btn">
-                        <button type="button" class="btn btn-default dropdown-toggle btn-active-field"
-                            data-toggle="dropdown" aria-expanded="false">
-                            %s <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-right" role="menu"> %s </ul>
-                    </div>
-                    <input type="text" class="form-control" name="searchValue" value="%s">
+                    <select class="form-select" aria-label="Bộ lọc">
+                        %s
+                    </select>
+                    <input type="text" class="form-control mr-5 input-br" name="searchValue" value="%s">
                     <input type="hidden" name="searchField" value="%s">
                     <span class="input-group-btn">
-                        <button id="btn-clear" type="button" class="btn btn-success"
-                            style="margin-right: 0px">Xóa tìm kiếm</button>
                         <button id="btn-search" type="button" class="btn btn-primary">Tìm kiếm</button>
+                        <button id="btn-clear" type="button" class="btn btn-success">Xóa tìm kiếm</button>
                     </span>
-                </div>', $rule[$searchField]['name'], $selections, $searchValue, $searchField);
+                </div>', $selections, $searchValue, $searchField);
 
         return $html;
     }
@@ -146,7 +139,7 @@ class Template {
        $link          = route($ctrl . '/change-' . $fieldName, [$fieldName => 'value_new', 'id' => $id]);
 
        $tmplDisplay = Config::get('custom.enum.select' . ucfirst($fieldName));
-       $html = sprintf('<select name="selectChangeAttr" data-url="%s" class="form-control">', $link  );
+       $html = sprintf('<select name="selectChangeAttr" data-url="%s" class="form-select">', $link  );
 
         foreach ($tmplDisplay as $key => $value) {
            $htmlSelected = '';

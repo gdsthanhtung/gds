@@ -5,7 +5,7 @@ use Config;
 class Notify {
     public static function export($data, $customMsg = []){
         $sMsg = 'Yêu cầu thực hiện thành công!';
-        $eMsg = 'Yêu cầu thực hiện thất bại';
+        $eMsg = 'Yêu cầu thực hiện thất bại!';
         if($customMsg){
             $sMsg = $customMsg['sMsg'];
             $eMsg = $customMsg['eMsg'];

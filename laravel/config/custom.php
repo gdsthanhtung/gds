@@ -70,16 +70,16 @@ return [
     'enum' => [
         'longNameId'    => array(),
         'ruleStatus'    => [
-            'active'    => ['name' => 'Kích hoạt', 'class' => 'btn-success'],
-            'inactive'  => ['name' => 'Chưa kích hoạt', 'class' => 'btn-warning'],
-            'all'       => ['name' => 'Tất cả', 'class' => 'btn-primary'],
-            'unknown'   => ['name' => 'Không xác định', 'class' => 'btn-danger']
+            'active'    => ['name' => 'Kích hoạt', 'class' => 'success'],
+            'inactive'  => ['name' => 'Chưa kích hoạt', 'class' => 'warning'],
+            'all'       => ['name' => 'Tất cả', 'class' => 'primary'],
+            'unknown'   => ['name' => 'Không xác định', 'class' => 'danger']
         ],
         'ruleStatusHoaDon'    => [
-            'active'    => ['name' => 'Đã thanh toán', 'class' => 'btn-success'],
-            'inactive'  => ['name' => 'Chưa thanh toán', 'class' => 'btn-warning'],
-            'all'       => ['name' => 'Tất cả', 'class' => 'btn-primary'],
-            'unknown'   => ['name' => 'Không xác định', 'class' => 'btn-danger']
+            'active'    => ['name' => 'Đã thanh toán', 'class' => 'success'],
+            'inactive'  => ['name' => 'Chưa thanh toán', 'class' => 'warning'],
+            'all'       => ['name' => 'Tất cả', 'class' => 'primary'],
+            'unknown'   => ['name' => 'Không xác định', 'class' => 'danger']
         ],
         'selectStatus' => [
             'active' => 'Kích hoạt',
@@ -136,9 +136,9 @@ return [
             'hoadon' => ['all'],
         ],
         'ruleBtn' => [
-            'edit'      => ['class' => 'btn-success',               'title' => 'Điều chỉnh',    'icon' => 'fa-pencil',  'route' => "/form"],
-            'delete'    => ['class' => 'btn-delete btn-danger',     'title' => 'Xoá',           'icon' => 'fa-trash',   'route' => "/delete"],
-            'info'      => ['class' => 'btn-info',                  'title' => 'Thông tin',     'icon' => 'fa-info',    'route' => "/form"],
+            'edit'      => ['class' => 'btn-primary',               'title' => 'Điều chỉnh',    'icon' => 'bi-pencil',  'route' => "/form"],
+            'delete'    => ['class' => 'btn-delete btn-danger',     'title' => 'Xoá',           'icon' => 'bi-trash',   'route' => "/delete"],
+            'info'      => ['class' => 'btn-info',                  'title' => 'Thông tin',     'icon' => 'bi-info',    'route' => "/form"],
         ],
         'btnInArea' => [
             'default' => ['edit', 'delete'],

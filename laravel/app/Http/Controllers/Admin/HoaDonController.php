@@ -190,4 +190,12 @@ class HoaDonController extends Controller
         return $pdf->download('hoadon.pdf');
 
     }
+
+    public function test(Request $rq)
+    {
+        $shareData = [
+            'data' => ['a','b'],
+        ];
+        return view($this->getPathView('test'), $shareData);
+    }
 }

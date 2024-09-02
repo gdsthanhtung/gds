@@ -5,17 +5,17 @@ use App\Helpers\Highlight;
 
 <div class="x_content">
     <div class="table-responsive">
-        <table class="table table-striped jambo_table bulk_action">
+        <table class="table table-hover jambo_table">
             <thead>
                 <tr class="headings">
-                    <th class="column-title">#</th>
+                    <th class="column-title text-center">#</th>
+                    <th class="column-title text-center">Avatar</th>
                     <th class="column-title">Thông tin</th>
-                    <th class="column-title">Avatar</th>
-                    <th class="column-title">Level</th>
-                    <th class="column-title">Trạng thái</th>
+                    <th class="column-title text-center">Level</th>
+                    <th class="column-title text-center">Trạng thái</th>
                     <th class="column-title">Tạo mới</th>
                     <th class="column-title">Chỉnh sửa</th>
-                    <th class="column-title">Hành động</th>
+                    <th class="column-title text-center">Chức năng</th>
                 </tr>
             </thead>
             <tbody>
@@ -37,18 +37,20 @@ use App\Helpers\Highlight;
                                 $actionBtn  = Template::showActionButton($ctrl, $id);
                             @endphp
 
-                            <td>{{ $no }}</td>
+                            <td class="text-center">{{ $no }}</td>
+                            <td class="text-center">{!! $avatar !!}</td>
                             <td width="20%">
-                                <p><strong>Name:</strong> {!! $username !!}</p>
-                                <p><strong>Fullname:</strong> {!! $fullname !!}</p>
-                                <p><strong>Email:</strong> {!! $email !!}</p>
+                                <small>
+                                    <span><strong>Name:</strong> {!! $username !!}</span><br>
+                                    <span><strong>Fullname:</strong> {!! $fullname !!}</span><br>
+                                    <span><strong>Email:</strong> {!! $email !!}</span>
+                                </small>
                             </td>
-                            <td>{!! $avatar !!}</td>
-                            <td>{!! $level !!}</td>
-                            <td>{!! $status !!}</td>
+                            <td class="text-center">{!! $level !!}</td>
+                            <td class="text-center">{!! $status !!}</td>
                             <td>{!! $createdHis !!}</td>
                             <td>{!! $modifiedHis !!}</td>
-                            <td class="last">{!! $actionBtn !!}</td>
+                            <td class="text-center">{!! $actionBtn !!}</td>
                         </tr>
                     @endforeach
                 @else

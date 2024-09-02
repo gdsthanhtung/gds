@@ -24,7 +24,7 @@ class UserController extends Controller
         $this->pathView = "admin.pages.$this->moduleName.";
         $this->pathViewTemplate = "admin.templates.";
 
-        $this->params["pagination"]['perPage'] = 10;
+        $this->params["pagination"]['perPage'] = 3;
 
         $ctrl = Config::get("custom.route.$this->moduleName.ctrl");
         View::share([

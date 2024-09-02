@@ -1,4 +1,4 @@
-*{
+/* *{
     padding: 0;
     margin: 0;
 }
@@ -77,7 +77,7 @@ img.zvn-cccd {
 }
 .main_menu_side {
     margin-top: 20px;
-}
+} */
 
 span.highlight{
     background: yellow;
@@ -152,4 +152,21 @@ span.highlight{
     border: none;
     background: none;
     font-weight: bolder;
+}
+
+.mr-5 {
+    margin-right: 5px;
+}
+
+.input-br{
+    border-top-right-radius: 0.375rem !important;
+    border-bottom-right-radius: 0.375rem !important;
+}
+
+.img-circle{
+    border-radius: 50%;
+}
+
+.jambo_table {
+    vertical-align: middle;
 }
