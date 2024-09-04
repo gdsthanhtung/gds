@@ -7,13 +7,10 @@
         <div class="card-body">
             <h5 class="card-title">Chức năng</h5>
             <div class="row">
-                <div class="col-6">
-                    <p>
-                        {!! Template::ct01($data['cong_dan_id'], 'NEW', true) . Template::ct01($data['cong_dan_id'], 'GH', true) !!}
-                    </p>
-                </div>
-
-                <div class="col-6">
+                <div class="col-12">
+                    {!! Template::hdtn($data['id'], 'hdtn',) !!}
+                    <hr>
+                    {!! Template::ct01($data['cong_dan_id'], 'NEW', true) . Template::ct01($data['cong_dan_id'], 'GH', true) !!}
                 </div>
             </div>
         </div>

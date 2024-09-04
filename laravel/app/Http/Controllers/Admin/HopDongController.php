@@ -12,6 +12,7 @@ use Config;
 
 use App\Models\CongDanModel;
 use App\Models\PhongTroModel;
+use PDF;
 
 class HopDongController extends Controller
 {
@@ -121,7 +122,6 @@ class HopDongController extends Controller
 
         $rs = $this->mainModel->saveItem($params, ['task' => 'change-status']);
         return redirect()->route($this->moduleName)->with('notify', Notify::export($rs));
-
     }
 
     public function save(MainRequest $rq)
@@ -134,5 +134,38 @@ class HopDongController extends Controller
             $rs = $this->mainModel->saveItem($params, ['task' => $task]);
         }
         return redirect()->route($this->moduleName)->with('notify', Notify::export($rs));
+    }
+
+    public function export(Request $rq)
+    {
+        $id = $rq->id;
+        $task = $rq->task;
+        $thoiHanONho = $rq->thoiHanONho;
+        $thoiHanTuNgay = $rq->thoiHanTuNgay;
+
+        $params = [
+            'id' => $id
+        ];
+
+        if($task == 'hdtn' && $id){
+            $data = $this->mainModel->getItem($params, ['task' => 'get-item-with-chu-ho']);
+            $nkInHopDong = ($data) ? $this->mainModel->assignNK([$data]) : [];
+
+            $shareData = [
+                'id' => $id,
+                'data' => $data,
+                'nkInHopDong' => $nkInHopDong,
+                'thoiHanONho' => $thoiHanONho,
+                'thoiHanTuNgay' => $thoiHanTuNgay
+            ];
+
+            //return view($this->getPathView('export_hdtn'), $shareData);
+
+            $pdf = PDF::loadView($this->getPathView('export_hdtn'), $shareData);
+            return $pdf->stream()->header('Content-Type','application/pdf');
+            return $pdf->download('hop-dong-thue-nha.pdf');
+        }
+
+        return redirect()->route($this->moduleName)->with('notify', ['type' => 'danger', 'message' => 'Bad Request!']);
     }
 }

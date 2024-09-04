@@ -109,6 +109,7 @@ Route::prefix($prefixAdmin)->middleware('check.permission')->group(function () {
             Route::get('/delete/{id}', 'delete')->where(['id' => '[0-9]+'])->name($ctrl.'/delete');
             Route::get('/change-status/{id}/{status}', 'change_status')->where(['id' => '[0-9]+', 'status' => '[a-z]+'])->name($ctrl.'/change-status');
             Route::post('/save', 'save')->name($ctrl.'/save');
+            Route::get('/export', 'export')->where(['id' => '[0-9]+', 'task' => '[a-z]+'])->name($ctrl.'/export');
         });
     });
 

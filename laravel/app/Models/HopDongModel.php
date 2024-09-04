@@ -183,6 +183,14 @@ class HopDongModel extends Model
         if($options['task'] == 'get-item'){
             $result = Self::select('*')->where('id', $params['id'])->first();
         }
+        if($options['task'] == 'get-item-with-chu-ho'){
+            $table = $this->table.' as main';
+            $query = Self::from($table);
+            $query->select(DB::raw('main.*, cd.avatar as cd_avatar, cd.fullname as cd_fullname, cd.address as cd_address, cd.cccd_number as cd_cccd_number, cd.cccd_dos as cd_cccd_dos, cd.status as cd_status'));
+            $query->where('main.id', $params['id']);
+            $query->leftJoin($this->tableCongDan.' as cd', 'cd.id', '=', 'main.cong_dan_id');
+            $result = $query->first();
+        }
         return $result;
     }
 }

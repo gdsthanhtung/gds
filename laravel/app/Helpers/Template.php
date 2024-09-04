@@ -209,4 +209,16 @@ class Template {
         $class = ($task == 'NEW') ? 'primary' : 'warning';
         return "<a href=".route('congdan/ct01', ['id' => $cdId, 'task' => $task, 'withFamily' => $withFamify])." target='_blank' class='btn btn-$class btn-sm mb-1 mr-5'>$text</a>";
     }
+
+    public static function hdtn($id, $task = 'hdtn'){
+        $date = Carbon::now()->format('d/m/Y');
+        if($task == 'hdtn'){
+            $class = 'success';
+            $text = 'HĐ Thuê Nhà';
+        }else{
+            $class = 'warning';
+            $text = 'HĐ Thuê Nhà';
+        }
+        return "<a href=".route('hopdong/export', ['id' => $id, 'task' => $task, 'thoiHanONho' => 24, 'thoiHanTuNgay' => $date])." target='_blank' class='btn btn-$class btn-sm mb-1 mr-5'>$text</a>";
+    }
 }

@@ -11,7 +11,6 @@ use App\Helpers\Notify;
 use Config;
 
 use App\Models\HopDongModel;
-use App\Helpers\Template;
 use PDF;
 
 class HoaDonController extends Controller
@@ -189,13 +188,5 @@ class HoaDonController extends Controller
         return $pdf->stream()->header('Content-Type','application/pdf');
         return $pdf->download('hoadon.pdf');
 
-    }
-
-    public function test(Request $rq)
-    {
-        $shareData = [
-            'data' => ['a','b'],
-        ];
-        return view($this->getPathView('test'), $shareData);
     }
 }
