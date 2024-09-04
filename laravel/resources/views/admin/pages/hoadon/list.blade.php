@@ -6,7 +6,7 @@ use App\Helpers\Highlight;
 
 <div class="x_content">
     <div class="table-responsive">
-        <table class="table table-striped jambo_table bulk_action">
+        <table class="table table-hover jambo_table">
             <thead>
                 <tr class="headings">
                     <th class="column-title">#</th>
@@ -15,7 +15,7 @@ use App\Helpers\Highlight;
                     <th class="column-title" colspan="2">Thông tin thuê phòng</th>
                     <th class="column-title">Trạng thái</th>
                     <th class="column-title">Lịch sử</th>
-                    <th class="column-title">Hành động</th>
+                    <th class="column-title text-center">Chức năng</th>
                 </tr>
             </thead>
             <tbody>
@@ -49,25 +49,31 @@ use App\Helpers\Highlight;
 
                             <td>{{ $no }}</td>
                             <td width='300px'>
-                                <p><strong>Phòng:</strong> {!! $ptName !!}</p>
-                                <p><strong>Hóa đơn từ:</strong> {!! $fromDate !!} - {!! $toDate !!}</p>
-                                <p><strong>Hợp đồng số:</strong> {!! $maHopDong !!}</p>
+                                <small>
+                                    <span><strong>Phòng:</strong> {!! $ptName !!}</span><br>
+                                    <span><strong>Hóa đơn từ:</strong> {!! $fromDate !!} - {!! $toDate !!}</span><br>
+                                    <span><strong>Hợp đồng số:</strong> {!! $maHopDong !!}</span>
+                                </small>
                             </td>
                             <td width='140px' style="text-align: center">{!! $avatar !!}</td>
                             <td>
-                                <p><strong>Họ tên:</strong> {!! $cdFullname !!}</p>
-                                <p><strong>Trạng thái:</strong> {!! $cdStatus !!}</p>
+                                <small>
+                                    <span><strong>Họ tên:</strong> {!! $cdFullname !!}</span><br>
+                                    <span><strong>Trạng thái:</strong> {!! $cdStatus !!}</span>
+                                </small>
                             </td>
                             <td>
-                                <p><strong>Số Điện đã dùng:</strong> {!! $numberE !!}</p>
-                                <p><strong>Số Nước đã dùng:</strong> {!! $numberW !!}</p>
+                                <small>
+                                    <span><strong>Số Điện đã dùng:</strong> {!! $numberE !!}</span><br>
+                                    <span><strong>Số Nước đã dùng:</strong> {!! $numberW !!}</span>
+                                </small>
                             </td>
                             <td>
-                                <p><strong>Tổng cộng:</strong> {!! $tongCong !!}</p>
+                                <small><span><strong>Tổng cộng:</strong> {!! $tongCong !!}</span></small>
                             </td>
                             <td>{!! $status !!}</td>
-                            <td><b>Tạo bởi:</b> {!! $createdHis !!} <b>Điều chỉnh:</b> {!! $modifiedHis !!}</td>
-                            <td class="last">{!! $actionBtn !!}</td>
+                            <td><small><b>Tạo bởi:</b><br>{!! $createdHis !!}<br><b>Điều chỉnh:</b><br>{!! $modifiedHis !!}</small></td>
+                            <td class="last text-center">{!! $actionBtn !!}</td>
                         </tr>
                     @endforeach
                 @else

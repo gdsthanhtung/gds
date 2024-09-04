@@ -11,8 +11,8 @@ use App\Helpers\Highlight;
                     <th class="column-title text-center">#</th>
                     <th class="column-title text-center">Avatar</th>
                     <th class="column-title">Thông tin</th>
-                    <th class="column-title text-center">Level</th>
-                    <th class="column-title text-center">Trạng thái</th>
+                    <th class="column-title">Level</th>
+                    <th class="column-title">Trạng thái</th>
                     <th class="column-title">Tạo mới</th>
                     <th class="column-title">Chỉnh sửa</th>
                     <th class="column-title text-center">Chức năng</th>
@@ -46,8 +46,8 @@ use App\Helpers\Highlight;
                                     <span><strong>Email:</strong> {!! $email !!}</span>
                                 </small>
                             </td>
-                            <td class="text-center">{!! $level !!}</td>
-                            <td class="text-center">{!! $status !!}</td>
+                            <td>{!! $level !!}</td>
+                            <td>{!! $status !!}</td>
                             <td>{!! $createdHis !!}</td>
                             <td>{!! $modifiedHis !!}</td>
                             <td class="text-center">{!! $actionBtn !!}</td>

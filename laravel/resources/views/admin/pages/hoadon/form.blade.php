@@ -1,26 +1,28 @@
 @extends('admin.main')
 
 @section('content')
-    <div class="right_col" role="main">
-        @include($pathViewTemplate . 'page_header',
-            [
-                'title' => $pageTitle,
-                'button' => '<a href="'.route($ctrl).'" class="btn btn-info"><i class="fa fa-arrow-left"></i> Quay lại</a>'
-            ])
+    @php
+        $exportHD = ($id) ? '<a href="'.route($ctrl.'/export', ['id' => $id]).'" target="_blank" class="btn btn-sm btn-primary mr-5"><i class="bi bi-download"></i> Xuất hóa đơn</a>' : '';
+    @endphp
 
-        @if (session('notify'))
-            @include($pathViewTemplate . 'notify')
+    @include($pathViewTemplate . 'page_header',
+    [
+        'title' => $pageTitle,
+        'button' => $exportHD.'<a href="'.route($ctrl).'" class="btn btn-secondary btn-sm"><i class="bi bi-arrow-left"></i> Quay lại</a>'
+    ])
+
+    @if (session('notify'))
+        @include($pathViewTemplate . 'notify')
+    @endif
+
+    <section class="section">
+        @include($pathViewTemplate . 'error')
+
+        @if($id)
+            @include($pathView.'form_hd_view')
+        @else
+            @include($pathView.'form_hd')
         @endif
 
-        <div class="row">
-            @include($pathViewTemplate . 'error')
-
-            @if($id)
-                @include($pathView.'form_hd_view')
-                @include($pathView.'form_at')
-            @else
-                @include($pathView.'form_hd')
-            @endif
-        </div>
-    </div>
+    </section>
 @endsection

@@ -5,51 +5,55 @@
     $statusFilter = Template::showButtonFilter($ctrl, $countByStatus, $params, 'ruleStatusHoaDon');
     $searchArea = Template::showsearchArea($ctrl, $params, 'searchSelectionHopDong');
 @endphp
-@section('content')
-    <div class="right_col" role="main">
-        @include($pathViewTemplate . 'page_header',
-            [
-                'title' => $pageTitle,
-                'button' => '<a href="'.route($ctrl."/export",['task' => 'uncharged']).'" class="btn btn-primary"><i class="fa fa-file"></i> Xuất HĐ chưa thanh toán</a>
-                             <a href="'.route($ctrl."/form").'" class="btn btn-success"><i class="fa fa-plus-circle"></i> Thêm mới</a>'
-            ])
 
-        @include($pathViewTemplate.'notify')
-        <div class="row">
-            <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="x_panel">
-                    @include($pathViewTemplate.'x_title', ['title' => 'Bộ lọc'])
-                    <div class="x_content">
-                        <div class="row">
-                            <div class="col-md-6">{!! $statusFilter !!}</div>
-                            <div class="col-md-6">{!! $searchArea !!}</div>
-                        </div>
+@section('content')
+@include($pathViewTemplate . 'page_header',
+[
+    'title' => $pageTitle,
+    'button' => '
+        <a href="'.route($ctrl."/export",['task' => 'uncharged']).'" class="btn btn-primary btn-sm"><i class="bi bi-download"></i> Xuất HĐ chưa thanh toán</a>
+        <a href="'.route($ctrl."/form").'" class="btn btn-success btn-sm"><i class="bi bi-plus-circle"></i> Thêm mới</a>
+    '
+])
+
+@include($pathViewTemplate.'notify')
+
+<section class="section">
+    <div class="row">
+        <div class="col-12">
+            <div class="card overflow-auto">
+                <div class="card-body">
+                    <h5 class="card-title">Bộ lọc</h5>
+                    <div class="row">
+                        <div class="col"> {!! $statusFilter !!} </div>
+                        <div class="col"> {!! $searchArea !!} </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!--box-lists-->
-        <div class="row">
-            <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="x_panel">
-                    @include($pathViewTemplate.'x_title', ['title' => 'Danh sách'])
-                    @include($pathView.'list')
-                </div>
-            </div>
-        </div>
-        <!--end-box-lists-->
-        <!--box-pagination-->
-        @if (count($data) > 0)
-        <div class="row">
-            <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="x_panel">
-                    @include($pathViewTemplate.'x_title', ['title' => 'Phân trang'])
-
-                    @include($pathViewTemplate.'pagination', ['title' => 'Phân trang'])
-                </div>
-            </div>
-        </div>
-        @endif
-        <!--end-box-pagination-->
     </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card overflow-auto">
+                <div class="card-body">
+                    <h5 class="card-title">Danh sách</h5>
+                    @include($pathView.'list')
+            </div>
+        </div>
+    </div>
+
+    @if (count($data) > 0)
+    <div class="row">
+        <div class="col-12">
+            <div class="card overflow-auto">
+                <div class="card-body">
+                    <h5 class="card-title">Phân trang</h5>
+                    @include($pathViewTemplate.'pagination', ['title' => 'Phân trang'])
+            </div>
+        </div>
+    </div>
+
+    @endif
+</section>
 @endsection

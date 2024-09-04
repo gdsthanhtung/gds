@@ -283,7 +283,6 @@ $(document).ready(function() {
         $('#address').val(arrContent[5].substr(16));
 
         let cccd_dos = arrContent[6].substr(15).replaceAll('/', '-');
-        console.log(cccd_dos);
 
         $('#cccd_dos').val(cccd_dos);
 
@@ -292,6 +291,9 @@ $(document).ready(function() {
 
         let gender = (arrContent[3].substr(11) == 'Nam') ? 'M' : 'W';
         $("#gender option[value='"+gender+"']").attr("selected", true);
+
+        $('#modalCongDanQuickAdd').modal('toggle');
+
     })
 
     function capitalizeFirstLetter(str) {

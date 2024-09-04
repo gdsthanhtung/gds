@@ -6,12 +6,6 @@ use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Laravel\Facades\Image;
 
 class Resource {
-    public static function upload($dirName, $file){
-        $newName = Carbon::now()->format('ymdhisu').'.'.$file->clientExtension();
-        $rs = $file->storeAs($dirName, $newName, 'global');
-        return ($rs) ? $newName : false;
-    }
-
     public static function delete($dirName, $file){
         $rs = Storage::disk('global')->delete($dirName.'/'.$file);
         return ($rs) ? $rs : false;
@@ -19,11 +13,7 @@ class Resource {
 
     public static function uploadImage($dirName, $image, $type = 'default')
     {
-        //if(!$image) return false;
-
         $imageName = Carbon::now()->format('ymdhisu').'.'.$image->clientExtension();
-        //dump($image);
-        //dd($image->getPathname());
         $img = Image::read($image->getPathname());
 
         switch ($type) {

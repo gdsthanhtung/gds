@@ -21,7 +21,7 @@
         ],
         [
             'label' => Form::label('status', 'Trạng thái', ['class' => $formLabelClass]),
-            'el'    => Form::select('status', $statusEnum, $status, ['class' => $formInputClass, 'placeholder' => 'Select an item...'])
+            'el'    => Form::select('status', $statusEnum, $status, ['class' => $formInputClass.' form-select', 'placeholder' => 'Select an item...'])
         ],
         [
             'el' => $hiddenID . Form::submit('Lưu', ['class' => 'btn btn-success']),
@@ -31,44 +31,44 @@
 @endphp
 
 @section('content')
-    <div class="right_col" role="main">
+    <section class="section">
         @include($pathViewTemplate . 'page_header',
-            [
-                'title' => $pageTitle,
-                'button' => '<a href="'.route($ctrl).'" class="btn btn-info"><i class="fa fa-arrow-left"></i> Quay lại</a>'
-            ])
+        [
+            'title' => $pageTitle,
+            'button' => '<a href="'.route($ctrl).'" class="btn btn-secondary btn-sm"><i class="bi bi-arrow-left"></i> Quay lại</a>'
+        ])
 
         @if (session('notify'))
             @include($pathViewTemplate . 'notify')
         @endif
 
-        <!--box-form-->
+        @include($pathViewTemplate . 'error')
+
         <div class="row">
-            <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="x_panel">
-                    @include($pathViewTemplate . 'x_title', ['title' => (1) ? 'Điều chỉnh' : 'Thêm mới'])
+            <div class="col-6 offset-3">
+                <div class="card overflow-auto">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ ($id) ? 'Điều chỉnh' : 'Thêm mới' }}</h5>
+                        <div class="row">
 
-                    @include($pathViewTemplate . 'error')
+                            {!!
+                                Form::open([
+                                    'url' => route($ctrl.'/save'),
+                                    'accept-charset' => 'UTF-8',
+                                    'method' => 'POST',
+                                    'enctype' => 'multipart/form-data',
+                                    'class' => 'form-horizontal form-label-left',
+                                    'id' => 'main-form'
+                                ])
+                            !!}
 
-                    <div class="x_content">
-                        {!!
-                            Form::open([
-                                'url' => route($ctrl.'/save'),
-                                'accept-charset' => 'UTF-8',
-                                'method' => 'POST',
-                                'enctype' => 'multipart/form-data',
-                                'class' => 'form-horizontal form-label-left',
-                                'id' => 'main-form'
-                            ])
-                        !!}
+                                {!! FormTemplate::export($element) !!}
 
-                            {!! FormTemplate::export($element) !!}
-
-                        {!! Form::close() !!}
+                            {!! Form::close() !!}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!--end-box-form-->
-    </div>
+    </section>
 @endsection

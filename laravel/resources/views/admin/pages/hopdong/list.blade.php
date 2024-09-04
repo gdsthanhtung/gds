@@ -6,17 +6,17 @@ use App\Helpers\Highlight;
 
 <div class="x_content">
     <div class="table-responsive">
-        <table class="table table-striped jambo_table bulk_action">
+        <table class="table table-hover jambo_table">
             <thead>
                 <tr class="headings">
-                    <th class="column-title">#</th>
+                    <th class="column-title text-center">#</th>
                     <th class="column-title">Hợp đồng</th>
+                    <th class="column-title">Thông tin thuê phòng</th>
                     <th class="column-title" colspan="2">Đại diện thuê phòng</th>
-                    <th class="column-title" colspan="2">Thông tin thuê phòng</th>
                     <th class="column-title">Nhân khẩu</th>
                     <th class="column-title">Trạng thái</th>
                     <th class="column-title">Lịch sử</th>
-                    <th class="column-title">Hành động</th>
+                    <th class="column-title text-center">Chức năng</th>
                 </tr>
             </thead>
             <tbody>
@@ -53,34 +53,38 @@ use App\Helpers\Highlight;
                                 $nhanKhauInfo   = Modal::showNhanKhau($id, $nhanKhau);
                             @endphp
 
-                            <td>{{ $no }}</td>
-                            <td width='300px'>
-                                <p><strong>Hợp đồng số:</strong> {!! $maHopDong !!}</p>
-                                <p><strong>Hiệu lực:</strong> {!! $fromDate !!} - {!! $toDate !!}</p>
-                                @if($note)
-                                    <p><strong>Ghi chú:</strong> {!! $note !!}</p>
-                                @endif
-                            </td>
-                            <td width='140px' style="text-align: center">{!! $avatar !!}</td>
-                            <td>
-                                <p><strong>Họ tên:</strong> {!! $cdFullname !!}</p>
-                                <p><strong>CCCD:</strong> {!! $cdCccdNumber !!}</p>
-                                <p><strong>Trạng thái:</strong> {!! $cdStatus !!}</p>
+                            <td class="text-center">{{ $no }}</td>
+                            <td width='250px'>
+                                <small>
+                                    <span><strong>Hợp đồng số:</strong> {!! $maHopDong !!}</span><br>
+                                    <span><strong>Hiệu lực:</strong> {!! $fromDate !!} - {!! $toDate !!}</span><br>
+                                    <span><strong>Hưởng đ.mức Điện:</strong> {!! $approveE !!}</span><br>
+                                    <span><strong>Hưởng đ.mức Nước:</strong> {!! $approveW !!}</span><br>
+                                    @if($note)
+                                        <span><strong>Ghi chú:</strong> {!! $note !!}</span>
+                                    @endif
+                                <small>
                             </td>
                             <td>
-                                <p><strong>Phòng:</strong> {!! $ptName !!}</p>
-                                <p><strong>Chỉ số Điện:</strong> {!! $numberE !!}</p>
-                                <p><strong>Chỉ số Nước:</strong> {!! $numberW !!}</p>
+                                <small>
+                                    <span><strong>Phòng:</strong> {!! $ptName !!}</span><br>
+                                    <span><strong>Chỉ số Điện:</strong> {!! $numberE !!}</span><br>
+                                    <span><strong>Chỉ số Nước:</strong> {!! $numberW !!}</span><br>
+                                    <span><strong>Giá Phòng:</strong> {!! $price !!}</span>
+                                </small>
                             </td>
-                            <td>
-                                <p><strong>Giá Phòng:</strong> {!! $price !!}</p>
-                                <p><strong>Hưởng định mức Điện:</strong> {!! $approveE !!}</p>
-                                <p><strong>Hưởng định mức Nước:</strong> {!! $approveW !!}</p>
+                            <td width='140px' class="text-center">{!! $avatar !!}</td>
+                            <td width='250px'>
+                                <small>
+                                    <span><strong>Họ tên:</strong> {!! $cdFullname !!}</span><br>
+                                    <span><strong>CCCD:</strong> {!! $cdCccdNumber !!}</span><br>
+                                    <span><strong>Trạng thái:</strong> {!! $cdStatus !!}</span>
+                                </small>
                             </td>
-                            <td>{!! $nhanKhauInfo !!}</td>
+                            <td><small>{!! $nhanKhauInfo !!}</small></td>
                             <td>{!! $status !!}</td>
-                            <td><b>Tạo bởi:</b> {!! $createdHis !!} <b>Điều chỉnh:</b> {!! $modifiedHis !!}</td>
-                            <td class="last">{!! $actionBtn !!}</td>
+                            <td><small><b>Tạo bởi:</b><br>{!! $createdHis !!}<br><b>Điều chỉnh:</b><br>{!! $modifiedHis !!}</small></td>
+                            <td class="last text-center">{!! $actionBtn !!}</td>
                         </tr>
                     @endforeach
                 @else

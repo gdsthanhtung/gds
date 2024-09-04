@@ -10,12 +10,12 @@
         @include($pathViewTemplate . 'page_header',
             [
                 'title' => $pageTitle,
-                'button' => '<a href="'.route($ctrl."/form").'" class="btn btn-success"><i class="fa fa-plus-circle"></i> Thêm mới</a>'
+                'button' => '<a href="'.route($ctrl."/form").'" class="btn btn-success btn-sm"><i class="bi bi-plus-circle"></i> Thêm mới</a>'
             ])
 
         @include($pathViewTemplate.'notify')
         <div class="row">
-            <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="col-12">
                 <div class="x_panel">
                     @include($pathViewTemplate.'x_title', ['title' => 'Bộ lọc'])
                     <div class="x_content">
@@ -29,7 +29,7 @@
         </div>
         <!--box-lists-->
         <div class="row">
-            <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="col-12">
                 <div class="x_panel">
                     @include($pathViewTemplate.'x_title', ['title' => 'Danh sách'])
                     @include($pathView.'list')
@@ -40,7 +40,7 @@
         <!--box-pagination-->
         @if (count($data) > 0)
         <div class="row">
-            <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="col-12">
                 <div class="x_panel">
                     @include($pathViewTemplate.'x_title', ['title' => 'Phân trang'])
 

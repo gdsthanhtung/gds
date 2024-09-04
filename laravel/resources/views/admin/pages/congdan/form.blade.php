@@ -1,3 +1,5 @@
+@extends('admin.main')
+
 @php
     use App\Helpers\Template;
     use App\Helpers\FormTemplate;
@@ -47,7 +49,7 @@
             'el'    => Form::text('fullname', $fullname, ['class' => $formInputClass, 'required' => true])
         ],[
             'label' => Form::label('gender', 'Giới Tính', ['class' => $formLabelClass]),
-            'el'    => Form::select('gender', $genderEnum, $gender, ['class' => $formInputClass, 'placeholder' => 'Select an item...'])
+            'el'    => Form::select('gender', $genderEnum, $gender, ['class' => $formInputClass.' form-select', 'placeholder' => 'Select an item...'])
         ],[
             'label' => Form::label('dob', 'Ngày Sinh', ['class' => $formLabelClass]),
             'el'    => Form::text('dob', $dob, ['class' => $formInputClass.' datepicker', 'required' => true])
@@ -65,17 +67,18 @@
             'el'    => Template::radioSelect($isCityEnum, $elName = 'is_city', $isCity)
         ],[
             'label' => Form::label('dktt_status', 'Trạng Thái ĐK Tạm trú', ['class' => $formLabelClass]),
-            'el'    => Form::select('dktt_status', $statusEnumDKTT, $statusDKTT, ['class' => $formInputClass, 'placeholder' => 'Select an item...'])
+            'el'    => Form::select('dktt_status', $statusEnumDKTT, $statusDKTT, ['class' => $formInputClass.' form-select', 'placeholder' => 'Select an item...'])
         ],[
             'label' => Form::label('dktt_tu_ngay', 'Đăng ký tạm trú', ['class' => $formLabelClass]),
-            'el'    => '<div class="input-group input-daterange">'.
+            'el'    => '<div class="input-group input-daterange mb-3">'.
                             Form::text('dktt_tu_ngay', $fromDateDKTT, ['class' => 'form-control']).'
-                            <div class="input-group-addon">đến</div>'.
+                            <div class="input-group-text">đến</div>'.
                             Form::text('dktt_den_ngay', $toDateDKTT, ['class' => 'form-control']).'
-                        </div>'
+                        </div>
+                        '
         ],[
             'label' => Form::label('status', 'Trạng Thái', ['class' => $formLabelClass]),
-            'el'    => Form::select('status', $statusEnum, $status, ['class' => $formInputClass, 'placeholder' => 'Select an item...'])
+            'el'    => Form::select('status', $statusEnum, $status, ['class' => $formInputClass.' form-select', 'placeholder' => 'Select an item...'])
         ],[
             'label' => Form::label('avatar', 'Ảnh Đại Diện', ['class' => $formLabelClass]),
             'el'    => Form::file('avatar', ['class' => $formInputClass]),
@@ -98,31 +101,30 @@
     ];
 @endphp
 
-@extends('admin.main')
-
 @section('content')
-    <div class="right_col" role="main">
-        @include($pathViewTemplate . 'page_header',
-            [
-                'title' => $pageTitle,
-                'button' => '
-                    <button class="btn btn-warning" id="cong-dan-quick-add" data-toggle="modal" data-target="#modalCongDanQuickAdd">Quick add</button>
-                    <a href="'.route($ctrl).'" class="btn btn-info"><i class="fa fa-arrow-left"></i> Quay lại</a>'
-            ])
+<section class="section">
+    @include($pathViewTemplate . 'page_header',
+    [
+        'title' => $pageTitle,
+        'button' => '
+            <button class="btn btn-warning btn-sm" id="cong-dan-quick-add" data-bs-toggle="modal" data-bs-target="#modalCongDanQuickAdd">Quick add</button>
+            <a href="'.route($ctrl).'" class="btn btn-secondary btn-sm"><i class="bi bi-arrow-left"></i> Quay lại</a>
+        '
+    ])
 
-        @if (session('notify'))
-            @include($pathViewTemplate . 'notify')
-        @endif
+    @if (session('notify'))
+        @include($pathViewTemplate . 'notify')
+    @endif
 
-        <!--box-form-->
-        <div class="row">
-            <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="x_panel">
-                    @include($pathViewTemplate . 'x_title', ['title' => 'Thêm mới'])
+    @include($pathViewTemplate . 'error')
 
-                    @include($pathViewTemplate . 'error')
+    <div class="row">
+        <div class="col-6 offset-3">
+            <div class="card overflow-auto">
+                <div class="card-body">
+                    <h5 class="card-title">{{ ($id) ? 'Điều chỉnh' : 'Thêm mới' }}</h5>
+                    <div class="row">
 
-                    <div class="x_content">
                         {!!
                             Form::open([
                                 'url' => route($ctrl.'/save'),
@@ -141,34 +143,32 @@
                 </div>
             </div>
         </div>
-        <!--end-box-form-->
     </div>
+</section>
 
-    <!-- Modal -->
-    <div id="modalCongDanQuickAdd" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Nhập thông tin Công Dân tự động</h4>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                      <label for="cccd-content" class="col-form-label">Thông tin CCCD:</label>
-                      <textarea class="form-control" id="cccd-content" rows="8"></textarea>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="process-cccd-content">Xử lý</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
+<!-- Modal -->
+<div id="modalCongDanQuickAdd" class="modal fade" tabindex='-1' aria-hidden="true">
+    <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">NHẬP THÔNG TIN CÔNG DÂN TỰ ĐỘNG</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-
+        <div class="modal-body">
+            <form>
+                <div class="form-group">
+                    <label for="cccd-content" class="col-form-label">Thông tin CCCD:</label>
+                    <textarea class="form-control" id="cccd-content" rows="8"></textarea>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id="process-cccd-content">Xử lý</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" id="process-cccd-close">Close</button>
         </div>
     </div>
+
+    </div>
+</div>
 
 @endsection

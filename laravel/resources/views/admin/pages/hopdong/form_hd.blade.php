@@ -37,17 +37,17 @@
         ],
         [
             'label' => Form::label('cong_dan_id', 'Đại diện thuê phòng', ['class' => $formLabelClass]),
-            'el'    => Form::select('cong_dan_id', $dataCongDan, $congDanId, ['class' => $formInputClass, 'placeholder' => 'Select an item...'])
+            'el'    => Form::select('cong_dan_id', $dataCongDan, $congDanId, ['class' => $formInputClass.' form-select', 'placeholder' => 'Select an item...'])
         ],
         [
             'label' => Form::label('phong_id', 'Phòng', ['class' => $formLabelClass]),
-            'el'    => Form::select('phong_id', $dataPhongTro, $phongId, ['class' => $formInputClass, 'placeholder' => 'Select an item...'])
+            'el'    => Form::select('phong_id', $dataPhongTro, $phongId, ['class' => $formInputClass.' form-select', 'placeholder' => 'Select an item...'])
         ],
         [
             'label' => Form::label('thue_tu_ngay', 'Thuê từ ngày', ['class' => $formLabelClass]),
             'el'    => '<div class="input-group input-daterange">'.
                             Form::text('thue_tu_ngay', $fromDate, ['class' => 'form-control', 'required' => true]).'
-                            <div class="input-group-addon">đến</div>'.
+                            <div class="input-group-text">đến</div>'.
                             Form::text('thue_den_ngay', $toDate, ['class' => 'form-control', 'required' => true]).'
                         </div>'
         ],
@@ -68,16 +68,16 @@
             'el'    => Form::number('chi_so_nuoc', $numberW, ['class' => $formInputClass, 'required' => true])
         ],
         [
-            'label' => Form::label('huong_dinh_muc_dien', 'Hưởng định mức Điện', ['class' => $formLabelClass]),
+            'label' => Form::label('huong_dinh_muc_dien', 'Hưởng đ.mức Điện', ['class' => $formLabelClass]),
             'el'    => Template::radioSelect($yesnoEnum, $elName = 'huong_dinh_muc_dien', $approveE)
         ],
         [
-            'label' => Form::label('huong_dinh_muc_nuoc', 'Hưởng định mức Nước', ['class' => $formLabelClass]),
+            'label' => Form::label('huong_dinh_muc_nuoc', 'Hưởng đ.mức Nước', ['class' => $formLabelClass]),
             'el'    => Template::radioSelect($yesnoEnum, $elName = 'huong_dinh_muc_nuoc', $approveW)
         ],
         [
             'label' => Form::label('status', 'Trạng thái', ['class' => $formLabelClass]),
-            'el'    => Form::select('status', $statusEnum, $status, ['class' => $formInputClass, 'placeholder' => 'Select an item...' ])
+            'el'    => Form::select('status', $statusEnum, $status, ['class' => $formInputClass.' form-select', 'placeholder' => 'Select an item...' ])
         ],
         [
             'label' => Form::label('ghi_chu', 'Ghi chú', ['class' => $formLabelClass]),
@@ -90,11 +90,10 @@
     ];
 @endphp
 
-@if($id) <div class="col-md-5 col-sm-5 col-xs-5"> @else <div class="col-md-12 col-sm-12 col-xs-12"> @endif
-    <div class="x_panel">
-        @include($pathViewTemplate . 'x_title', ['title' => ($id) ? 'Điều chỉnh Hợp đồng' : 'Thêm mới Hợp đồng'])
-
-        <div class="x_content">
+<div class="card overflow-auto">
+    <div class="card-body">
+        <h5 class="card-title">{{ ($id) ? 'Điều chỉnh Hợp đồng' : 'Thêm mới Hợp đồng' }}</h5>
+        <div class="row">
             {!!
                 Form::open([
                     'url' => route($ctrl.'/save'),

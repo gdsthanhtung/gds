@@ -5,17 +5,17 @@ use App\Helpers\Highlight;
 
 <div class="x_content">
     <div class="table-responsive">
-        <table class="table table-striped jambo_table bulk_action">
+        <table class="table table-hover jambo_table">
             <thead>
                 <tr class="headings">
-                    <th class="column-title">#</th>
+                    <th class="column-title text-center">#</th>
                     <th class="column-title">Hình Ảnh</th>
                     <th class="column-title" colspan="2">Thông tin Công dân</th>
                     <th class="column-title">Đăng ký tạm trú</th>
                     <th class="column-title">Trạng thái</th>
                     <th class="column-title">Lịch sử</th>
                     <th class="column-title">Xuất file</th>
-                    <th class="column-title">Hành động</th>
+                    <th class="column-title text-center">Chức năng</th>
                 </tr>
             </thead>
             <tbody>
@@ -58,31 +58,37 @@ use App\Helpers\Highlight;
                                 $actionBtn          = Template::showActionButton($ctrl, $id);
                             @endphp
 
-                            <td width="20px">{{ $no }}</td>
+                            <td width="20px" class="text-center">{{ $no }}</td>
                             <td width="5%">{!! $avatar !!}</td>
                             <td width="15%">
-                                <p><strong>Họ tên:</strong> {!! $fullname !!}</p>
-                                <p><strong>Số CCCD:</strong> {!! $cccd_number !!}</p>
-                                <p><strong>Ngày cấp:</strong> {!! $cccd_dos !!}</p>
-                                <p><strong>Hình CCCD:</strong>
-                                    <a href="#" data-toggle="modal" data-target="#cccdModal" data-cccdfront="{{ $cccd_image_front }}" data-cccdrear="{{ $cccd_image_rear }}">
-                                        <i class="fa fa-eye"></i> View
-                                    </a>
-                                </p>
+                                <small>
+                                    <span><strong>Họ tên:</strong> {!! $fullname !!}</span><br>
+                                    <span><strong>Số CCCD:</strong> {!! $cccd_number !!}</span><br>
+                                    <span><strong>Ngày cấp:</strong> {!! $cccd_dos !!}</span><br>
+                                    <span><strong>Hình CCCD:</strong>
+                                        <a href="#" data-bs-toggle="modal" data-bs-target="#cccdModal" data-cccdfront="{{ $cccd_image_front }}" data-cccdrear="{{ $cccd_image_rear }}">
+                                            <i class="bi bi-eye"></i> View
+                                        </a>
+                                    </span>
+                                </small>
                             </td>
-                            <td width="25%">
-                                <p><strong>Đ/C thường trú:</strong> {!! $address !!}</p>
-                                <p><strong>Hộ khẩu:</strong> {!! $isCity !!}</p>
-                                <p><strong>Giới tính:</strong> {!! $gender !!}</p>
+                            <td width="20%">
+                                <small>
+                                    <span><strong>Đ/C thường trú:</strong> {!! $address !!}</span><br>
+                                    <span><strong>Hộ khẩu:</strong> {!! $isCity !!}</span><br>
+                                    <span><strong>Giới tính:</strong> {!! $gender !!}</span>
+                                </small>
                             </td>
                             <td>
-                                <p><strong>Trạng thái:</strong> {!! $dktt_status !!}</p>
-                                <p><strong>Thời hạn:</strong> {!! $dktt_from_date !!} - {!! $dktt_to_date !!}</p>
+                                <small>
+                                    <span><strong>Trạng thái ĐKTT:</strong> {!! $dktt_status !!}</span><br>
+                                    <span><strong>Thời hạn:</strong> {!! $dktt_from_date !!} - {!! $dktt_to_date !!}</span>
+                                </small>
                             </td>
                             <td>{!! $status !!}</td>
-                            <td><b>Tạo bởi:</b> {!! $createdHis !!} <b>Điều chỉnh:</b> {!! $modifiedHis !!}</td>
-                            <td class="last">{!! $exportCT01NEW !!} {!! $exportCT01GH !!}</td>
-                            <td class="last">{!! $actionBtn !!}</td>
+                            <td><small><b>Tạo bởi:</b><br>{!! $createdHis !!}<br><b>Điều chỉnh:</b><br>{!! $modifiedHis !!}</small></td>
+                            <td class="last">{!! $exportCT01NEW !!} <br> {!! $exportCT01GH !!}</td>
+                            <td class="last text-center">{!! $actionBtn !!}</td>
                         </tr>
                     @endforeach
                 @else
@@ -93,25 +99,27 @@ use App\Helpers\Highlight;
     </div>
 </div>
 
-<div class='modal fade cccdModal' id='cccdModal' tabindex='-1' role='dialog' aria-labelledby='CCCD'>
-    <div class='modal-dialog modal-lg' role='document'>
+<div class='modal fade cccdModal' id='cccdModal' tabindex='-1' aria-hidden="true">
+    <div class='modal-dialog modal-lg'>
         <div class='modal-content'>
             <div class='modal-header'>
-                <button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
-                <h4 class='modal-title' id='myModalLabel'>THÔNG TIN CĂN CƯỚC CÔNG DÂN</h4>
+                <h5 class="modal-title">THÔNG TIN CĂN CƯỚC CÔNG DÂN</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class='modal-body'>
-                <div class='content'>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-6 text-center" id="modal-cccd-front"></div>
-                            <div class="col-md-6 text-center" id="modal-cccd-rear"></div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <div class="col text-center" id="modal-cccd-front"></div>
+                        </div>
+                        <div class="col">
+                            <div class="col text-center" id="modal-cccd-rear"></div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class='modal-footer'>
-                <button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>

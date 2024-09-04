@@ -1,25 +1,31 @@
 @extends('admin.main')
 
 @section('content')
-    <div class="right_col" role="main">
-        @include($pathViewTemplate . 'page_header',
-            [
-                'title' => $pageTitle,
-                'button' => '<a href="'.route($ctrl).'" class="btn btn-info"><i class="fa fa-arrow-left"></i> Quay lại</a>'
-            ])
+    @include($pathViewTemplate . 'page_header',
+    [
+        'title' => $pageTitle,
+        'button' => '<a href="'.route($ctrl).'" class="btn btn-secondary btn-sm"><i class="bi bi-arrow-left"></i> Quay lại</a>'
+    ])
 
-        @if (session('notify'))
-            @include($pathViewTemplate . 'notify')
-        @endif
+    @if (session('notify'))
+        @include($pathViewTemplate . 'notify')
+    @endif
+
+    <section class="section">
+        @include($pathViewTemplate . 'error')
 
         <div class="row">
-            @include($pathViewTemplate . 'error')
+            @if($id) <div class="col-6"> @else <div class="col-6 offset-3"> @endif
+                @include($pathView.'form_hd')
+            </div>
 
-            @include($pathView.'form_hd')
             @if($id)
-                @include($pathView.'form_nk')
-                @include($pathView.'form_at')
+                <div class="col-6">
+                    @include($pathView.'form_nk')
+                    @include($pathView.'form_at')
+                </div>
             @endif
         </div>
-    </div>
+
+    </section>
 @endsection

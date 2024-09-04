@@ -31,13 +31,13 @@ $(document).ready(function() {
         $("#cong_dan_list option[value='"+congDanId+"']").attr("disabled", true);
         $("#cong_dan_list option[value='"+congDanId+"']").addClass('selected-option');
 
-        $('#cong_dan_list').find($('option')).attr('selected',false);
-        $('#mqh_list').find($('option')).attr('selected',false);
+        $('#cong_dan_list option:selected').prop('selected', false).change();
+        $('#mqh_list option:selected').prop('selected', false).change();
 
         rebuildListNKSelected();
 	});
 
-	$("#listNK").on("click", "span.remove-cong-dan", function(){
+	$("#listNK").on("click", ".remove-cong-dan", function(){
         let congDanId = $(this).attr('cong-dan-id');
 
         var index = congDanSelectedId.indexOf(congDanId);
@@ -60,11 +60,11 @@ $(document).ready(function() {
     function rebuildListNKSelected(){
         let listNK = '';
         if(congDanSelectedId.length == 0){
-            listNK = '<div class="alert alert-warning alert-dismissible init-nk-selected">Vui lòng chọn nhân khẩu từ danh sách bên cạnh!</div>';
+            listNK = '<div class="alert alert-warning alert-dismissible fade show init-nk-selected" role="alert"><i class="bi bi-info-circle me-1"></i>Chọn nhân khẩu từ danh sách phía trên!</div>';
         }else{
             for (let i = 0; i < congDanSelectedId.length; i++) {
-                listNK += '<div class="alert alert-info alert-dismissible init-nk-selected">';
-                listNK += '<button type="button" class="close"><span aria-hidden="true" class="remove-cong-dan" cong-dan-id="'+congDanSelectedId[i]+'">&times;</span></button>';
+                listNK += '<div class="alert alert-info alert-dismissible fade show init-nk-selected" role="alert">';
+                listNK += '<button type="button" class="btn-close remove-cong-dan" cong-dan-id="'+congDanSelectedId[i]+'" data-bs-dismiss="alert" aria-label="Close"></button>';
                 listNK += congDanSelectedName[i] + ' <strong>' + '(' + mqhSelectedName[i]+') </strong>';
                 listNK += '</div>';
             }

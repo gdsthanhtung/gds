@@ -31,17 +31,17 @@
             'label' => Form::label('password', 'Password', ['class' => $formLabelClass]),
             'el'    => Form::password('password', ['class' => $formInputClass, 'required' => true])
         ],[
-            'label' => Form::label('password_confirmation', 'Password confirmation', ['class' => $formLabelClass]),
+            'label' => Form::label('password_confirmation', 'Re-Password', ['class' => $formLabelClass]),
             'el'    => Form::password('password_confirmation', ['class' => $formInputClass, 'required' => true])
         ],[
             'label' => Form::label('email', 'Email', ['class' => $formLabelClass]),
             'el'    => Form::text('email', $email, ['class' => $formInputClass, 'required' => true])
         ],[
             'label' => Form::label('status', 'Status', ['class' => $formLabelClass]),
-            'el'    => Form::select('status', $statusEnum, $status, ['class' => $formInputClass, 'placeholder' => 'Select an item...'])
+            'el'    => Form::select('status', $statusEnum, $status, ['class' => $formInputClass.' form-select', 'placeholder' => 'Select an item...'])
         ],[
             'label' => Form::label('level', 'Level', ['class' => $formLabelClass]),
-            'el'    => Form::select('level', $levelEnum, $level, ['class' => $formInputClass, 'placeholder' => 'Select an item...'])
+            'el'    => Form::select('level', $levelEnum, $level, ['class' => $formInputClass.' form-select', 'placeholder' => 'Select an item...'])
         ],[
             'label' => Form::label('avatar', 'Avatar', ['class' => $formLabelClass]),
             'el'    => Form::file('avatar', ['class' => $formInputClass]),
@@ -54,31 +54,29 @@
     ];
 @endphp
 
-<!--box-form-->
 <div class="row">
-    <div class="col-md-12 col-sm-12 col-xs-12">
-        <div class="x_panel">
-            @include($pathViewTemplate . 'x_title', ['title' => 'Thêm mới'])
+    <div class="col-6 offset-3">
+        <div class="card overflow-auto">
+            <div class="card-body">
+                <h5 class="card-title">Thêm mới</h5>
+                <div class="row">
 
-            @include($pathViewTemplate . 'error')
+                    {!!
+                        Form::open([
+                            'url' => route($ctrl.'/save'),
+                            'accept-charset' => 'UTF-8',
+                            'method' => 'POST',
+                            'enctype' => 'multipart/form-data',
+                            'class' => 'form-horizontal form-label-left',
+                            'id' => 'main-form'
+                        ])
+                    !!}
 
-            <div class="x_content">
-                {!!
-                    Form::open([
-                        'url' => route($ctrl.'/save'),
-                        'accept-charset' => 'UTF-8',
-                        'method' => 'POST',
-                        'enctype' => 'multipart/form-data',
-                        'class' => 'form-horizontal form-label-left',
-                        'id' => 'main-form'
-                    ])
-                !!}
+                        {!! FormTemplate::export($element) !!}
 
-                    {!! FormTemplate::export($element) !!}
-
-                {!! Form::close() !!}
+                    {!! Form::close() !!}
+                </div>
             </div>
         </div>
     </div>
 </div>
-<!--end-box-form-->

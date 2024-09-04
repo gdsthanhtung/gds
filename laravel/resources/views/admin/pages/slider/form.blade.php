@@ -53,7 +53,7 @@
         @include($pathViewTemplate . 'page_header',
             [
                 'title' => $pageTitle,
-                'button' => '<a href="'.route($ctrl).'" class="btn btn-info"><i class="fa fa-arrow-left"></i> Quay lại</a>'
+                'button' => '<a href="'.route($ctrl).'" class=""btn btn-secondary btn-sm"><i class="bi bi-arrow-left"></i> Quay lại</a>'
             ])
 
         @if (session('notify'))
@@ -62,7 +62,7 @@
 
         <!--box-form-->
         <div class="row">
-            <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="col-12">
                 <div class="x_panel">
                     @include($pathViewTemplate . 'x_title', ['title' => ($id) ? 'Điều chỉnh' : 'Thêm mới'])
 

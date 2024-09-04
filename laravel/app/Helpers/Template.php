@@ -48,11 +48,11 @@ class Template {
     }
 
     public static function showItemThumb($ctrl, $img, $alt){
-        return sprintf (" <img src=%s }} alt=%s class='zvn-thumb'> ", asset("images/$ctrl/$img"), $alt);
+        return sprintf (" <img src=%s }} alt=%s class='thumb'> ", asset("images/$ctrl/$img"), $alt);
     }
 
     public static function showItemCCCD($ctrl, $img, $alt){
-        return sprintf (" <img src=%s }} alt=%s class='zvn-cccd'> ", asset("images/$ctrl/$img"), $alt);
+        return sprintf (" <img src=%s }} alt=%s class='cccd'> ", asset("images/$ctrl/$img"), $alt);
     }
 
     public static function showItemAvatar($ctrl, $img, $alt){
@@ -71,7 +71,7 @@ class Template {
         foreach($listBtn as $item){
             $button = $rule[$item];
             $link = route($ctrl.$button['route'], ['id' => $id]);
-            $html .= sprintf('<a href="%s" type="button" class="rounded-pill btn btn-sm btn-icon %s" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="%s">
+            $html .= sprintf('<a href="%s" type="button" class="rounded-pill mr-5 btn btn-sm btn-icon %s" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-original-title="%s">
                                 <i class="bi %s"></i>', $link, $button['class'], $button['title'], $button['icon']);
         }
         $html = '<div class="zvn-box-btn-filter">'.$html.'</div>';
@@ -173,8 +173,8 @@ class Template {
         if($nkInHopDong){
             foreach($nkInHopDong[$id] as $nk){
                 $nkInfo = $nk['fullname'].' - '.$nk['cccd_number'].' - '.$nk['status'];
-                $initNkSelected .= '<div class="alert alert-info alert-dismissible init-nk-selected">';
-                $initNkSelected .= '<button type="button" class="close"><span aria-hidden="true" class="remove-cong-dan" cong-dan-id="'.$nk['cong_dan_id'].'">&times;</span></button>';
+                $initNkSelected .= '<div class="alert alert-info alert-dismissible fade show init-nk-selected" role="alert">';
+                $initNkSelected .= '<button type="button" class="btn-close remove-cong-dan" cong-dan-id="'.$nk['cong_dan_id'].'" data-bs-dismiss="alert" aria-label="Close"></button>';
                 $initNkSelected .= $nk['fullname'].' - '.$nk['cccd_number'].' - '.$nk['status'].' <strong> ('.$mqhEnum[$nk['mqh_chu_phong']].') </strong>';
                 $initNkSelected .= '</div>';
                 $nkIdOptionSelected[]       = (string)$nk['cong_dan_id'];
@@ -183,7 +183,7 @@ class Template {
                 $mqhNameOptionSelected[]    = $mqhEnum[$nk['mqh_chu_phong']];
             }
         }else{
-            $initNkSelected = '<div class="alert alert-warning alert-dismissible init-nk-selected">Vui lòng chọn nhân khẩu từ danh sách bên cạnh!</div>';
+            $initNkSelected = '<div class="alert alert-warning alert-dismissible fade show init-nk-selected" role="alert"><i class="bi bi-info-circle me-1"></i>Chọn nhân khẩu từ danh sách phía trên!</div>';
         }
         return [
             'initNkSelected'        => $initNkSelected,
@@ -195,7 +195,7 @@ class Template {
     }
 
     public static function buildSelectCongDanList($dataCongDan = [], $nkIdOptionSelected){
-        $selectCongDanList = '<select class="form-control col-md-7 col-xs-12" id="cong_dan_list" name="cong_dan_list"><option value="">Select an item...</option>';
+        $selectCongDanList = '<select class="form-control col-7" id="cong_dan_list" name="cong_dan_list"><option value="">Select an item...</option>';
         if($dataCongDan) foreach ($dataCongDan as $cdId => $cd) {
             $disable = (in_array($cdId, $nkIdOptionSelected)) ? 'disabled="disabled" class="selected-option"' : '';
             $selectCongDanList .= "<option $disable value='$cdId'>$cd</option>";
@@ -207,6 +207,6 @@ class Template {
     public static function ct01($cdId, $task = 'NEW', $withFamify = false){
         $text = ($cdId == 'ALL') ? "$cdId-CT01-$task" : "CT01-$task";
         $class = ($task == 'NEW') ? 'primary' : 'warning';
-        return "<a href=".route('congdan/ct01', ['id' => $cdId, 'task' => $task, 'withFamily' => $withFamify])." target='_blank' class='btn btn-$class'>$text</a>";
+        return "<a href=".route('congdan/ct01', ['id' => $cdId, 'task' => $task, 'withFamily' => $withFamify])." target='_blank' class='btn btn-$class btn-sm mb-1 mr-5'>$text</a>";
     }
 }

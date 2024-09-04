@@ -45,7 +45,7 @@
     $isCity         = $isCityEnum[0].': '.$city[0].' | '.$isCityEnum[1].': '.$city[1];
     $eDetail = Calc::calcE($rangeE, $data['chi_so_dien'] - $data['chi_so_dien_ky_truoc']);
     $wDetail = Calc::calcW($data['tien_nuoc_detail']);
-    $elNine = 'col-md-9 col-sm-9 col-xs-9';
+    $elNine = 'col-9';
 
     $element = [
         [
@@ -132,34 +132,39 @@
 
     $elementDetail = [
         [
-            'label' => Form::label('tien_dien', 'Tiền điện chi tiết', ['class' => $formLabelClass]),
+            'label' => Form::label('tien_dien', 'Tiền điện chi tiết', ['class' => $formLabelClass.' text-end']),
             'el'    => $eDetail,
             'elClass' => $elNine
         ],
         [
-            'label' => Form::label('tien_nuoc', 'Tiền nước', ['class' => $formLabelClass]),
+            'label' => Form::label('tien_nuoc', 'Tiền nước', ['class' => $formLabelClass.' text-end']),
             'el'    => $wDetail,
             'elClass' => $elNine
         ],
     ];
 @endphp
 
-@if($id) <div class="col-md-10 col-sm-10 col-xs-10"> @else <div class="col-md-12 col-sm-12 col-xs-12"> @endif
-    <div class="x_panel">
-        @include($pathViewTemplate . 'x_title', ['title' => ($id) ? 'Chi tiết Hóa đơn' : 'Thêm mới Hóa đơn'])
+<div class="row">
+    <div class="col-12">
+        <div class="card overflow-auto">
+            <div class="card-body">
+                <h5 class="card-title">Thêm mới</h5>
+                <div class="row">
+                    <div class="col-5">
+                        <small>
+                            {!! Form::open([ 'class' => 'form-horizontal form-label-left' ]) !!}
+                                {!! FormTemplate::export($element) !!}
+                            {!! Form::close() !!}
+                        </small>
+                    </div>
 
-        <div class="x_content">
-            <div class="row">
-                <div class="col-md-6 col-sm-6 col-xs-6">
-                    {!! Form::open([ 'class' => 'form-horizontal form-label-left' ]) !!}
-                        {!! FormTemplate::export($element) !!}
-                    {!! Form::close() !!}
-                </div>
-
-                <div class="col-md-6 col-sm-6 col-xs-6">
-                    {!! Form::open([ 'class' => 'form-horizontal form-label-left' ]) !!}
-                        {!! FormTemplate::export($elementDetail) !!}
-                    {!! Form::close() !!}
+                    <div class="col-7">
+                        <small>
+                            {!! Form::open([ 'class' => 'form-horizontal form-label-left' ]) !!}
+                                {!! FormTemplate::export($elementDetail) !!}
+                            {!! Form::close() !!}
+                        </small>
+                    </div>
                 </div>
             </div>
         </div>

@@ -7,12 +7,12 @@ class FormTemplate {
 
         foreach($element as $item){
             $type = isset($item['type']) ? $item['type'] : 'input';
-            $colClass = isset($item['elClass']) ? $item['elClass'] : 'col-md-6 col-sm-6 col-xs-12';
+            $colClass = isset($item['elClass']) ? $item['elClass'] : 'col-9';
 
             switch ($type) {
                 case 'input':
                     $html .= sprintf('
-                        <div class="form-group">
+                        <div class="row mb-3">
                             %s
                             <div class="%s"> %s </div>
                         </div>', $item['label'], $colClass, $item['el']);
@@ -20,15 +20,15 @@ class FormTemplate {
 
                 case 'btn-submit':
                     $html .= sprintf('
-                        <div class="ln_solid"></div>
-                        <div class="form-group">
-                            <div class="%s col-md-offset-3"> %s </div>
+                        <hr>
+                        <div class="row mb-3">
+                            <div class="%s offset-3"> %s </div>
                         </div>', $colClass, $item['el']);
                     break;
 
                 case 'thumb':
                     $html .= sprintf('
-                        <div class="form-group">
+                        <div class="row mb-3">
                             %s
                             <div class="%s">
                                 %s
@@ -40,11 +40,10 @@ class FormTemplate {
 
                 case 'avatar':
                     $html .= sprintf('
-                        <div class="form-group">
+                        <div class="row mb-3">
                             %s
                             <div class="%s">
-                                %s
-                                <p style="margin-top: 50px;"> %s </p>
+                                <div class="mb-3">%s</div>%s
                             </div>
                         </div>', $item['label'], $colClass, $item['el'], $item['avatar']);
                     break;

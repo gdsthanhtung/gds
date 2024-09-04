@@ -54,7 +54,7 @@
     $element = [
         [
             'label' => Form::label('hop_dong_id', 'Hợp đồng số', ['class' => $formLabelClass]),
-            'el'    => Form::select('hop_dong_id', $selectHopDong, $hopDongId, ['class' => $formInputClass, 'required' => true, 'placeholder' => 'Select an item...'])
+            'el'    => Form::select('hop_dong_id', $selectHopDong, $hopDongId, ['class' => $formInputClass.' form-select', 'required' => true, 'placeholder' => 'Select an item...'])
         ],
         [
             'label' => Form::label('prev_invoice', 'Hóa đơn gần nhất', ['class' => $formLabelClass]),
@@ -67,12 +67,12 @@
                        Form::hidden('is_city', $isCity, ['id' => 'is-city-input']),
         ],
         [
-            'label' => Form::label('huong_dinh_muc_dien', 'Hưởng định mức Điện', ['class' => $formLabelClass]),
+            'label' => Form::label('huong_dinh_muc_dien', 'Hưởng đ.mức Điện', ['class' => $formLabelClass]),
             'el'    => Form::label('huong_dinh_muc_dien', $yesnoEnum[$approveE], ['class' => $formLabelRightClass. ' text-left input-like-text', 'id' => 'approve-e', 'disabled' => true]).
                        Form::hidden('huong_dinh_muc_dien', $approveE, ['id' => 'approve-e-input']),
         ],
         [
-            'label' => Form::label('huong_dinh_muc_nuoc', 'Hưởng định mức Nước', ['class' => $formLabelClass]),
+            'label' => Form::label('huong_dinh_muc_nuoc', 'Hưởng đ.mức Nước', ['class' => $formLabelClass]),
             'el'    => Form::label('huong_dinh_muc_nuoc', $yesnoEnum[$approveW], ['class' => $formLabelRightClass. ' text-left input-like-text', 'id' => 'approve-w', 'disabled' => true]).
                        Form::hidden('huong_dinh_muc_nuoc', $approveW, ['id' => 'approve-w-input']),
         ],
@@ -80,7 +80,7 @@
             'label' => Form::label('tu_ngay', 'Từ ngày', ['class' => $formLabelClass]),
             'el'    => '<div class="input-group input-daterange">'.
                             Form::text('tu_ngay', $fromDate, ['class' => 'form-control', 'required' => true]).'
-                            <div class="input-group-addon">đến</div>'.
+                            <div class="input-group-text">đến</div>'.
                             Form::text('den_ngay', $toDate, ['class' => 'form-control', 'required' => true]).'
                         </div>'
         ],
@@ -88,9 +88,9 @@
             'label' => Form::label('chi_so_dien', 'Chỉ số Điện mới', ['class' => $formLabelClass]),
             'el'    =>  '<div class="input-group">'.
                             Form::text('chi_so_dien', $numberE, ['class' => 'form-control text-center chi_so_dien zero', 'required' => true, 'id' => 'chi_so_dien']).'
-                            <div class="input-group-addon">Kỳ trước</div>'.
+                            <div class="input-group-text">Kỳ trước</div>'.
                             Form::text('chi_so_dien_ky_truoc', $numberEOld, ['class' => 'form-control text-center chi_so_dien zero', 'required' => true, 'id' => 'chi_so_dien_ky_truoc']).'
-                            <div class="input-group-addon">Sử dụng trong kỳ</div>'.
+                            <div class="input-group-text">Sử dụng trong kỳ</div>'.
                             Form::text('su_dung_dien', $numberE, ['class' => 'form-control text-center zero', 'disabled' => true, 'id' => 'su_dung_dien']).'
                         </div>'
         ],
@@ -98,16 +98,16 @@
             'label' => Form::label('tien_dien', 'Tiền điện', ['class' => $formLabelClass]),
             'el'    => '<div class="input-group">'.
                             Form::number('tien_dien', $tienDien, ['class' => $formInputClass . ' zero', 'required' => true]).'
-                            <div class="input-group-addon n-a" id="chi-tiet-dien"></div>
+                            <div class="input-group-text n-a" id="chi-tiet-dien"></div>
                         </div>'.Form::hidden('tien_dien_detail', $isCity, ['id' => 'tien-dien-detail-input'])
         ],
         [
             'label' => Form::label('chi_so_nuoc', 'Chỉ số Nước mới', ['class' => $formLabelClass]),
             'el'    => '<div class="input-group">'.
                             Form::text('chi_so_nuoc', $numberW, ['class' => 'form-control text-center chi_so_nuoc zero', 'required' => true, 'id' => 'chi_so_nuoc']).'
-                            <div class="input-group-addon">Kỳ trước</div>'.
+                            <div class="input-group-text">Kỳ trước</div>'.
                             Form::text('chi_so_nuoc_ky_truoc', $numberWOld, ['class' => 'form-control text-center chi_so_nuoc zero', 'required' => true, 'id' => 'chi_so_nuoc_ky_truoc']).'
-                            <div class="input-group-addon">Sử dụng trong kỳ</div>'.
+                            <div class="input-group-text">Sử dụng trong kỳ</div>'.
                             Form::text('su_dung_nuoc', $numberE, ['class' => 'form-control text-center zero', 'disabled' => true, 'id' => 'su_dung_nuoc']).'
                         </div>'
         ],
@@ -115,7 +115,7 @@
             'label' => Form::label('tien_nuoc', 'Tiền nước', ['class' => $formLabelClass]),
             'el'    => '<div class="input-group">'.
                             Form::number('tien_nuoc', $tienNuoc, ['class' => $formInputClass . ' zero', 'required' => true]).'
-                            <div class="input-group-addon n-a" id="chi-tiet-nuoc"></div>
+                            <div class="input-group-text n-a" id="chi-tiet-nuoc"></div>
                         </div>'.Form::hidden('tien_nuoc_detail', $isCity, ['id' => 'tien-nuoc-detail-input'])
         ],
         [
@@ -141,7 +141,7 @@
         ],
         [
             'label' => Form::label('status', 'Trạng thái', ['class' => $formLabelClass]),
-            'el'    => Form::select('status', $statusEnum, $status, ['class' => $formInputClass, 'placeholder' => 'Select an item...' ])
+            'el'    => Form::select('status', $statusEnum, $status, ['class' => $formInputClass.' form-select', 'placeholder' => 'Select an item...' ])
         ],
         [
             'label' => Form::label('ghi_chu', 'Ghi chú', ['class' => $formLabelClass]),
@@ -155,26 +155,30 @@
     ];
 @endphp
 
-@if($id) <div class="col-md-9 col-sm-9 col-xs-9"> @else <div class="col-md-12 col-sm-12 col-xs-12"> @endif
-    <div class="x_panel">
-        @include($pathViewTemplate . 'x_title', ['title' => ($id) ? 'Điều chỉnh Hóa đơn' : 'Thêm mới Hóa đơn'])
+<div class="row">
+    <div class="col-8 offset-2">
+        <div class="card overflow-auto">
+            <div class="card-body">
+                <h5 class="card-title">Thêm mới</h5>
+                <div class="row">
+                    {!!
+                        Form::open([
+                            'url' => route($ctrl.'/save'),
+                            'accept-charset' => 'UTF-8',
+                            'method' => 'POST',
+                            'enctype' => 'multipart/form-data',
+                            'class' => 'form-horizontal form-label-left',
+                            'id' => 'main-form'
+                        ])
+                    !!}
 
-        <div class="x_content">
-            {!!
-                Form::open([
-                    'url' => route($ctrl.'/save'),
-                    'accept-charset' => 'UTF-8',
-                    'method' => 'POST',
-                    'enctype' => 'multipart/form-data',
-                    'class' => 'form-horizontal form-label-left',
-                    'id' => 'main-form'
-                ])
-            !!}
+                        {!! FormTemplate::export($element) !!}
 
-                {!! FormTemplate::export($element) !!}
-
-            {!! Form::close() !!}
+                    {!! Form::close() !!}
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
 

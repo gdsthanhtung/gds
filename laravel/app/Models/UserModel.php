@@ -113,7 +113,7 @@ class UserModel extends Model
             $paramsNew['password']       = md5($params['password']);
 
             if(isset($params['avatar']) && $params['avatar']){
-                $uploadRS = Resource::upload($this->uploadDir, $params['avatar']);
+                $uploadRS = Resource::uploadImage($this->uploadDir, $params['avatar'], 'avatar');
                 if($uploadRS)
                     $paramsNew['avatar'] = $uploadRS;
                 else
@@ -128,7 +128,7 @@ class UserModel extends Model
             $paramsNew['modified_by'] = $loginUserId;
 
             if(isset($params['avatar']) && $params['avatar']){
-                $uploadRS = Resource::upload($this->uploadDir, $params['avatar']);
+                $uploadRS = Resource::uploadImage($this->uploadDir, $params['avatar'], 'avatar');
                 if($uploadRS)
                     $paramsNew['avatar'] = $uploadRS;
                 else

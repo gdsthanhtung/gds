@@ -33,10 +33,10 @@
             'el'    => Form::text('email', $email, ['class' => $formInputClass, 'required' => true])
         ],[
             'label' => Form::label('status', 'Trạng thái', ['class' => $formLabelClass]),
-            'el'    => Form::select('status', $statusEnum, $status, ['class' => $formInputClass, 'placeholder' => 'Select an item...'])
+            'el'    => Form::select('status', $statusEnum, $status, ['class' => $formInputClass.' form-select', 'placeholder' => 'Select an item...'])
         ],[
             'label' => Form::label('level', 'Level', ['class' => $formLabelClass]),
-            'el'    => Form::select('level', $levelEnum, $level, ['class' => $formInputClass, 'placeholder' => 'Select an item...'])
+            'el'    => Form::select('level', $levelEnum, $level, ['class' => $formInputClass.' form-select', 'placeholder' => 'Select an item...'])
         ],[
             'label' => Form::label('avatar', 'Avatar', ['class' => $formLabelClass]),
             'el'    => Form::file('avatar', ['class' => $formInputClass]),
@@ -49,12 +49,12 @@
     ];
 @endphp
 
-<!--box-form-->
-    <div class="col-md-6 col-sm-12 col-xs-12">
-        <div class="x_panel">
-            @include($pathViewTemplate . 'x_title', ['title' => 'Điều chỉnh'])
+<div class="col-6">
+    <div class="card overflow-auto">
+        <div class="card-body">
+            <h5 class="card-title">Điều chỉnh</h5>
+            <div class="row">
 
-            <div class="x_content">
                 {!!
                     Form::open([
                         'url' => route($ctrl.'/save'),
@@ -72,4 +72,4 @@
             </div>
         </div>
     </div>
-<!--end-box-form-->
+</div>

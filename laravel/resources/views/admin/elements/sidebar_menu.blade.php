@@ -39,7 +39,7 @@
 
         <li class="nav-item">
             <a class="nav-link collapsed" href="{{ route('hoadon') }}">
-                <i class="bi bi-newspaper"></i>
+                <i class="bi bi-clipboard-check"></i>
                 <span>Hóa Đơn</span>
             </a>
         </li>

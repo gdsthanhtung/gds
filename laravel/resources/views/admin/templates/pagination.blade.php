@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-md-6">
             Số phần tử trên trang: <span class="badge bg-success">{{ $perPage }}</span>
-            Tổng số phần tử: <span class="badge bg-primary">{{ $totalItems }}</span>
+            Tổng số phần tử: <span class="badge bg-warning">{{ $totalItems }}</span>
             Tổng số trang: <span class="badge bg-info">{{ $totalPages }}</span>
         </div>
         <div class="col-md-6">

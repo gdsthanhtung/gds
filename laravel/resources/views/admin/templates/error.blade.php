@@ -1,5 +1,5 @@
-<div class="form-group">
-    @if ($errors->any())
+@if ($errors->any())
+    <div class="form-group">
         <div class="alert alert-danger" style="padding-left: 25px">
             <ul>
                 @foreach ($errors->all() as $error)
@@ -7,5 +7,5 @@
                 @endforeach
             </ul>
         </div>
-    @endif
-</div>
+    </div>
+@endif

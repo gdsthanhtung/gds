@@ -55,16 +55,16 @@ return [
     ],
     'template' => [
         'formLabel' => [
-            'class' => 'control-label col-md-3 col-sm-3 col-xs-12'
+            'class' => 'col-3 col-form-label'
         ],
         'formLabelRight' => [
-            'class' => 'control-label col-md-9 col-sm-9 col-xs-12 text-left'
+            'class' => 'col-9 col-form-label text-left'
         ],
         'formInput' => [
-            'class' => 'form-control col-md-7 col-sm-7 col-xs-12'
+            'class' => 'form-control'
         ],
         'formInputDateRange' => [
-            'class' => 'form-control col-md-3 col-sm-7 col-xs-6'
+            'class' => 'form-control'
         ]
     ],
     'enum' => [

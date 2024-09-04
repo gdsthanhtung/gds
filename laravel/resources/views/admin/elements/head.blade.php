@@ -1,7 +1,7 @@
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-<title>Components / Accordion - NiceAdmin Bootstrap Template</title>
+<title>GDS-QLNT</title>
 <meta content="" name="description">
 <meta content="" name="keywords">
 
@@ -29,4 +29,4 @@
 <link href="{{ asset('admin/css/mycss.css') }}" rel="stylesheet">
 
 <link href="{{ asset('admin/asset/datepicker/css/bootstrap-datepicker.min.css') }}" rel="stylesheet">
-<link href="{{ asset('admin/asset/selectpicker/css/bootstrap-multiselect.css') }}" rel="stylesheet"> -->
+<link href="{{ asset('admin/asset/selectpicker/css/bootstrap-multiselect.css') }}" rel="stylesheet">

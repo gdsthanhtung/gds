@@ -20,7 +20,7 @@
             'label' => Form::label('password', 'Password', ['class' => $formLabelClass]),
             'el'    => Form::password('password', ['class' => $formInputClass, 'required' => true])
         ],[
-            'label' => Form::label('password_confirmation', 'Password confirmation', ['class' => $formLabelClass]),
+            'label' => Form::label('password_confirmation', 'Re-Password', ['class' => $formLabelClass]),
             'el'    => Form::password('password_confirmation', ['class' => $formInputClass, 'required' => true])
 
         ],[
@@ -30,27 +30,27 @@
     ];
 @endphp
 
-<!--box-form-->
-<div class="col-md-6 col-sm-12 col-xs-12">
-    <div class="x_panel">
-        @include($pathViewTemplate . 'x_title', ['title' => 'Change Password'])
+<div class="col-6">
+    <div class="card overflow-auto">
+        <div class="card-body">
+            <h5 class="card-title">Change password</h5>
+            <div class="row">
 
-        <div class="x_content">
-            {!!
-                Form::open([
-                    'url' => route($ctrl.'/save'),
-                    'accept-charset' => 'UTF-8',
-                    'method' => 'POST',
-                    'enctype' => 'multipart/form-data',
-                    'class' => 'form-horizontal form-label-left',
-                    'id' => 'main-form'
-                ])
-            !!}
+                {!!
+                    Form::open([
+                        'url' => route($ctrl.'/save'),
+                        'accept-charset' => 'UTF-8',
+                        'method' => 'POST',
+                        'enctype' => 'multipart/form-data',
+                        'class' => 'form-horizontal form-label-left',
+                        'id' => 'main-form'
+                    ])
+                !!}
 
-                {!! FormTemplate::export($element) !!}
+                    {!! FormTemplate::export($element) !!}
 
-            {!! Form::close() !!}
+                {!! Form::close() !!}
+            </div>
         </div>
     </div>
 </div>
-<!--end-box-form-->
