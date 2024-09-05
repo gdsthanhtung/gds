@@ -11,6 +11,8 @@ use App\Helpers\Notify;
 use Config;
 use PDF;
 use App\Models\HopDongModel as HopDongModel;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendMailDKTT;
 
 class CongDanController extends Controller
 {
@@ -154,5 +156,15 @@ class CongDanController extends Controller
             $rs = $this->mainModel->saveItem($params, ['task' => $params['task']]);
         }
         return redirect()->route($this->moduleName)->with('notify', Notify::export($rs));
+    }
+
+    public function sendmail(MainRequest $rq)
+    {
+        $data = $this->mainModel->listItems($this->params, ['task' => 'admin-list-items-expired-dktt']);
+        if(!$data) echo 'Empty data!';
+
+        $congDan = $data;
+        Mail::to("gds.thanhtung@gmail.com")->send(new SendMailDKTT (compact ("congDan")));
+        echo 'Send mail done';
     }
 }

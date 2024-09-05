@@ -56,6 +56,12 @@ class CongDanModel extends Model
             $result = $query->orderBy('main.fullname', 'asc')->pluck('info', 'id')->toArray();
         }
 
+        if($options['task'] == 'admin-list-items-expired-dktt'){
+            $query = Self::select(DB::raw('main.*'));
+            $query->where('main.dktt_den_ngay', '<', Carbon::now()->addMonth(1)->format('Y-m-d'));
+            $result = $query->orderBy('main.fullname', 'asc')->get()->toArray();
+        }
+
         return $result;
     }
 

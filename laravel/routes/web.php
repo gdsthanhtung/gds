@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AuthController;
@@ -48,18 +47,6 @@ Route::prefix($prefixAdmin)->middleware('check.permission')->group(function () {
         });
     });
 
-    $prefix = Config::get('custom.route.slider.prefix', 'slider');
-    $ctrl   = Config::get('custom.route.slider.ctrl', 'slider');
-    Route::prefix($prefix)->group(function () use ($ctrl) {
-        Route::controller(SliderController::class)->group(function () use ($ctrl) {
-            Route::get('/', 'show')->name($ctrl);
-            Route::get('/form/{id?}', 'form')->where(['id' => '[0-9]+'])->name($ctrl.'/form');
-            Route::get('/delete/{id}', 'delete')->where(['id' => '[0-9]+'])->name($ctrl.'/delete');
-            Route::get('/change-status/{id}/{status}', 'change_status')->where(['id' => '[0-9]+', 'status' => '[a-z]+'])->name($ctrl.'/change-status');
-            Route::post('/save', 'save')->name($ctrl.'/save');
-        });
-    });
-
     $prefix = Config::get('custom.route.user.prefix', 'user');
     $ctrl   = Config::get('custom.route.user.ctrl', 'user');
     Route::prefix($prefix)->group(function () use ($ctrl) {
@@ -97,6 +84,7 @@ Route::prefix($prefixAdmin)->middleware('check.permission')->group(function () {
             Route::get('/change-status/{id}/{status}', 'change_status')->where(['id' => '[0-9]+', 'status' => '[a-z]+'])->name($ctrl.'/change-status');
             Route::get('/change-level/{id}/{level}', 'change_level')->where(['id' => '[0-9]+', 'level' => '[a-z]+'])->name($ctrl.'/change-level');
             Route::post('/save', 'save')->name($ctrl.'/save');
+            Route::get('/sendmail', 'sendmail')->name($ctrl.'/sendmail');
         });
     });
 
