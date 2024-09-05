@@ -3,11 +3,6 @@
 return [
     'route' => [
         'prefix_admin' => 'admin',
-        'slider' => [
-            'ctrl' => 'slider',
-            'prefix' => 'slider',
-            'view' => 'slider'
-        ],
         'dashboard' => [
             'ctrl' => 'dashboard',
             'prefix' => 'dashboard',
@@ -128,7 +123,6 @@ return [
         ],
         'selectionInModule' => [
             'default' => ['all'],
-            'slider' => ['all', 'name', 'description', 'link'],
             'user' => ['all', 'username', 'email', 'fullname'],
             'phongtro' => ['all', 'name'],
             'congdan' => ['all', 'fullname', 'cccd_number', 'address', 'phone'],
@@ -142,7 +136,6 @@ return [
         ],
         'btnInArea' => [
             'default' => ['edit', 'delete'],
-            'slider' => ['edit', 'delete'],
             'user' => ['edit'],
             'phongtro' => ['edit', 'delete'],
             'congdan' => ['edit', 'delete'],

@@ -15,7 +15,7 @@
                     <div class="d-flex justify-content-center py-4">
                         <a href="index.html" class="logo d-flex align-items-center w-auto">
                         <img src="{{ asset('admin/asset/nice-admin/img/logo.png') }}" alt="">
-                        <span class="d-none d-lg-block">GDS-QLNT</span>
+                        <span class="d-none d-lg-block">GDS-Room4Rent</span>
                         </a>
                     </div><!-- End Logo -->
 

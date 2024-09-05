@@ -1,3 +1,39 @@
+@php
+    use Carbon\Carbon;
+    //dd($data);
+    $i = 0;
+    $listCongDan = '';
+    foreach ($data as $item) {
+        $soDu = $i % 2;
+        if($soDu == 0) {
+            $listCongDan .= '<tr>
+                                <td style="padding:0;Margin:0">
+                                <table cellpadding="0" cellspacing="0" width="100%" class="es-menu" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                                    <tbody>
+                                        <tr class="links-images-right">
+                                            <td align="left" valign="top" width="100.00%" bgcolor="#cfe2f3" id="esd-menu-id-0" style="Margin:0;border:0;padding-top:15px;padding-right:15px;padding-bottom:15px;padding-left:15px"><a target="_blank" href="" style="mso-line-height-rule:exactly;text-decoration:none;font-family:lato, \'helvetica neue\', helvetica, arial, sans-serif;display:block;color:#003554;font-size:16px">'.($i+1).'. '.$item['fullname'].' | Expired date: '.Carbon::parse($item['dktt_den_ngay'])->format('d/m/Y').'</a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                </td>
+                            </tr>';
+        }else{
+            $listCongDan .= '<tr>
+                                <td style="padding:0;Margin:0">
+                                    <table cellpadding="0" cellspacing="0" width="100%" class="es-menu" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                                        <tbody>
+                                            <tr class="links-images-right">
+                                                <td align="left" valign="top" width="100.00%" bgcolor="#f0f8fe" id="esd-menu-id-0" style="Margin:0;border:0;padding-top:15px;padding-right:15px;padding-bottom:15px;padding-left:15px"><a target="_blank" href="" style="mso-line-height-rule:exactly;text-decoration:none;font-family:lato, \'helvetica neue\', helvetica, arial, sans-serif;display:block;color:#003554;font-size:16px">'.($i+1).'. '.$item['fullname'].' | Expired date: '.Carbon::parse($item['dktt_den_ngay'])->format('d/m/Y').'</a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>';
+        }
+        $i++;
+    }
+@endphp
+
 <html dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office" lang="und">
    <head>
       <meta http-equiv="Content-Security-Policy" content="script-src 'none'; connect-src 'none'; object-src 'none'; form-action https://cdn.ampproject.org https://amp.stripo.email;">
@@ -72,7 +108,7 @@
                                                                   <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
                                                                      <tbody>
                                                                         <tr>
-                                                                           <td align="center" class="es-m-txt-c" style="padding:0;Margin:0;padding-top:5px;padding-bottom:5px;font-size:0px"><a target="_blank" href="https://viewstripo.email" style="mso-line-height-rule:exactly;text-decoration:underline;color:#1F1F1F;font-size:14px"><img src="https://fovtclh.stripocdn.email/content/guids/CABINET_2b03c859f54276711089e7a5b12db17a/images/group_362.png" alt="Logo" title="Logo" width="270" style="display:block;font-size:16px;border:0;outline:none;text-decoration:none"></a></td>
+                                                                           <td align="center" class="es-m-txt-c" style="padding:0;Margin:0;padding-top:5px;padding-bottom:5px;font-size:0px"><a target="_blank" href="https://gds.pro.vn/admin/dashboard" style="mso-line-height-rule:exactly;text-decoration:underline;color:#1F1F1F;font-size:14px"><img src="https://gds.pro.vn/admin/asset/nice-admin/img/logo-full.png" alt="Logo" title="Logo" width="270" style="display:block;font-size:16px;border:0;outline:none;text-decoration:none"></a></td>
                                                                         </tr>
                                                                      </tbody>
                                                                   </table>
@@ -156,7 +192,7 @@
                                                             <tbody>
                                                                <tr>
                                                                   <td align="left" class="es-m-p20t es-m-p20b" style="padding:0;Margin:0;padding-top:15px;padding-bottom:15px">
-                                                                     <h1 style="Margin:0;font-family:'Space Grotesk', sans-serif;mso-line-height-rule:exactly;letter-spacing:0;font-size:25px;font-style:normal;font-weight:normal;line-height:30px;color:#051923">Đến hạn Đăng ký thường trú</h1>
+                                                                     <h1 style="Margin:0;font-family:'Space Grotesk', sans-serif;mso-line-height-rule:exactly;letter-spacing:0;font-size:25px;font-style:normal;font-weight:normal;line-height:30px;color:#051923">Đến hạn Đăng ký Tạm trú</h1>
                                                                   </td>
                                                                </tr>
                                                             </tbody>
@@ -234,32 +270,7 @@
                                                          <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
                                                             <!--[if !mso]><!---->
                                                             <tbody>
-                                                               <tr>
-                                                                  <td style="padding:0;Margin:0">
-                                                                     <table cellpadding="0" cellspacing="0" width="100%" class="es-menu" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
-                                                                        <tbody>
-                                                                           <tr class="links-images-right">
-                                                                              <td align="left" valign="top" width="100.00%" bgcolor="#cfe2f3" id="esd-menu-id-0" style="Margin:0;border:0;padding-top:15px;padding-right:15px;padding-bottom:15px;padding-left:15px"><a target="_blank" href="" style="mso-line-height-rule:exactly;text-decoration:none;font-family:lato, 'helvetica neue', helvetica, arial, sans-serif;display:block;color:#003554;font-size:16px">1. Excepteur sint <img src="https://my.stripo.email/static/assets/img/default-img.png" alt="1. Excepteur sint " title="1. Excepteur sint " align="absmiddle" width="24" style="display:inline !important;font-size:16px;border:0;outline:none;text-decoration:none;vertical-align:middle;padding-left:5px"></a></td>
-                                                                           </tr>
-                                                                        </tbody>
-                                                                     </table>
-                                                                  </td>
-                                                               </tr>
-                                                               <!--[if !mso]><!---->
-                                                               <tr>
-                                                                  <td style="padding:0;Margin:0">
-                                                                     <table cellpadding="0" cellspacing="0" width="100%" class="es-menu" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
-                                                                        <tbody>
-                                                                           <tr class="links-images-right">
-                                                                              <td align="left" valign="top" width="100.00%" bgcolor="#f0f8fe" id="esd-menu-id-0" style="Margin:0;border:0;padding-top:15px;padding-right:15px;padding-bottom:15px;padding-left:15px"><a target="_blank" href="" style="mso-line-height-rule:exactly;text-decoration:none;font-family:lato, 'helvetica neue', helvetica, arial, sans-serif;display:block;color:#003554;font-size:16px">2. Duis aute irure<img src="https://my.stripo.email/static/assets/img/default-img.png" alt="2. Duis aute irure" title="2. Duis aute irure" align="absmiddle" width="24" style="display:inline !important;font-size:16px;border:0;outline:none;text-decoration:none;vertical-align:middle;padding-left:5px"></a></td>
-                                                                           </tr>
-                                                                        </tbody>
-                                                                     </table>
-                                                                  </td>
-                                                               </tr>
-                                                               <!--[if !mso]><!---->
-                                                               <!--[if !mso]><!---->
-                                                               <!--[if !mso]><!---->
+                                                               {!! $listCongDan !!}
                                                             </tbody>
                                                          </table>
                                                       </td>
@@ -319,14 +330,14 @@
                                                                            <tr>
                                                                               <td align="center" class="es-m-txt-l" style="padding:0;Margin:0;padding-top:10px">
                                                                                  <!--[if mso]>
-                                                                                 <a href="https://viewstripo.email" target="_blank" hidden>
-                                                                                    <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" esdevVmlButton href="https://viewstripo.email" style="height:39px; v-text-anchor:middle; width:173px" arcsize="15%" stroke="f"  fillcolor="#0d6efd">
+                                                                                 <a href="https://gds.pro.vn/admin/dashboard" target="_blank" hidden>
+                                                                                    <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" esdevVmlButton href="https://gds.pro.vn/admin/dashboard" style="height:39px; v-text-anchor:middle; width:173px" arcsize="15%" stroke="f"  fillcolor="#0d6efd">
                                                                                        <w:anchorlock></w:anchorlock>
                                                                                        <center style='color:#ffffff; font-family:"Space Grotesk", sans-serif; font-size:14px; font-weight:400; line-height:14px;  mso-text-raise:1px'>Cập nhật ngay!</center>
                                                                                     </v:roundrect>
                                                                                  </a>
                                                                                  <![endif]-->
-                                                                                 <!--[if !mso]><!-- --><span class="es-button-border msohide" style="border-style:solid;border-color:#2CB543;background:#0d6efd;border-width:0px;display:block;border-radius:6px;width:auto;mso-hide:all"><a href="https://viewstripo.email" target="_blank" class="es-button es-button-1671625063908 msohide" style="mso-style-priority:100 !important;text-decoration:none !important;mso-line-height-rule:exactly;color:#FFFFFF;font-size:16px;padding:10px 5px;display:block;background:#0d6efd;border-radius:6px;font-family:'Space Grotesk', sans-serif;font-weight:normal;font-style:normal;line-height:19.2px;width:auto;text-align:center;letter-spacing:0;mso-padding-alt:0;mso-border-alt:10px solid #0d6efd;mso-hide:all">Cập nhật ngay!</a>
+                                                                                 <!--[if !mso]><!-- --><span class="es-button-border msohide" style="border-style:solid;border-color:#2CB543;background:#0d6efd;border-width:0px;display:block;border-radius:6px;width:auto;mso-hide:all"><a href="https://gds.pro.vn/admin/dashboard" target="_blank" class="es-button es-button-1671625063908 msohide" style="mso-style-priority:100 !important;text-decoration:none !important;mso-line-height-rule:exactly;color:#FFFFFF;font-size:16px;padding:10px 5px;display:block;background:#0d6efd;border-radius:6px;font-family:'Space Grotesk', sans-serif;font-weight:normal;font-style:normal;line-height:19.2px;width:auto;text-align:center;letter-spacing:0;mso-padding-alt:0;mso-border-alt:10px solid #0d6efd;mso-hide:all">Cập nhật ngay!</a>
                                                                                  </span>
                                                                                  <!--<![endif]-->
                                                                               </td>
@@ -391,16 +402,16 @@
                                                          <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
                                                             <tbody>
                                                                <tr>
-                                                                  <td align="center" class="es-m-txt-c" style="padding:0;Margin:0;padding-bottom:20px;font-size:0px"><a target="_blank" href="https://viewstripo.email" style="mso-line-height-rule:exactly;text-decoration:underline;color:#1F1F1F;font-size:12px"><img src="https://fovtclh.stripocdn.email/content/guids/CABINET_2b03c859f54276711089e7a5b12db17a/images/group.png" alt="Logo" width="50" title="Logo" style="display:block;font-size:16px;border:0;outline:none;text-decoration:none"></a></td>
+                                                                  <td align="center" class="es-m-txt-c" style="padding:0;Margin:0;padding-bottom:20px;font-size:0px"><a target="_blank" href="https://gds.pro.vn/admin/dashboard" style="mso-line-height-rule:exactly;text-decoration:underline;color:#1F1F1F;font-size:12px"><img src="https://gds.pro.vn/admin/asset/nice-admin/img/logo.png" alt="Logo" width="50" title="Logo" style="display:block;font-size:16px;border:0;outline:none;text-decoration:none"></a></td>
                                                                </tr>
                                                                <tr>
                                                                   <td align="center" style="padding:0;Margin:0">
-                                                                     <p style="Margin:0;mso-line-height-rule:exactly;font-family:lato, 'helvetica neue', helvetica, arial, sans-serif;line-height:19.5px;letter-spacing:0;color:#1F1F1F;font-size:13px"><a target="_blank" style="mso-line-height-rule:exactly;text-decoration:none;color:#1F1F1F;font-size:12px" href=""></a><a target="_blank" href="https://viewstripo.email" style="mso-line-height-rule:exactly;text-decoration:none;color:#1F1F1F;font-size:12px">Privacy Policy</a><a target="_blank" style="mso-line-height-rule:exactly;text-decoration:none;color:#1F1F1F;font-size:13px" href=""></a> • <a target="_blank" href="https://viewstripo.email" style="mso-line-height-rule:exactly;text-decoration:none;color:#1F1F1F;font-size:12px">Unsubscribe</a></p>
+                                                                     <p style="Margin:0;mso-line-height-rule:exactly;font-family:lato, 'helvetica neue', helvetica, arial, sans-serif;line-height:19.5px;letter-spacing:0;color:#1F1F1F;font-size:13px"><a target="_blank" style="mso-line-height-rule:exactly;text-decoration:none;color:#1F1F1F;font-size:12px" href=""></a><a target="_blank" href="https://gds.pro.vn/admin/dashboard" style="mso-line-height-rule:exactly;text-decoration:none;color:#1F1F1F;font-size:12px">Privacy Policy</a><a target="_blank" style="mso-line-height-rule:exactly;text-decoration:none;color:#1F1F1F;font-size:13px" href=""></a> • <a target="_blank" href="https://gds.pro.vn/admin/dashboard" style="mso-line-height-rule:exactly;text-decoration:none;color:#1F1F1F;font-size:12px">Unsubscribe</a></p>
                                                                   </td>
                                                                </tr>
                                                                <tr>
                                                                   <td align="center" style="padding:0;Margin:0;padding-top:20px">
-                                                                     <p style="Margin:0;mso-line-height-rule:exactly;font-family:lato, 'helvetica neue', helvetica, arial, sans-serif;line-height:18px;letter-spacing:0;color:#1F1F1F;font-size:12px"><a target="_blank" style="mso-line-height-rule:exactly;text-decoration:underline;color:#1F1F1F;font-size:12px" href=""></a>Copyright ©2022 Busines Network<a target="_blank" style="mso-line-height-rule:exactly;text-decoration:underline;color:#1F1F1F;font-size:12px" href=""></a></p>
+                                                                     <p style="Margin:0;mso-line-height-rule:exactly;font-family:lato, 'helvetica neue', helvetica, arial, sans-serif;line-height:18px;letter-spacing:0;color:#1F1F1F;font-size:12px"><a target="_blank" style="mso-line-height-rule:exactly;text-decoration:underline;color:#1F1F1F;font-size:12px" href=""></a>Copyright © {{Carbon::now()->format('Y')}} GDS-Room4Rent<a target="_blank" style="mso-line-height-rule:exactly;text-decoration:underline;color:#1F1F1F;font-size:12px" href=""></a></p>
                                                                   </td>
                                                                </tr>
                                                             </tbody>

@@ -37,7 +37,7 @@ class SendMailDKTT extends Mailable
         return new Content(
             view: 'admin.pages.congdan.mail',
             with: [
-                'congDan' => $this->data['congDan']
+                'data' => $this->data['congDan']
             ]
         );
     }
