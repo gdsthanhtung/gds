@@ -158,7 +158,7 @@ class CongDanController extends Controller
         return redirect()->route($this->moduleName)->with('notify', Notify::export($rs));
     }
 
-    public function sendmail(MainRequest $rq)
+    public function sendmail()
     {
         $data = $this->mainModel->listItems($this->params, ['task' => 'admin-list-items-expired-dktt']);
         if(!$data) echo 'Empty data!';
