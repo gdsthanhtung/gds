@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Jobs\SendReminderDKTTEmail;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -30,12 +31,14 @@ class Kernel extends ConsoleKernel
         //         ->runInBackground()
         //         ->withoutOverlapping(10);
 
-        $filePath = base_path('storage/logs/cong-dan_check-dktt.log');
-        $schedule->call('\App\Http\Controllers\Admin\CongDanController@sendmail')
-                ->everyFiveSeconds()
-                ->name('cong-dan:check-dktt')
-                ->appendOutputTo($filePath)
-                ->withoutOverlapping(10);
+        // $filePath = base_path('storage/logs/cong-dan_check-dktt.log');
+        // $schedule->call('\App\Http\Controllers\Admin\CongDanController@sendmail')
+        //         ->everyFiveSeconds()
+        //         ->name('cong-dan:check-dktt')
+        //         ->appendOutputTo($filePath)
+        //         ->withoutOverlapping(10);
+
+        $schedule->job(new SendReminderDKTTEmail(['test' => 123]))->everyTenSeconds();
     }
 
     /**

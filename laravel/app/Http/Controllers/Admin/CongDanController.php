@@ -161,10 +161,10 @@ class CongDanController extends Controller
     public function sendmail()
     {
         $data = $this->mainModel->listItems($this->params, ['task' => 'admin-list-items-expired-dktt']);
-        if(!$data) echo 'Empty data!';
+        if(!$data) return 'Empty data!';
 
         $congDan = $data;
         Mail::to("gds.thanhtung@gmail.com")->send(new SendMailDKTT (compact ("congDan")));
-        echo 'Send mail done';
+        return 'Send mail done';
     }
 }

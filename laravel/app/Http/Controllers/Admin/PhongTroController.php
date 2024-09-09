@@ -10,7 +10,7 @@ use App\Http\Requests\PhongTroRequest  as MainRequest;
 use App\Helpers\Notify;
 use Config;
 
-use App\Models\CongDanModel;
+use App\Jobs\LogRemovePhongTroRecord;
 
 class PhongTroController extends Controller
 {
@@ -94,6 +94,7 @@ class PhongTroController extends Controller
             'id'    => $rq->id
         ];
         $rs = $this->mainModel->delete($params);
+        LogRemovePhongTroRecord::dispatchIf($rs, ['route' => $rq->route()->getName(), 'params' => $params]);
         return redirect()->route($this->moduleName)->with('notify', Notify::export($rs));
     }
 

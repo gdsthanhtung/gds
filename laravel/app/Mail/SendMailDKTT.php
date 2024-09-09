@@ -25,7 +25,7 @@ class SendMailDKTT extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: '[Cảnh báo] - Đến hạn đăng ký tạm trú',
+            subject: '[Nhắc Nhở] - Đến hạn đăng ký tạm trú',
         );
     }
 

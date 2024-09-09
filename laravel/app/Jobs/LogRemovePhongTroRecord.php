@@ -2,7 +2,6 @@
 
 namespace App\Jobs;
 
-use App\Http\Controllers\Admin\CongDanController;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -10,7 +9,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 
-class SendReminderDKTTEmail implements ShouldQueue
+class LogRemovePhongTroRecord implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -32,14 +31,24 @@ class SendReminderDKTTEmail implements ShouldQueue
      */
     public function handle(): void
     {
-        $congDanController = (new CongDanController);
-        $rs = $congDanController->sendmail(/*$params*/);
+        Log::info("PhongTro record has been removed: ", [
+            'route' => json_encode($this->params)
+        ]);
+        $this->subFunction();
+    }
 
+    public function subFunction()
+    {
         Log::build([
             'driver' => 'single',
-            'path' => storage_path('logs/reminderDKTT.log'),
-            ])->info("ReminderDKTT has been executed: ", [
-                'data' => json_encode($rs)
+            'path' => storage_path('logs/custom.log'),
+            ])->warning("PhongTro record has been removed: ", [
+                'route' => json_encode($this->params)
             ]);
+    }
+
+    public function failed()
+    {
+
     }
 }
