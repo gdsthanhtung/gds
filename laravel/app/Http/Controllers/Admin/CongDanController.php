@@ -8,9 +8,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use App\Http\Requests\CongDanRequest as MainRequest;
 use App\Helpers\Notify;
+use App\Mail\SendMail;
+use App\Models\CongDanModel;
 use Config;
 use PDF;
 use App\Models\HopDongModel as HopDongModel;
+use Illuminate\Support\Facades\Mail;
 
 class CongDanController extends Controller
 {
@@ -154,5 +157,14 @@ class CongDanController extends Controller
             $rs = $this->mainModel->saveItem($params, ['task' => $params['task']]);
         }
         return redirect()->route($this->moduleName)->with('notify', Notify::export($rs));
+    }
+
+    public function test_send_mail(){
+        $congDan = CongDanModel::find(1);
+        $mailable = new SendMail($congDan);
+
+        //Mail::to('gds.gradeus@gmail.com')->queue($mailable);
+        Mail::to('gds.gradeus@gmail.com')->later(now()->addSeconds(10), $mailable);
+        dd($congDan, ' Email sent success!');
     }
 }

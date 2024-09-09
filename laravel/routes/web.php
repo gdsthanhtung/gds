@@ -97,6 +97,7 @@ Route::prefix($prefixAdmin)->middleware('check.permission')->group(function () {
             Route::get('/change-status/{id}/{status}', 'change_status')->where(['id' => '[0-9]+', 'status' => '[a-z]+'])->name($ctrl.'/change-status');
             Route::get('/change-level/{id}/{level}', 'change_level')->where(['id' => '[0-9]+', 'level' => '[a-z]+'])->name($ctrl.'/change-level');
             Route::post('/save', 'save')->name($ctrl.'/save');
+            Route::get('/test', 'test_send_mail')->name($ctrl.'/test_send_mail');
         });
     });
 
