@@ -2,10 +2,17 @@
 
 namespace App\Providers;
 
+use App\Events\CreatePhongTroEvent;
+use App\Listeners\CreatePhongTroListener;
+use App\Listeners\CreatePhongTroListenerSub;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Log;
+use Throwable;
+
+use function Illuminate\Events\queueable;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -25,7 +32,16 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Event::listen(
+            CreatePhongTroEvent::class,
+            CreatePhongTroListener::class
+        );
+
+        // Event::listen(queueable(function (CreatePhongTroEvent $event) {
+        //     Log::info(now().' - Test event EventServiceProvider');
+        // })->catch(function (CreatePhongTroEvent $event, Throwable $e) {
+        //     Log::error(now().' - Test event EventServiceProvider');
+        // }));
     }
 
     /**

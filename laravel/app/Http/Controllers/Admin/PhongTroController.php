@@ -106,6 +106,7 @@ class PhongTroController extends Controller
         ];
 
         $rs = $this->mainModel->saveItem($params, ['task' => 'change-status']);
+        event(new \App\Events\CreatePhongTroEvent(['params' => $params, 'rs' => $rs]));
         return redirect()->route($this->moduleName)->with('notify', Notify::export($rs));
 
     }
